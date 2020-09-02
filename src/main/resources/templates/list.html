@@ -43,8 +43,9 @@
         <div class="noteHeader" th:text="${note.title}"></div>
         <div class="noteBody" th:text="${note.content}"></div>
     </div>
+    <p th:if="${notes.isEmpty()}" class="noNotes">Brak notek w kalendarzu.</p>
     <div style="clear: both;"></div>
-    <a class="pdf" th:href="@{/notes/pdf}">Pobierz pdf</a>
+    <a th:if="${!notes.isEmpty()}" class="pdf" th:href="@{/notes/pdf}">Pobierz pdf</a>
 
 </div>
 

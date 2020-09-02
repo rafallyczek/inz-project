@@ -13,7 +13,7 @@ import java.util.Collection;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "Users")
+@Table(name = "app_users")
 public class User implements UserDetails {
 
     //Pola
