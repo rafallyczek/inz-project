@@ -41,7 +41,7 @@ public class NoteController {
     //Wyświetl listę notek
     @GetMapping("/list")
     public String showNoteList(){
-        return "list";
+        return "note-list";
     }
 
     //Pobierz pdf

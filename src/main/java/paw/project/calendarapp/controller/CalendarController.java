@@ -44,6 +44,12 @@ public class CalendarController {
         return "calendar";
     }
 
+    //Wyświetl listę kalendarzy
+    @GetMapping("/list")
+    public String showCalendarList(){
+        return "calendar-list";
+    }
+
     //Nastepny miesiąc
     @GetMapping("/next")
     public String nextMonth(Model model){

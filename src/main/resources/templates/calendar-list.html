@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>CalendarApp</title>
+    <link rel="stylesheet" type="text/css" href="/styles/calendar-list.css">
+</head>
+<body>
+    <!--Wylogowywanie-->
+    <div class="userBar" sec:authorize="isAuthenticated()">
+        <div class="bar">
+            <span>Użytkownik:</span>
+            <p sec:authentication="name"></p>
+            <form method="POST" th:action="@{/logout}">
+                <input class="logout" type="submit" value="Wyloguj">
+            </form>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+
+    <div class="header">
+        <h1>CalendarApp</h1>
+    </div>
+
+    <div class="navBar">
+        <div class="nav">
+            <a th:href="@{/}">Strona główna</a>
+            <a th:href="@{/calendar/list}">Kalendarze</a>
+            <a th:href="@{/notes/list}">Lista notek</a>
+        </div>
+    </div>
+
+    <div class="calendarHeader">
+
+        <p class="title">Kalendarze</p>
+
+    </div>
+
+    <div class="container">
+
+        <div class="calendar">
+            <p>Nazwa kalendarza</p>
+        </div>
+
+    </div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
