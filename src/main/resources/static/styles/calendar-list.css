@@ -34,12 +34,16 @@ body{
 .calendar{
     width: 100px;
     border-radius: 10px;
-    border: 1px solid dimgray;
+    border: 1px solid black;
+    background-color: grey;
+    cursor: pointer;
 }
 .calendar p{
-    color: dimgrey;
     text-align: center;
     padding: 15px;
+}
+.calendar:hover{
+    background-color: #737373;
 }
 h1{
     text-align: center;
