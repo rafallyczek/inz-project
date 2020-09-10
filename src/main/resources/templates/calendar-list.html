@@ -38,12 +38,42 @@
 
     <div class="container">
 
-        <div class="calendar">
+        <!--Dodaj nowy kalendarz-->
+        <div class="calendar" th:onclick="modal()">
             <p>Nowy kalendarz</p>
+            <!--Okno modalne-->
+            <div class="modal" id="modal">
+                <!--Zawartość okna modalnego-->
+                <div class="modalContent">
+                    <!--Nagłówek okna modalnego-->
+                    <div class="modalHeader">
+                        <h2>Nowy kalendarz</h2>
+                    </div>
+                    <!--Ciało okna modalnego-->
+                    <div class="modalBody">
+                        <!--Formularz dodający nowy kalendarz-->
+                        <form method="POST" th:action="@{/calendar/add}" th:object="${dbCalendar}">
+                            <div class="formInputs">
+                                <label for="title">Nazwa kalendarza</label>
+                                <input id="title" type="text" th:field="*{title}">
+                            </div>
+                            <div style="clear: both"></div>
+                            <input type="submit" value="Dodaj">
+                            <input type="reset" value="Resetuj">
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
 
-    </div>
+        <!--Wyświetl kalendarze użytkownika-->
+        <div class="calendar" th:each="dbcalendar : ${calendars}">
+            <p th:text="${dbcalendar.title}"></p>
+        </div>
+        <div style="clear: both;"></div>
 
+    </div>
+    <script type="text/javascript" src="/js/calendar-list.js"></script>
 </body>
 </html>
 

@@ -3,7 +3,6 @@ package paw.project.calendarapp.service;
 import org.springframework.stereotype.Service;
 import paw.project.calendarapp.model.CalendarUser;
 import paw.project.calendarapp.model.DbCalendar;
-import paw.project.calendarapp.model.Note;
 import paw.project.calendarapp.repository.CalendarRepository;
 import paw.project.calendarapp.repository.CalendarUserRepository;
 

@@ -42,6 +42,7 @@ public class CalendarController {
         Note note = new Note();
         DbCalendar dbCalendar = new DbCalendar();
         note.setUserId(user.getId().intValue());
+        dbCalendar.setOwnerId(user.getId().intValue());
         model.addAttribute("calendar", this.calendar);
         model.addAttribute("note", note);
         model.addAttribute("dbCalendar", dbCalendar);
