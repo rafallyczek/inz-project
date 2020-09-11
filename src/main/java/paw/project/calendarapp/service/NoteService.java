@@ -22,6 +22,11 @@ public class NoteService {
         return noteRepository.findAllByUserId(id);
     }
 
+    //Zwróć notki po id kalendarza
+    public List<Note> loadNotesByCalendarId(int id){
+        return noteRepository.findAllByCalendarId(id);
+    }
+
     //Dodaj notkę
     public void addNote(Note note){
         noteRepository.save(note);

@@ -58,7 +58,6 @@ public class NoteController {
     //Dodaj notkę
     @PostMapping("/add")
     public String addNote(@ModelAttribute("note") Note note){
-        note.setCalendarId(1);//Wartość testowa, poprawić
         noteService.addNote(note);
         return "redirect:/calendar";
     }

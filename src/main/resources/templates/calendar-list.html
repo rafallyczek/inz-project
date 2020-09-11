@@ -31,13 +31,10 @@
     </div>
 
     <div class="calendarHeader">
-
         <p class="title">Kalendarze</p>
-
     </div>
 
     <div class="container">
-
         <!--Dodaj nowy kalendarz-->
         <div class="calendar" th:onclick="modal()">
             <p>Nowy kalendarz</p>
@@ -67,9 +64,12 @@
         </div>
 
         <!--Wyświetl kalendarze użytkownika-->
-        <div class="calendar" th:each="dbcalendar : ${calendars}">
-            <p th:text="${dbcalendar.title}"></p>
-        </div>
+        <form method="POST" th:each="dbcalendar : ${calendars}" th:action="@{/calendar/setCalendarId}" onclick="this.submit()">
+            <input id="calendarId" type="hidden" th:value="${dbcalendar.id}" name="calendarId">
+            <div class="calendar">
+                <p th:text="${dbcalendar.title}"></p>
+            </div>
+        </form>
         <div style="clear: both;"></div>
 
     </div>

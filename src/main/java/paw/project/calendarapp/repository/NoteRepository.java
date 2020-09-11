@@ -12,4 +12,7 @@ public interface NoteRepository extends CrudRepository<Note,Long> {
     //Znajdź notki po id użytkownika
     List<Note> findAllByUserId(int id);
 
+    //Znajdź notki po id użytkownika
+    List<Note> findAllByCalendarId(int id);
+
 }

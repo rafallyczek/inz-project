@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import paw.project.calendarapp.model.Calendar;
 import paw.project.calendarapp.model.DbCalendar;
 import paw.project.calendarapp.model.Note;
@@ -25,6 +22,7 @@ public class CalendarController {
     private Calendar calendar;
     private NoteService noteService;
     private CalendarService calendarService;
+    private int calendarId;
 
     //Wstrzykiwanie obiektu Calendar
     @Autowired
@@ -32,26 +30,37 @@ public class CalendarController {
         this.calendar = calendar;
         this.noteService = noteService;
         this.calendarService = calendarService;
+        this.calendarId = 0;
     }
 
     //Ustaw atrybuty modelu
     @ModelAttribute
     public void setModelAttributes(Model model, @AuthenticationPrincipal User user){
-        loadNotes(user);
         loadCalendars(model, user);
         Note note = new Note();
         DbCalendar dbCalendar = new DbCalendar();
+
         note.setUserId(user.getId().intValue());
+        note.setCalendarId(this.calendarId);
         dbCalendar.setOwnerId(user.getId().intValue());
-        model.addAttribute("calendar", this.calendar);
+
         model.addAttribute("note", note);
+        model.addAttribute("calendar", this.calendar);
         model.addAttribute("dbCalendar", dbCalendar);
     }
 
     //Wyświetl kalendarz
     @GetMapping
     public String showCalendar(){
+        loadNotes(this.calendarId);
         return "calendar";
+    }
+
+    //Ustaw id kalendarza i załaduj notki
+    @PostMapping("/setCalendarId")
+    public String setCalendarId(@RequestParam int calendarId){
+        this.calendarId = calendarId;
+        return "redirect:/calendar";
     }
 
     //Wyświetl listę kalendarzy
@@ -84,8 +93,8 @@ public class CalendarController {
     }
 
     //Wczytaj notki użytkownika i zapisz je do kalendarza
-    public void loadNotes(User user){
-        List<Note> notes = noteService.loadNotesByUserId(user.getId().intValue());
+    public void loadNotes(int id){
+        List<Note> notes = noteService.loadNotesByCalendarId(id);
         this.calendar.setNotes(notes);
     }
 
