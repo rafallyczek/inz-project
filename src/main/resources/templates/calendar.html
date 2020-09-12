@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/fontello/css/fontello.css">
 </head>
 <body>
+
     <!--Wylogowywanie-->
     <div class="userBar" sec:authorize="isAuthenticated()">
         <div class="bar">
@@ -32,13 +33,12 @@
     </div>
 
     <div class="calendarHeader">
-
         <p class="year" th:text="${calendar.year}"></p>
         <p class="month" th:text="${calendar.monthName}"></p>
-
     </div>
 
     <div class="container">
+
         <!--    Nagłówek kalendarza z nazwami dni    -->
         <div class="calendar">
             <div class="dayName">Poniedziałek</div>
@@ -50,8 +50,10 @@
             <div class="dayName">Niedziela</div>
             <div style="clear: both;"></div>
         </div>
+
         <!--Kalendarz-->
         <div class="calendar">
+
             <!--Generowanie pustych pól-->
             <div class="blankDay" th:if="${calendar.dayOfWeek>1}" th:each="i : ${#numbers.sequence(1,(calendar.dayOfWeek)-1)}"></div>
             <!--Generowanie pól z dniami-->
@@ -59,6 +61,7 @@
                 [[${i}]]
                 <!--Okno modalne zawierające szczegóły dnia-->
                 <div class="modal" th:id="'modal'+${i}">
+
                     <!--Okno zawierające informacje o szczegółach dnia-->
                     <div class="modalContent" th:id="'info'+${i}">
                         <!--Nagłówek okna modalnego-->
@@ -68,11 +71,7 @@
                         <!--Ciało okna modalnego-->
                         <div class="modalBody">
                             <!--Pokaż okno dodawania nowej notki-->
-                            <button id="addButton"
-                                    th:data-index="${i}"
-                                    th:data-month="${calendar.month}"
-                                    th:data-year="${calendar.year}"
-                                    onclick="showAddForm(this.getAttribute('data-index'),this.getAttribute('data-month'),this.getAttribute('data-year'));">Dodaj notkę</button>
+                            <button id="addButton" th:attr="onclick=|showAddForm('${i}','${calendar.month}','${calendar.year}')|">Dodaj notkę</button>
                             <!--Wyświetl notki-->
                             <div class="note" th:each="note : ${calendar.notes}" th:if="${note.date.isEqual(#temporals.create(calendar.year,calendar.month,i))}">
                                 <!--Nagłówek notki-->
@@ -85,18 +84,7 @@
                                         </i>
                                     </a>
                                     <!--Edytuj notkę-->
-                                    <a th:data-index="${i}"
-                                       th:data-id="${note.id}"
-                                       th:data-userId="${note.userId}"
-                                       th:data-title="${note.title}"
-                                       th:data-content="${note.content}"
-                                       th:data-date="${note.date}"
-                                       onclick="showEditForm(this.getAttribute('data-index'),
-                                                            this.getAttribute('data-id'),
-                                                            this.getAttribute('data-userId'),
-                                                            this.getAttribute('data-title'),
-                                                            this.getAttribute('data-content'),
-                                                            this.getAttribute('data-date'))" class="editButton">
+                                    <a th:attr="onclick=|showEditForm('${i}','${note.id}','${note.userId}','${note.title}','${note.content}','${note.date}')|" class="editButton">
                                         <i class="icon-pencil">
                                             <span class="tooltip">Edytuj notkę</span>
                                         </i>
@@ -107,6 +95,7 @@
                             </div>
                         </div>
                     </div>
+
                     <!--Okno zawierające formularz dodający nową notkę-->
                     <div class="modalContent" th:id="'addForm'+${i}" style="display: none;">
                         <!--Nagłówek okna modalnego-->
@@ -136,6 +125,7 @@
                             <button id="backButton" th:onclick="'showInfo('+${i}+');'">Wróć</button>
                         </div>
                     </div>
+
                     <!--Okno zawierające formularz edytujący notkę-->
                     <div class="modalContent" th:id="'editForm'+${i}" style="display: none;">
                         <!--Nagłówek okna modalnego-->
@@ -166,16 +156,19 @@
                         </div>
                     </div>
                 </div>
+
                 <!--Wyświetlanie notek w polu dnia-->
                 <div class="miniNote" th:each="note : ${calendar.notes}"
                      th:if="${note.date.isEqual(#temporals.create(calendar.year,calendar.month,i))}" th:text="${note.title}"></div>
             </div>
             <div style="clear: both;"></div>
         </div>
+
         <!--Przejście do następnego miesiąca-->
         <a class="next" href="/calendar/next"><i class="icon-right-open"></i></a>
         <!--Przejście do poprzedniego miesiąca-->
         <a class="previous" href="/calendar/previous"><i class="icon-left-open"></i></a>
+
     </div>
     <script type="text/javascript" src="/js/calendar.js"></script>
 </body>

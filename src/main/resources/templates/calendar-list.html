@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="/styles/calendar-list.css">
 </head>
 <body>
+
     <!--Wylogowywanie-->
     <div class="userBar" sec:authorize="isAuthenticated()">
         <div class="bar">
@@ -35,6 +36,7 @@
     </div>
 
     <div class="container">
+
         <!--Dodaj nowy kalendarz-->
         <div class="calendar" th:onclick="modal()">
             <p>Nowy kalendarz</p>

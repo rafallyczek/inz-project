@@ -12,7 +12,6 @@ import paw.project.calendarapp.model.User;
 import paw.project.calendarapp.service.CalendarService;
 import paw.project.calendarapp.service.NoteService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
