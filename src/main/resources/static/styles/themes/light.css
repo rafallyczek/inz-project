@@ -1,0 +1,14 @@
+body{
+    background-color: white;
+}
+.navBar{
+    border-top: 1px solid white;
+}
+.navBar a:hover{
+    background-color: white;
+    color: cornflowerblue;
+}
+.userBar{
+    background-color: white;
+    color: black;
+}

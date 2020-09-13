@@ -64,7 +64,6 @@ form > input{
     background-color: cornflowerblue;
     width: 100%;
     font-size: 0;
-    border-top: 1px solid white;
     text-align: center;
 }
 .nav{
@@ -78,10 +77,6 @@ form > input{
     color: white;
     font-size: 20px;
     text-decoration: none;
-}
-.navBar a:hover{
-    background-color: white;
-    color: cornflowerblue;
 }
 .login{
     text-decoration: none;
