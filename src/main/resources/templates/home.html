@@ -8,14 +8,18 @@
 </head>
 <body>
 
-<!--Wylogowywanie-->
-<div class="userBar" sec:authorize="isAuthenticated()">
-    <div class="bar">
+<!--Pasek górny-->
+<div class="userBar">
+    <div class="bar" sec:authorize="isAuthenticated()">
         <span>Użytkownik:</span>
         <p sec:authentication="name"></p>
         <form method="POST" th:action="@{/logout}">
             <input class="logout" type="submit" value="Wyloguj">
         </form>
+        <div style="clear: both;"></div>
+    </div>
+    <div class="bar" sec:authorize="!isAuthenticated()">
+        <a class="loginButton" th:href="@{/login}">Logowanie</a>
         <div style="clear: both;"></div>
     </div>
 </div>

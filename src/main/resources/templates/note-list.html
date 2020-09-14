@@ -8,9 +8,9 @@
 </head>
 <body>
 
-<!--Wylogowywanie-->
-<div class="userBar" sec:authorize="isAuthenticated()">
-    <div class="bar">
+<!--Pasek górny-->
+<div class="userBar">
+    <div class="bar" sec:authorize="isAuthenticated()">
         <span>Użytkownik:</span>
         <p sec:authentication="name"></p>
         <form method="POST" th:action="@{/logout}">

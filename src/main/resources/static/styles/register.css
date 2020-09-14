@@ -126,3 +126,17 @@ form{
     background-color: #d62929;
     cursor: pointer;
 }
+.loginButton{
+    text-decoration: none;
+    color: white;
+    background-color: seagreen;
+    padding: 5px;
+    border-radius: 5px;
+    display: block;
+    max-height: 15px;
+    font: 400 13.3333px Arial;
+}
+.loginButton:hover{
+    background-color: #39ac6b;
+    cursor: pointer;
+}

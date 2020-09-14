@@ -74,7 +74,7 @@ h1{
     position: absolute;
     right: 15px;
 }
-.bar form, .bar p{
+.bar form, .barLogged p{
     float: left;
 }
 .bar p{
@@ -95,5 +95,19 @@ h1{
 }
 .logout:hover{
     background-color: #d62929;
+    cursor: pointer;
+}
+.loginButton{
+    text-decoration: none;
+    color: white;
+    background-color: seagreen;
+    padding: 5px;
+    border-radius: 5px;
+    display: block;
+    max-height: 15px;
+    font: 400 13.3333px Arial;
+}
+.loginButton:hover{
+    background-color: #39ac6b;
     cursor: pointer;
 }

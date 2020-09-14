@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>CalendarApp</title>
@@ -7,6 +7,22 @@
     <link rel="stylesheet" type="text/css" href="/styles/login.css">
 </head>
 <body>
+
+<!--Pasek górny-->
+<div class="userBar">
+    <div class="bar" sec:authorize="isAuthenticated()">
+        <span>Użytkownik:</span>
+        <p sec:authentication="name"></p>
+        <form method="POST" th:action="@{/logout}">
+            <input class="logout" type="submit" value="Wyloguj">
+        </form>
+        <div style="clear: both;"></div>
+    </div>
+    <div class="bar" sec:authorize="!isAuthenticated()">
+        <a class="loginButton" th:href="@{/login}">Logowanie</a>
+        <div style="clear: both;"></div>
+    </div>
+</div>
 
 <div class="header">
     <h1>CalendarApp</h1>
