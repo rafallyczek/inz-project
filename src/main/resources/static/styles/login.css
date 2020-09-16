@@ -100,6 +100,13 @@ form > input{
     position: absolute;
     right: 15px;
 }
+.themeForm{
+    position: absolute;
+    left: 5px;
+}
+.themeForm select{
+    height: 25px;
+}
 .bar form, .bar p{
     float: left;
 }
@@ -130,7 +137,6 @@ form > input{
     padding: 5px;
     border-radius: 5px;
     display: block;
-    max-height: 15px;
     font: 400 13.3333px Arial;
 }
 .loginButton:hover{

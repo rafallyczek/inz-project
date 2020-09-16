@@ -10,6 +10,14 @@
 
 <!--Pasek górny-->
 <div class="userBar">
+    <form class="themeForm" method="POST" th:action="@{/theme}" name="themeForm" id="themeForm">
+        <span>Preferencje:</span>
+        <select id="theme" name="theme" onChange="submitForm()">
+            <option value="" disabled selected>Wybierz motyw</option>
+            <option value="light">Jasny</option>
+            <option value="dark">Ciemny</option>
+        </select>
+    </form>
     <div class="bar" sec:authorize="isAuthenticated()">
         <span>Użytkownik:</span>
         <p sec:authentication="name"></p>
@@ -45,14 +53,6 @@
 <div class="container">
 
     <p class="hello">Witaj na stronie głównej.</p>
-
-    <form method="POST" th:action="@{/theme}" name="themeForm" id="themeForm">
-        <select id="theme" name="theme" onChange="submitForm()">
-            <option value="">Reset</option>
-            <option value="light">Jasny</option>
-            <option value="dark">Ciemny</option>
-        </select>
-    </form>
 
 </div>
 <script type="text/javascript">

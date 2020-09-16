@@ -89,6 +89,13 @@ h1{
     position: absolute;
     right: 15px;
 }
+.themeForm{
+    position: absolute;
+    left: 5px;
+}
+.themeForm select{
+    height: 25px;
+}
 .bar form, .bar p{
     float: left;
 }
