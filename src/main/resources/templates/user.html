@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>CalendarApp</title>
     <link rel="stylesheet" type="text/css" th:href="${#themes.code('styleSheet')}">
-    <link rel="stylesheet" type="text/css" href="/styles/home.css">
+    <link rel="stylesheet" type="text/css" href="/styles/user.css">
 </head>
 <body>
 
@@ -26,10 +26,6 @@
         </form>
         <div style="clear: both;"></div>
     </div>
-    <div class="barLogin" sec:authorize="!isAuthenticated()">
-        <a class="loginButton" th:href="@{/login}">Logowanie</a>
-        <div style="clear: both;"></div>
-    </div>
 </div>
 
 <div class="header">
@@ -44,15 +40,15 @@
     </div>
 </div>
 
-<div class="homeHeader">
+<div class="userHeader">
 
-    <p class="title">Strona główna</p>
+    <p class="title">Szczegóły konta</p>
 
 </div>
 
 <div class="container">
 
-    <p class="hello">Witaj na stronie głównej.</p>
+    <p class="hello">Tu będą szczegóły konta.</p>
 
 </div>
 <script type="text/javascript">

@@ -70,7 +70,7 @@ h1{
     padding: 5px;
     position: relative;
 }
-.bar{
+.bar, .barLogin{
     position: absolute;
     right: 15px;
 }
@@ -81,10 +81,10 @@ h1{
 .themeForm select{
     height: 25px;
 }
-.bar form, .barLogged p{
+.bar form, .bar a, .barLogin a{
     float: left;
 }
-.bar p{
+.bar a{
     margin: 3px 5px 0 5px;
 }
 .bar span{

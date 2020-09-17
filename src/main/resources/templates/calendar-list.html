@@ -20,7 +20,7 @@
         </form>
         <div class="bar" sec:authorize="isAuthenticated()">
             <span>Użytkownik:</span>
-            <p sec:authentication="name"></p>
+            <a sec:authentication="name" th:href="@{/user}"></a>
             <form method="POST" th:action="@{/logout}">
                 <input class="logout" type="submit" value="Wyloguj">
             </form>
@@ -85,6 +85,11 @@
 
     </div>
     <script type="text/javascript" src="/js/calendar-list.js"></script>
+    <script type="text/javascript">
+        function submitForm() {
+            document.getElementById("themeForm").submit();
+        }
+    </script>
 </body>
 </html>
 

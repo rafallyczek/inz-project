@@ -96,7 +96,7 @@ form > input{
     padding: 5px;
     position: relative;
 }
-.bar{
+.bar, .barLogin{
     position: absolute;
     right: 15px;
 }
@@ -107,10 +107,10 @@ form > input{
 .themeForm select{
     height: 25px;
 }
-.bar form, .bar p{
+.bar form, .bar a, .barLogin a{
     float: left;
 }
-.bar p{
+.bar a{
     margin: 3px 5px 0 5px;
 }
 .bar span{

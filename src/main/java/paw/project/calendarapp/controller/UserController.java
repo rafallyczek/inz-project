@@ -9,7 +9,7 @@ import paw.project.calendarapp.model.User;
 import paw.project.calendarapp.repository.UserRepository;
 
 @Controller
-@RequestMapping("/register")
+@RequestMapping("/user")
 public class UserController {
 
     private UserRepository userRepository;
@@ -28,14 +28,20 @@ public class UserController {
         model.addAttribute("user", new User());
     }
 
-    //Wyświetlanie formularza rejestracyjnego
+    //Wyświetlanie widoku ze szczegółami konta
     @GetMapping
+    public String user(){
+        return "user";
+    }
+
+    //Wyświetlanie formularza rejestracyjnego
+    @GetMapping("/register")
     public String register(){
         return "register";
     }
 
     //Dodaj użytkownika
-    @PostMapping
+    @PostMapping("/add")
     public String addUser(@ModelAttribute User user){
         User newUser = new User(user.getUsername(),passwordEncoder.encode(user.getPassword()),user.getEmail());
         userRepository.save(newUser);

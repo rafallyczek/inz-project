@@ -20,13 +20,13 @@
     </form>
     <div class="bar" sec:authorize="isAuthenticated()">
         <span>Użytkownik:</span>
-        <p sec:authentication="name"></p>
+        <a sec:authentication="name" th:href="@{/user}"></a>
         <form method="POST" th:action="@{/logout}">
             <input class="logout" type="submit" value="Wyloguj">
         </form>
         <div style="clear: both;"></div>
     </div>
-    <div class="bar" sec:authorize="!isAuthenticated()">
+    <div class="barLogin" sec:authorize="!isAuthenticated()">
         <a class="loginButton" th:href="@{/login}">Logowanie</a>
         <div style="clear: both;"></div>
     </div>
@@ -64,11 +64,15 @@
             </div>
             <input class="login" type="submit" value="Zaloguj">
         </form>
-        <a href="/register">Nie masz konta? Zarejestruj się</a>
+        <a href="/user/register">Nie masz konta? Zarejestruj się</a>
     </div>
 
 
 </div>
-
+<script type="text/javascript">
+    function submitForm() {
+        document.getElementById("themeForm").submit();
+    }
+</script>
 </body>
 </html>

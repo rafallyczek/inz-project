@@ -20,13 +20,13 @@
     </form>
     <div class="bar" sec:authorize="isAuthenticated()">
         <span>Użytkownik:</span>
-        <p sec:authentication="name"></p>
+        <a sec:authentication="name" th:href="@{/user}"></a>
         <form method="POST" th:action="@{/logout}">
             <input class="reset" type="submit" value="Wyloguj">
         </form>
         <div style="clear: both;"></div>
     </div>
-    <div class="bar" sec:authorize="!isAuthenticated()">
+    <div class="barLogin" sec:authorize="!isAuthenticated()">
         <a class="loginButton" th:href="@{/login}">Logowanie</a>
         <div style="clear: both;"></div>
     </div>
@@ -54,7 +54,7 @@
 
     <div class="registerForm">
 
-        <form method="POST" th:action="@{/register}" th:object="${user}">
+        <form method="POST" th:action="@{/user/add}" th:object="${user}">
             <div class="formInputs">
                 <label for="username">Nazwa użytkownika</label>
                 <input id="username" type="text" th:field="*{username}">
@@ -76,6 +76,10 @@
     </div>
 
 </div>
-
+<script type="text/javascript">
+    function submitForm() {
+        document.getElementById("themeForm").submit();
+    }
+</script>
 </body>
 </html>

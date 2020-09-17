@@ -20,7 +20,7 @@
     </form>
     <div class="bar" sec:authorize="isAuthenticated()">
         <span>Użytkownik:</span>
-        <p sec:authentication="name"></p>
+        <a sec:authentication="name" th:href="@{/user}"></a>
         <form method="POST" th:action="@{/logout}">
             <input class="logout" type="submit" value="Wyloguj">
         </form>
@@ -57,6 +57,10 @@
     <a th:if="${!notes.isEmpty()}" class="pdf" th:href="@{/notes/pdf}">Pobierz pdf</a>
 
 </div>
-
+<script type="text/javascript">
+    function submitForm() {
+        document.getElementById("themeForm").submit();
+    }
+</script>
 </body>
 </html>

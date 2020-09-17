@@ -7,7 +7,26 @@ body{
     color: white;
     padding: 10px;
 }
-.registerHeader{
+.navBar{
+    margin: 0 auto 10px auto;
+    background-color: cornflowerblue;
+    width: 100%;
+    font-size: 0;
+    text-align: center;
+}
+.nav{
+    margin-left: auto;
+    margin-right: auto;
+    display: inline-block;
+}
+.navBar a{
+    display: inline-block;
+    padding: 5px 10px;
+    color: white;
+    font-size: 20px;
+    text-decoration: none;
+}
+.userHeader{
     margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
@@ -31,15 +50,6 @@ body{
     -moz-box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
     box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
 }
-.registerForm{
-    padding: 5px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 210px;
-}
-.formInputs{
-    margin-bottom: 5px;
-}
 h1{
     text-align: center;
     font-size: 50px;
@@ -51,35 +61,8 @@ h1{
     text-align: center;
     margin: 0;
 }
-input, label{
-    display: block;
-}
-form > input{
-    display: block;
-    float: left;
-    margin: 5px 5px 0 0;
-}
-form{
-    margin-bottom: 5px;
-}
-.navBar{
-    margin: 0 auto 10px auto;
-    background-color: cornflowerblue;
-    width: 100%;
-    font-size: 0;
+.hello{
     text-align: center;
-}
-.nav{
-    margin-left: auto;
-    margin-right: auto;
-    display: inline-block;
-}
-.navBar a{
-    display: inline-block;
-    padding: 5px 10px;
-    color: white;
-    font-size: 20px;
-    text-decoration: none;
 }
 .userBar{
     width: 100%;
@@ -87,7 +70,7 @@ form{
     padding: 5px;
     position: relative;
 }
-.bar, .barLogin{
+.bar{
     position: absolute;
     right: 15px;
 }
@@ -98,7 +81,7 @@ form{
 .themeForm select{
     height: 25px;
 }
-.bar form, .bar a, .barLogin a{
+.bar form, .bar a{
     float: left;
 }
 .bar a{
@@ -109,19 +92,7 @@ form{
     margin: 3px 0 0 0;
     float: left;
 }
-.register{
-    text-decoration: none;
-    color: white;
-    background-color: seagreen;
-    padding: 5px;
-    border-radius: 5px;
-    border: none;
-}
-.register:hover{
-    background-color: #39ac6b;
-    cursor: pointer;
-}
-.reset{
+.logout{
     text-decoration: none;
     color: white;
     background-color: firebrick;
@@ -129,7 +100,7 @@ form{
     border-radius: 5px;
     border: none;
 }
-.reset:hover{
+.logout:hover{
     background-color: #d62929;
     cursor: pointer;
 }
@@ -140,7 +111,6 @@ form{
     padding: 5px;
     border-radius: 5px;
     display: block;
-    max-height: 15px;
     font: 400 13.3333px Arial;
 }
 .loginButton:hover{

@@ -35,16 +35,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .passwordEncoder(encoder());
     }
 
-//    @Override
-//    public void configure(WebSecurity web) throws Exception {
-//        web.ignoring().antMatchers("/styles/themes/**");
-//    }
-
     //Zabezpieczenie żądań
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http.authorizeRequests()
-                .antMatchers("/calendar","/notes/list","/calendar/list")
+                .antMatchers("/calendar","/notes/list","/calendar/list","/user")
                     .hasRole("USER")
                 .antMatchers("/","/**").permitAll()
                 .and()
