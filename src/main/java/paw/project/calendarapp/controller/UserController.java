@@ -29,9 +29,11 @@ public class UserController {
     //Dodaj do modelu obiekt User
     @ModelAttribute
     public void calendar(Model model, @AuthenticationPrincipal User user){
-        User loggedUser = userRepository.findByUsername(user.getUsername());
+        if(user!=null) {
+            User loggedUser = userRepository.findByUsername(user.getUsername());
+            model.addAttribute("loggedUser", loggedUser);
+        }
         model.addAttribute("user", new User());
-        model.addAttribute("loggedUser", loggedUser);
     }
 
     //Wyświetlanie widoku ze szczegółami konta
@@ -48,7 +50,7 @@ public class UserController {
 
     //Dodaj użytkownika
     @PostMapping("/add")
-    public String addUser(@Valid @ModelAttribute User user, Errors errors){
+    public String addUser(@Valid @ModelAttribute("user") User user, Errors errors){
         if(errors.hasErrors()){
             return "register";
         }
@@ -59,7 +61,10 @@ public class UserController {
 
     //Aktualizuj dane użytkownika
     @PostMapping("/update")
-    public String updateNote(@ModelAttribute("user") User user){
+    public String updateNote(@Valid @ModelAttribute("loggedUser") User user, Errors errors){
+        if(errors.hasErrors()){
+            return "user";
+        }
         User newUser = userRepository.findById(user.getId()).get();
         if(user.getEmail()!=null){
             newUser.setEmail(user.getEmail());

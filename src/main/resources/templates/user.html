@@ -58,6 +58,9 @@
             <div class="formInputs">
                 <label for="password">Nowe hasło</label>
                 <input id="password" type="password" th:field="*{password}">
+                <div class="error">
+                    <span class="tooltip" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                </div>
             </div>
             <input type="hidden" th:field="*{id}">
             <input class="update" type="submit" value="Zapisz">
