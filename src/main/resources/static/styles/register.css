@@ -153,8 +153,8 @@ form{
 .tooltip{
     color: firebrick;
     position: absolute;
-    bottom: -1px;
-    right: -385px;
+    bottom: -3px;
+    left: 190px;
     background-color: grey;
     text-align: center;
     width: 400px;
