@@ -58,10 +58,16 @@
             <div class="formInputs">
                 <label for="username">Nazwa użytkownika</label>
                 <input id="username" type="text" th:field="*{username}">
+                <div class="error">
+                    <span class="tooltip" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+                </div>
             </div>
             <div class="formInputs">
                 <label for="password">Hasło</label>
                 <input id="password" type="password" th:field="*{password}">
+                <div class="error">
+                    <span class="tooltip" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                </div>
             </div>
 <!--            <div class="formInputs">-->
 <!--                <label for="confirm">Powtórz hasło</label>-->

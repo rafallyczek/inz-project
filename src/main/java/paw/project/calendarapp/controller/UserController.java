@@ -5,9 +5,12 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import paw.project.calendarapp.model.User;
 import paw.project.calendarapp.repository.UserRepository;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/user")
@@ -44,7 +47,10 @@ public class UserController {
 
     //Dodaj użytkownika
     @PostMapping("/add")
-    public String addUser(@ModelAttribute User user){
+    public String addUser(@Valid @ModelAttribute User user, Errors errors){
+        if(errors.hasErrors()){
+            return "register";
+        }
         User newUser = new User(user.getUsername(),passwordEncoder.encode(user.getPassword()),user.getEmail());
         userRepository.save(newUser);
         return "redirect:/login";
