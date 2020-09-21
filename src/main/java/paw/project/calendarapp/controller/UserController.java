@@ -29,8 +29,9 @@ public class UserController {
     //Dodaj do modelu obiekt User
     @ModelAttribute
     public void calendar(Model model, @AuthenticationPrincipal User user){
+        User loggedUser = userRepository.findByUsername(user.getUsername());
         model.addAttribute("user", new User());
-        model.addAttribute("loggedUser", user);
+        model.addAttribute("loggedUser", loggedUser);
     }
 
     //Wyświetlanie widoku ze szczegółami konta
@@ -60,10 +61,14 @@ public class UserController {
     @PostMapping("/update")
     public String updateNote(@ModelAttribute("user") User user){
         User newUser = userRepository.findById(user.getId()).get();
-        newUser.setEmail(user.getEmail());
-        newUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        if(user.getEmail()!=null){
+            newUser.setEmail(user.getEmail());
+        }
+        if(!user.getPassword().isEmpty()){
+            newUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
         userRepository.save(newUser);
-        return "redirect:/user";
+        return "user";
     }
 
 }

@@ -32,11 +32,6 @@ public class NoteService {
         noteRepository.save(note);
     }
 
-    //Pobierz notkę po id
-    public Note getNote(Long id){
-        return noteRepository.findById(id).get();
-    }
-
     //Aktualizuj notkę
     public void updateNote(Note note){
         Note newNote = noteRepository.findById(note.getId()).get();

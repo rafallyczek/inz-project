@@ -69,13 +69,6 @@ public class NoteController {
         return "redirect:/calendar";
     }
 
-    //Pobierz notkę i zapisz ją w modelu (notka do edycji)
-    @GetMapping("/get/{id}")
-    public String getNote(@PathVariable Long id, Model model){
-        model.addAttribute("retrievednote",noteService.getNote(id));
-        return "redirect:/notes/update";
-    }
-
     //Usuń notkę
     @RequestMapping("/delete/{id}")
     public String deleteNote(@PathVariable Long id){
