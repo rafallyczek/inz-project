@@ -48,7 +48,23 @@
 
 <div class="container">
 
-    <p class="hello">Tu będą szczegóły konta.</p>
+    <div class="userForm">
+
+        <form method="POST" th:action="@{/user/update}" th:object="${loggedUser}">
+            <div class="formInputs">
+                <label for="password">Hasło</label>
+                <input id="password" type="password" th:field="*{password}">
+            </div>
+            <div class="formInputs">
+                <label for="email">Email</label>
+                <input id="email" type="email" th:field="*{email}">
+            </div>
+            <input class="update" type="submit" value="Zapisz">
+            <input class="reset" type="reset" value="Resetuj">
+            <div style="clear: both"></div>
+        </form>
+
+    </div>
 
 </div>
 <script type="text/javascript">

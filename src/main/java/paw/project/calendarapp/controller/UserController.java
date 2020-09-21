@@ -1,6 +1,7 @@
 package paw.project.calendarapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,8 +25,9 @@ public class UserController {
 
     //Dodaj do modelu obiekt User
     @ModelAttribute
-    public void calendar(Model model){
+    public void calendar(Model model, @AuthenticationPrincipal User user){
         model.addAttribute("user", new User());
+        model.addAttribute("loggedUser", user);
     }
 
     //Wyświetlanie widoku ze szczegółami konta
@@ -46,6 +48,16 @@ public class UserController {
         User newUser = new User(user.getUsername(),passwordEncoder.encode(user.getPassword()),user.getEmail());
         userRepository.save(newUser);
         return "redirect:/login";
+    }
+
+    //Aktualizuj dane użytkownika
+    @PostMapping("/update")
+    public String updateNote(@ModelAttribute("user") User user){
+        User newUser = userRepository.findById(user.getId()).get();
+        newUser.setEmail(user.getEmail());
+        newUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(newUser);
+        return "redirect:/user";
     }
 
 }

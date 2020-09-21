@@ -29,4 +29,5 @@ public class UserService implements UserDetailsService {
         }
         throw new UsernameNotFoundException("Nie znaleziono użytkownika: "+username);
     }
+
 }

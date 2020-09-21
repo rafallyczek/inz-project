@@ -61,6 +61,25 @@ h1{
     text-align: center;
     margin: 0;
 }
+input, label{
+    display: block;
+}
+form > input{
+    display: block;
+    float: left;
+    margin: 5px 5px 0 0;
+}
+form{
+    margin-bottom: 5px;
+}
+.userForm{
+    margin-left: auto;
+    margin-right: auto;
+    width: 210px;
+}
+.formInputs{
+    margin-bottom: 5px;
+}
 .hello{
     text-align: center;
 }
@@ -92,6 +111,30 @@ h1{
     margin: 3px 0 0 0;
     float: left;
 }
+.update{
+    text-decoration: none;
+    color: white;
+    background-color: seagreen;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+}
+.update:hover{
+    background-color: #39ac6b;
+    cursor: pointer;
+}
+.reset{
+    text-decoration: none;
+    color: white;
+    background-color: firebrick;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+}
+.reset:hover{
+    background-color: #d62929;
+    cursor: pointer;
+}
 .logout{
     text-decoration: none;
     color: white;
@@ -99,6 +142,7 @@ h1{
     padding: 5px;
     border-radius: 5px;
     border: none;
+    margin: 0;
 }
 .logout:hover{
     background-color: #d62929;
