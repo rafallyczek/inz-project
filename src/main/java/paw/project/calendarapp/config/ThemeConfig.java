@@ -1,24 +1,16 @@
-package paw.project.calendarapp.web;
+package paw.project.calendarapp.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.ui.context.support.ResourceBundleThemeSource;
 import org.springframework.web.servlet.ThemeResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.theme.CookieThemeResolver;
 import org.springframework.web.servlet.theme.ThemeChangeInterceptor;
 
 @Configuration
-public class WebConfig implements WebMvcConfigurer {
-
-    //Zarejestruj zautomatyzowane kontrolery dla poszczególnych ścieżek
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry){
-        registry.addViewController("/").setViewName("home");
-        registry.addViewController("/login");
-    }
+public class ThemeConfig implements WebMvcConfigurer {
 
     //Zarejestruj interceptor zmieniający aktualny motyw
     @Override
@@ -45,6 +37,8 @@ public class WebConfig implements WebMvcConfigurer {
     public ThemeResolver themeResolver(){
         CookieThemeResolver cookieThemeResolver = new CookieThemeResolver();
         cookieThemeResolver.setDefaultThemeName("light");
+        //604800s = 1 tydzień (60*60*24*7)
+        cookieThemeResolver.setCookieMaxAge(604800);
         return cookieThemeResolver;
     }
 
