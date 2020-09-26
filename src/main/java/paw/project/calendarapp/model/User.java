@@ -28,6 +28,8 @@ public class User implements UserDetails {
     @NotNull
     @Size(min=4, message = "Hasło musi mieć co najmniej 4 znaki.")
     private String password;
+    @Transient
+    private String oldPassword;
     private String email;
 
     //Konstruktor parametrowy
