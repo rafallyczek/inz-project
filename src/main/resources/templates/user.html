@@ -77,6 +77,13 @@
                     <span class="tooltip" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
                 </div>
             </div>
+            <div class="formInputs">
+                <label for="matchPassword">Powtórz hasło</label>
+                <input id="matchPassword" type="password" th:field="*{matchPassword}">
+                <div class="error">
+                    <span class="tooltip" th:if="${#fields.hasErrors('matchPassword')}" th:errors="*{matchPassword}"></span>
+                </div>
+            </div>
             <input type="hidden" th:field="*{userId}">
             <input class="update" type="submit" value="Zapisz">
             <input class="reset" type="reset" value="Resetuj">
