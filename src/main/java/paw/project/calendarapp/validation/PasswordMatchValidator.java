@@ -1,5 +1,6 @@
 package paw.project.calendarapp.validation;
 
+import paw.project.calendarapp.TO.Register;
 import paw.project.calendarapp.TO.UpdatePassword;
 
 import javax.validation.ConstraintValidator;
@@ -19,8 +20,12 @@ public class PasswordMatchValidator implements ConstraintValidator<PasswordMatch
         if(o instanceof UpdatePassword){
             UpdatePassword updatePassword = (UpdatePassword) o;
             result = updatePassword.getPassword().equals(updatePassword.getMatchPassword());
+        } else if(o instanceof Register){
+            Register register = (Register) o;
+            result = register.getPassword().equals(register.getMatchPassword());
         }
 
+        //Ustawienie atrybutu ścieżki dla ograniczenia
         if(!result){
             constraintValidatorContext.disableDefaultConstraintViolation();
             constraintValidatorContext.buildConstraintViolationWithTemplate(constraintValidatorContext.getDefaultConstraintMessageTemplate()).addPropertyNode("matchPassword").addConstraintViolation();

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import paw.project.calendarapp.TO.Register;
 import paw.project.calendarapp.TO.UpdateEmail;
 import paw.project.calendarapp.TO.UpdatePassword;
 import paw.project.calendarapp.model.User;
@@ -47,7 +48,7 @@ public class UserController {
             model.addAttribute("updateEmail", updateEmail);
             model.addAttribute("updatePassword", updatePassword);
         }
-        model.addAttribute("user", new User());
+        model.addAttribute("register", new Register());
     }
 
     //Wyświetlanie widoku ze szczegółami konta
@@ -64,11 +65,11 @@ public class UserController {
 
     //Dodaj użytkownika
     @PostMapping("/add")
-    public String addUser(@Valid @ModelAttribute("user") User user, Errors errors){
+    public String addUser(@Valid @ModelAttribute("register") Register register, Errors errors){
         if(errors.hasErrors()){
             return "register";
         }
-        User newUser = new User(user.getUsername(),passwordEncoder.encode(user.getPassword()),user.getEmail());
+        User newUser = new User(register.getUsername(),passwordEncoder.encode(register.getPassword()),register.getEmail());
         userRepository.save(newUser);
         return "redirect:/login";
     }

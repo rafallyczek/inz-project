@@ -54,7 +54,7 @@
 
     <div class="registerForm">
 
-        <form method="POST" th:action="@{/user/add}" th:object="${user}">
+        <form method="POST" th:action="@{/user/add}" th:object="${register}">
             <div class="formInputs">
                 <label for="username">Nazwa użytkownika</label>
                 <input id="username" type="text" th:field="*{username}">
@@ -69,10 +69,13 @@
                     <span class="tooltip" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
                 </div>
             </div>
-<!--            <div class="formInputs">-->
-<!--                <label for="confirm">Powtórz hasło</label>-->
-<!--                <input id="confirm" type="password" th:field="*{password}">-->
-<!--            </div>-->
+            <div class="formInputs">
+                <label for="confirm">Powtórz hasło</label>
+                <input id="confirm" type="password" th:field="*{matchPassword}">
+                <div class="error">
+                    <span class="tooltip" th:if="${#fields.hasErrors('matchPassword')}" th:errors="*{matchPassword}"></span>
+                </div>
+            </div>
             <div class="formInputs">
                 <label for="email">Email</label>
                 <input id="email" type="email" th:field="*{email}">
