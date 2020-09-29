@@ -85,7 +85,7 @@
                             <div class="note" th:each="note : ${calendar.notes}" th:if="${note.date.isEqual(#temporals.create(calendar.year,calendar.month,i))}">
                                 <!--Nagłówek notki-->
                                 <div class="noteHeader" th:inline="text">
-                                    [[${note.title}]]
+                                    [[${note.title}]] | [[${note.time}]]
                                     <!--Usuń notkę-->
                                     <a th:href="@{/notes/delete/{id}(id=${note.id})}" class="deleteButton">
                                         <i class="icon-cancel">
@@ -122,6 +122,10 @@
                                 <div class="formInputs">
                                     <label for="content">Tekst</label>
                                     <input id="content" type="text" th:field="*{content}">
+                                </div>
+                                <div class="formInputs">
+                                    <label for="time">Czas</label>
+                                    <input id="time" type="time" th:field="*{time}">
                                 </div>
                                 <div style="clear: both"></div>
                                 <input id="userId" type="hidden" th:field="*{userId}">

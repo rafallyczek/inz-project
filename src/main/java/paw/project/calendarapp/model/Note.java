@@ -20,6 +20,7 @@ public class Note {
     private Integer userId;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
+    private String time;
     private Integer calendarId;
 
 }

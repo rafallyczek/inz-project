@@ -49,7 +49,7 @@
 <div class="container">
 
     <div class="note" th:each="note : ${notes}">
-        <div class="noteHeader" th:text="${note.title}"></div>
+        <div class="noteHeader" th:inline="text">[[${note.title}]] | [[${note.time}]]</div>
         <div class="noteBody" th:text="${note.content}"></div>
     </div>
     <p th:if="${notes.isEmpty()}" class="noNotes">Brak notek w kalendarzu.</p>
