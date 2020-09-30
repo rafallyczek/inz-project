@@ -5,6 +5,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import paw.project.calendarapp.TO.AddUpdateNote;
 import paw.project.calendarapp.model.Calendar;
 import paw.project.calendarapp.model.DbCalendar;
 import paw.project.calendarapp.model.Note;
@@ -36,14 +37,16 @@ public class CalendarController {
     @ModelAttribute
     public void setModelAttributes(Model model, @AuthenticationPrincipal User user){
         loadCalendars(model, user);
-        Note note = new Note();
+
+        AddUpdateNote addUpdateNote = new AddUpdateNote();
         DbCalendar dbCalendar = new DbCalendar();
 
-        note.setUserId(user.getId().intValue());
-        note.setCalendarId(this.calendarId);
+        addUpdateNote.setUserId(user.getId().intValue());
+        addUpdateNote.setCalendarId(this.calendarId);
+
         dbCalendar.setOwnerId(user.getId().intValue());
 
-        model.addAttribute("note", note);
+        model.addAttribute("addUpdateNote", addUpdateNote);
         model.addAttribute("calendar", this.calendar);
         model.addAttribute("dbCalendar", dbCalendar);
     }

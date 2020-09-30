@@ -93,7 +93,7 @@
                                         </i>
                                     </a>
                                     <!--Edytuj notkę-->
-                                    <a th:attr="onclick=|showEditForm('${i}','${note.id}','${note.userId}','${note.title}','${note.content}','${note.date}')|" class="editButton">
+                                    <a th:attr="onclick=|showEditForm('${i}','${note.id}','${note.userId}','${note.title}','${note.content}','${note.date}','${note.time}')|" class="editButton">
                                         <i class="icon-pencil">
                                             <span class="tooltip">Edytuj notkę</span>
                                         </i>
@@ -114,7 +114,7 @@
                         <!--Ciało okna modalnego-->
                         <div class="modalBody">
                             <!--Formularz dodający nową notkę-->
-                            <form method="POST" th:action="@{/notes/add}" th:object="${note}">
+                            <form method="POST" th:action="@{/notes/add}" th:object="${addUpdateNote}">
                                 <div class="formInputs">
                                     <label for="title">Tytuł</label>
                                     <input id="title" type="text" th:field="*{title}">
@@ -143,12 +143,12 @@
                     <div class="modalContent" th:id="'editForm'+${i}" style="display: none;">
                         <!--Nagłówek okna modalnego-->
                         <div class="modalHeader">
-                            <h2 th:inline="text">Edytuj notkę: [[${note.title}]]</h2>
+                            <h2 th:id="'modalEditHeader'+${i}"></h2>
                         </div>
                         <!--Ciało okna modalnego-->
                         <div class="modalBody">
                             <!--Formularz edytujący notkę-->
-                            <form method="POST" th:action="@{/notes/update}" th:object="${note}">
+                            <form method="POST" th:action="@{/notes/update}" th:object="${addUpdateNote}">
                                 <input th:id="'idEdit'+${i}" type="hidden" th:field="*{id}">
                                 <div class="formInputs">
                                     <label th:for="'titleEdit'+${i}">Tytuł</label>
@@ -158,9 +158,14 @@
                                     <label th:for="'contentEdit'+${i}">Tekst</label>
                                     <input th:id="'contentEdit'+${i}" type="text" th:field="*{content}">
                                 </div>
+                                <div class="formInputs">
+                                    <label th:for="'timeEdit'+${i}">Czas</label>
+                                    <input th:id="'timeEdit'+${i}" type="time" th:field="*{time}">
+                                </div>
                                 <div style="clear: both"></div>
                                 <input th:id="'userIdEdit'+${i}" type="hidden" th:field="*{userId}">
                                 <input th:id="'dateEdit'+${i}" type="hidden" th:field="*{date}">
+                                <input id="calendarIdEdit" type="hidden" th:field="*{calendarId}">
                                 <input type="submit" value="Zapisz">
                                 <input type="reset" value="Resetuj">
                             </form>

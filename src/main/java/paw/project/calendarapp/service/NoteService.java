@@ -19,12 +19,22 @@ public class NoteService {
 
     //Zwróć notki po id użytkownika
     public List<Note> loadNotesByUserId(int id){
-        return noteRepository.findAllByUserId(id);
+        List<Note> notes = noteRepository.findAllByUserId(id);
+        for(Note note : notes){
+            note.setNoteDate();
+            note.setNoteTime();
+        }
+        return notes;
     }
 
     //Zwróć notki po id kalendarza
     public List<Note> loadNotesByCalendarId(int id){
-        return noteRepository.findAllByCalendarId(id);
+        List<Note> notes = noteRepository.findAllByCalendarId(id);
+        for(Note note : notes){
+            note.setNoteDate();
+            note.setNoteTime();
+        }
+        return notes;
     }
 
     //Dodaj notkę
@@ -37,6 +47,7 @@ public class NoteService {
         Note newNote = noteRepository.findById(note.getId()).get();
         newNote.setTitle(note.getTitle());
         newNote.setContent(note.getContent());
+        newNote.setDateTime(note.getDateTime());
         noteRepository.save(newNote);
     }
 

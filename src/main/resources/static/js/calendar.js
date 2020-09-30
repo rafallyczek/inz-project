@@ -34,7 +34,7 @@ function showInfo(i){
     info.style.display = "block";
 }
 //Wyświetl formularz edycji
-function showEditForm(i,id,userId,title,content,date) {
+function showEditForm(i,id,userId,title,content,date,time) {
     var info = document.getElementById("info"+i);
     var editForm = document.getElementById("editForm"+i);
 
@@ -43,6 +43,9 @@ function showEditForm(i,id,userId,title,content,date) {
     document.getElementById("titleEdit"+i).value = title;
     document.getElementById("contentEdit"+i).value = content;
     document.getElementById("dateEdit"+i).value = date;
+    document.getElementById("timeEdit"+i).value = time;
+
+    document.getElementById("modalEditHeader"+i).innerHTML = "Edytuj notkę: "+title;
 
     info.style.display = "none";
     editForm.style.display = "block";

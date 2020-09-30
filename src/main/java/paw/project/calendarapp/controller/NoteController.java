@@ -10,6 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import paw.project.calendarapp.TO.AddUpdateNote;
 import paw.project.calendarapp.model.Note;
 import paw.project.calendarapp.model.User;
 import paw.project.calendarapp.pdf.Pdf;
@@ -57,14 +58,16 @@ public class NoteController {
 
     //Dodaj notkę
     @PostMapping("/add")
-    public String addNote(@ModelAttribute("note") Note note){
+    public String addNote(@ModelAttribute("addUpdateNote") AddUpdateNote addUpdateNote){
+        Note note = addUpdateNote.toAddNote();
         noteService.addNote(note);
         return "redirect:/calendar";
     }
 
     //Aktualizuj notkę
     @PostMapping("/update")
-    public String updateNote(@ModelAttribute("note") Note note){
+    public String updateNote(@ModelAttribute("addUpdateNote") AddUpdateNote addUpdateNote){
+        Note note = addUpdateNote.toUpdateNote();
         noteService.updateNote(note);
         return "redirect:/calendar";
     }
