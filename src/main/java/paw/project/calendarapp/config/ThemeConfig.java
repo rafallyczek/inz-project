@@ -8,14 +8,16 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.theme.CookieThemeResolver;
 import org.springframework.web.servlet.theme.ThemeChangeInterceptor;
+import paw.project.calendarapp.cookies.CookieRefresh;
 
 @Configuration
 public class ThemeConfig implements WebMvcConfigurer {
 
-    //Zarejestruj interceptor zmieniający aktualny motyw
+    //Zarejestruj interceptor zmieniający aktualny motyw oraz interceptor odświeżający czas życia cookie
     @Override
     public void addInterceptors(InterceptorRegistry registry){
         registry.addInterceptor(themeChangeInterceptor());
+        registry.addInterceptor(new CookieRefresh());
     }
 
     //Bean zwracający Interceptor zmieniający aktualny motyw na podstawie parametrów żądań
@@ -32,13 +34,13 @@ public class ThemeConfig implements WebMvcConfigurer {
         return new ResourceBundleThemeSource();
     }
 
-    //Bean zwracający ThemeResolver ustawiający wybrany motyw na podstawie danych z cookies
+    //Bean zwracający ThemeResolver ustawiający wybrany motyw na podstawie danych z cookie
     @Bean
     public ThemeResolver themeResolver(){
         CookieThemeResolver cookieThemeResolver = new CookieThemeResolver();
         cookieThemeResolver.setDefaultThemeName("light");
-        //604800s = 1 tydzień (60*60*24*7)
-        cookieThemeResolver.setCookieMaxAge(604800);
+        //259200s = 3 dni (60*60*24*3)
+        cookieThemeResolver.setCookieMaxAge(259200);
         return cookieThemeResolver;
     }
 
