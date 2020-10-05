@@ -34,12 +34,11 @@ function showInfo(i){
     info.style.display = "block";
 }
 //Wyświetl formularz edycji
-function showEditForm(i,id,userId,title,content,date,time) {
+function showEditForm(i,id,title,content,date,time) {
     var info = document.getElementById("info"+i);
     var editForm = document.getElementById("editForm"+i);
 
     document.getElementById("idEdit"+i).value = id;
-    document.getElementById("userIdEdit"+i).value = userId;
     document.getElementById("titleEdit"+i).value = title;
     document.getElementById("contentEdit"+i).value = content;
     document.getElementById("dateEdit"+i).value = date;
