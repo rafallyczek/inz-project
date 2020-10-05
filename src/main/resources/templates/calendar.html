@@ -80,7 +80,7 @@
                         <!--Ciało okna modalnego-->
                         <div class="modalBody">
                             <!--Pokaż okno dodawania nowej notki-->
-                            <button id="addButton" th:attr="onclick=|showAddForm('${i}','${calendar.month}','${calendar.year}')|">Dodaj notkę</button>
+                            <button id="addButton" th:attr="onclick='showAddForm(\''+${i}+'\',\''+${calendar.month}+'\',\''+${calendar.year}+'\')'">Dodaj notkę</button>
                             <!--Wyświetl notki-->
                             <div class="note" th:each="note : ${calendar.notes}" th:if="${note.date.isEqual(#temporals.create(calendar.year,calendar.month,i))}">
                                 <!--Nagłówek notki-->
@@ -93,7 +93,7 @@
                                         </i>
                                     </a>
                                     <!--Edytuj notkę-->
-                                    <a th:attr="onclick=|showEditForm('${i}','${note.id}','${note.title}','${note.content}','${note.date}','${note.time}')|" class="editButton">
+                                    <a th:attr="onclick='showEditForm(\''+${i}+'\',\''+${note.id}+'\',\''+${note.title}+'\',\''+${note.content}+'\',\''+${note.date}+'\',\''+${note.time}+'\')'" class="editButton">
                                         <i class="icon-pencil">
                                             <span class="tooltip">Edytuj notkę</span>
                                         </i>
@@ -194,20 +194,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -8,12 +8,12 @@ function modal(i){
         if(event.target == modal){
             modal.style.display = "none";
         }
-    }
+    };
 }
 //Schowaj info i wyświetl dodawanie
 function showAddForm(i,month,year){
     var info = document.getElementById("info"+i);
-    var addForm = document.getElementById("addForm"+i)
+    var addForm = document.getElementById("addForm"+i);
 
     var stringMonth = month<10 ? "0"+month : month;
     var stringDay = i<10 ? "0"+i : i;
@@ -26,7 +26,7 @@ function showAddForm(i,month,year){
 //Schowaj dodawanie i wyświetl info
 function showInfo(i){
     var info = document.getElementById("info"+i);
-    var addForm = document.getElementById("addForm"+i)
+    var addForm = document.getElementById("addForm"+i);
     var editForm = document.getElementById("editForm"+i);
 
     editForm.style.display = "none";
