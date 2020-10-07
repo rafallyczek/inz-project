@@ -16,8 +16,8 @@ public class ThemeConfig implements WebMvcConfigurer {
     //Zarejestruj interceptor zmieniający aktualny motyw oraz interceptor odświeżający czas życia cookie
     @Override
     public void addInterceptors(InterceptorRegistry registry){
-        registry.addInterceptor(themeChangeInterceptor());
         registry.addInterceptor(new CookieRefresh());
+        registry.addInterceptor(themeChangeInterceptor());
     }
 
     //Bean zwracający Interceptor zmieniający aktualny motyw na podstawie parametrów żądań
