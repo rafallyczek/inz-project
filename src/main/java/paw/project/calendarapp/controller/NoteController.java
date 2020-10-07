@@ -12,13 +12,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import paw.project.calendarapp.TO.AddNote;
 import paw.project.calendarapp.TO.UpdateNote;
+import paw.project.calendarapp.model.DbCalendar;
 import paw.project.calendarapp.model.Note;
 import paw.project.calendarapp.model.User;
 import paw.project.calendarapp.pdf.Pdf;
+import paw.project.calendarapp.service.CalendarService;
 import paw.project.calendarapp.service.NoteService;
 
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -26,17 +29,24 @@ import java.util.List;
 public class NoteController {
 
     private NoteService noteService;
+    private CalendarService calendarService;
+    private List<Note> notes;
 
     //Wstrzykiwanie serwisu
     @Autowired
-    public NoteController(NoteService noteService){
+    public NoteController(NoteService noteService, CalendarService calendarService){
         this.noteService = noteService;
+        this.calendarService = calendarService;
+        this.notes = new ArrayList<>();
     }
 
     //Ustaw atrybuty modelu
     @ModelAttribute
     public void notes(Model model, @AuthenticationPrincipal User user){
-        List<Note> notes = getAllNotes(user);
+        loadCalendars(model, user);
+        if(notes.isEmpty()){
+            notes = getAllNotes(user);
+        }
         model.addAttribute("notes", notes);
     }
 
@@ -48,8 +58,7 @@ public class NoteController {
 
     //Pobierz pdf
     @GetMapping("/pdf")
-    public ResponseEntity<InputStreamResource> pdf(@AuthenticationPrincipal User user) throws DocumentException, IOException {
-        List<Note> notes = getAllNotes(user);
+    public ResponseEntity<InputStreamResource> pdf() throws DocumentException, IOException {
         Pdf pdf = new Pdf(notes);
         ByteArrayInputStream in = pdf.buildPdf();
         HttpHeaders headers = new HttpHeaders();
@@ -78,9 +87,26 @@ public class NoteController {
         return "redirect:/calendar";
     }
 
+    //Wczytaj notki danego kalendarza
+    @PostMapping("/getCalendarNotes")
+    public String getCalendarNotes(@RequestParam int calendarId, @AuthenticationPrincipal User user){
+        if(calendarId==0){
+            notes = getAllNotes(user);
+        }else{
+            notes = noteService.loadNotesByCalendarId(calendarId);
+        }
+        return "redirect:/notes/list";
+    }
+
     //Wczytaj notki użytkownika
     public List<Note> getAllNotes(User user){
         return noteService.loadNotesByUserId(user.getId().intValue());
+    }
+
+    //Wczytaj kalendarze użytkownika i zapisz jako atrybut modelu
+    public void loadCalendars(Model model, User user){
+        List<DbCalendar> dbCalendars = calendarService.getCalendarsByUserId(user.getId().intValue());
+        model.addAttribute("calendars", dbCalendars);
     }
 
 }

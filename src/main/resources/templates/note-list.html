@@ -12,7 +12,7 @@
 <div class="userBar">
     <form class="themeForm" method="POST" th:action="@{/theme}" name="themeForm" id="themeForm">
         <span>Preferencje:</span>
-        <select id="theme" name="theme" onChange="submitForm()">
+        <select id="theme" name="theme" onchange="submitThemeForm()">
             <option value="" disabled selected>Wybierz motyw</option>
             <option value="light">Jasny</option>
             <option value="dark">Ciemny</option>
@@ -48,7 +48,15 @@
 
 <div class="container">
 
-    <div class="note" th:each="note : ${notes}">
+    <form method="POST" th:if="${!calendars.isEmpty()}" th:action="@{/notes/getCalendarNotes}" id="calendarForm">
+        <select name="calendarId" form="calendarForm" onchange="submitCalendarForm()">
+            <option value="" disabled selected>Wybierz kalendarz</option>
+            <option value="0">Wszystkie kalendarze</option>
+            <option th:each="dbcalendar : ${calendars}" th:text="${dbcalendar.title}" th:value="${dbcalendar.id}"></option>
+        </select>
+    </form>
+
+    <div class="note" th:if="${!notes.isEmpty()}" th:each="note : ${notes}">
         <div class="noteHeader" th:inline="text">[[${note.title}]] | [[${note.time}]]</div>
         <div class="noteBody" th:text="${note.content}"></div>
     </div>
@@ -58,8 +66,11 @@
 
 </div>
 <script type="text/javascript">
-    function submitForm() {
+    function submitThemeForm() {
         document.getElementById("themeForm").submit();
+    }
+    function submitCalendarForm() {
+        document.getElementById("calendarForm").submit();
     }
 </script>
 </body>

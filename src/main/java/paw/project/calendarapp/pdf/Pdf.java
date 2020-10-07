@@ -15,7 +15,7 @@ import java.util.List;
 @Data
 public class Pdf {
 
-    private List<Note> notes = new ArrayList<>();
+    private List<Note> notes;
 
     public Pdf(List<Note> notes){
         this.notes = notes;
