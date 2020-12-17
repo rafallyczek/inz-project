@@ -11,23 +11,23 @@
 <!--Pasek górny-->
 <div class="userBar">
     <form class="themeForm" method="POST" th:action="@{/theme}" name="themeForm" id="themeForm">
-        <span>Preferencje:</span>
+        <span th:text="#{lang.preferences}"></span>
         <select id="theme" name="theme" onchange="submitForm()">
-            <option value="" disabled selected>Wybierz motyw</option>
-            <option value="light">Jasny</option>
-            <option value="dark">Ciemny</option>
+            <option value="" th:text="#{lang.chooseTheme}" disabled selected></option>
+            <option value="light" th:text="#{lang.lightTheme}"></option>
+            <option value="dark" th:text="#{lang.darkTheme}"></option>
         </select>
     </form>
     <div class="bar" sec:authorize="isAuthenticated()">
-        <span>Użytkownik:</span>
+        <span th:text="#{lang.user}"></span>
         <a sec:authentication="name" th:href="@{/user}"></a>
         <form method="POST" th:action="@{/logout}">
-            <input class="logout" type="submit" value="Wyloguj">
+            <input class="logout" type="submit" th:value="#{lang.logOut}">
         </form>
         <div style="clear: both;"></div>
     </div>
     <div class="barLogin" sec:authorize="!isAuthenticated()">
-        <a class="loginButton" th:href="@{/login}">Logowanie</a>
+        <a class="loginButton" th:href="@{/login}" th:text="#{lang.logging}"></a>
         <div style="clear: both;"></div>
     </div>
 </div>
@@ -38,21 +38,21 @@
 
 <div class="navBar">
     <div class="nav">
-        <a th:href="@{/}">Strona główna</a>
-        <a th:href="@{/calendar/list}">Kalendarze</a>
-        <a th:href="@{/notes/list}">Lista notek</a>
+        <a th:href="@{/}" th:text="#{lang.mainPage}"></a>
+        <a th:href="@{/calendar/list}" th:text="#{lang.calendars}"></a>
+        <a th:href="@{/notes/list}" th:text="#{lang.noteList}"></a>
     </div>
 </div>
 
 <div class="homeHeader">
 
-    <p class="title">Strona główna</p>
+    <p class="title" th:text="#{lang.mainPage}"></p>
 
 </div>
 
 <div class="container">
 
-    <p class="hello">Witaj na stronie głównej.</p>
+    <p class="hello" th:text="#{lang.greeting}"></p>
 
 </div>
 <script type="text/javascript">
