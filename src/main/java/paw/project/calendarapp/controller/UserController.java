@@ -15,6 +15,11 @@ import paw.project.calendarapp.repository.UserRepository;
 import paw.project.calendarapp.service.UserService;
 
 import javax.validation.Valid;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/user")
@@ -23,6 +28,7 @@ public class UserController {
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
     private UserService userService;
+    private List<String> zones;
 
     //Wstrzykiwanie repozytorium
     @Autowired
@@ -30,6 +36,9 @@ public class UserController {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
+        Set<String> zonesSet = ZoneId.getAvailableZoneIds();
+        zones = new ArrayList<>(zonesSet);
+        Collections.sort(zones);
     }
 
     //Dodaj do modelu obiekt User
@@ -49,6 +58,7 @@ public class UserController {
             model.addAttribute("updatePassword", updatePassword);
         }
         model.addAttribute("register", new Register());
+        model.addAttribute("zones",zones);
     }
 
     //Wyświetlanie widoku ze szczegółami konta
@@ -69,7 +79,7 @@ public class UserController {
         if(errors.hasErrors()){
             return "register";
         }
-        User newUser = new User(register.getUsername(),passwordEncoder.encode(register.getPassword()),register.getEmail());
+        User newUser = new User(register.getUsername(),passwordEncoder.encode(register.getPassword()),register.getEmail(),register.getTimezone());
         userRepository.save(newUser);
         return "redirect:/login";
     }

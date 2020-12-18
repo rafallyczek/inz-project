@@ -80,6 +80,12 @@
                 <label for="email">Email</label>
                 <input id="email" type="email" th:field="*{email}">
             </div>
+            <div class="formInputs">
+                <label for="timezone">Strefa czasowa</label>
+                <select id="timezone" name="timezone" th:field="*{timezone}">
+                    <option th:each="zone : ${zones}" th:value="${zone}" th:text="${zone}"></option>
+                </select>
+            </div>
             <input class="register" type="submit" value="Zarejestruj">
             <input class="reset" type="reset" value="Resetuj">
             <div style="clear: both"></div>

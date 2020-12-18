@@ -16,5 +16,6 @@ public class Register {
     private String password;
     private String matchPassword;
     private String email;
+    private String timezone;
 
 }

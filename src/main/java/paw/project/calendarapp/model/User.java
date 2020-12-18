@@ -31,12 +31,14 @@ public class User implements UserDetails {
     @Transient
     private String oldPassword;
     private String email;
+    private String timezone;
 
     //Konstruktor parametrowy
-    public User(String username, String password, String email) {
+    public User(String username, String password, String email, String timezone) {
         this.username = username;
         this.password = password;
         this.email = email;
+        this.timezone = timezone;
     }
 
     //Metody interfejsu UserDetails
