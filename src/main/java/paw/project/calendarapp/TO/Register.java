@@ -10,6 +10,8 @@ import javax.validation.constraints.Size;
 @PasswordMatch(message = "Hasła muszą się zgadzać.")
 public class Register {
 
+    @NotNull
+    @Size(min=4, message = "Nazwa użytkownika musi mieć co najmniej 4 znaki.")
     private String username;
     @NotNull
     @Size(min=4, message = "Hasło musi mieć co najmniej 4 znaki.")

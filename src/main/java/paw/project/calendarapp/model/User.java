@@ -22,14 +22,8 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
-    @Size(min=4, message = "Nazwa użytkownika musi mieć co najmniej 4 znaki.")
     private String username;
-    @NotNull
-    @Size(min=4, message = "Hasło musi mieć co najmniej 4 znaki.")
     private String password;
-    @Transient
-    private String oldPassword;
     private String email;
     private String timezone;
 
