@@ -31,7 +31,7 @@ public class CalendarController {
         this.calendar = calendar;
         this.noteService = noteService;
         this.calendarService = calendarService;
-        this.calendarId = 0;
+        this.calendarId = -1;
     }
 
     //Ustaw atrybuty modelu
@@ -56,6 +56,9 @@ public class CalendarController {
     //Wyświetl kalendarz
     @GetMapping
     public String showCalendar(){
+        if(this.calendarId==-1){
+            return "calendar-list";
+        }
         loadNotes(this.calendarId);
         return "calendar";
     }
