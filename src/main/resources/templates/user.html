@@ -90,6 +90,21 @@
             <div style="clear: both"></div>
         </form>
 
+        <p>Zmień strefę czasową</p>
+        <hr>
+        <form method="POST" th:action="@{/user/updateTimezone}" th:object="${updateTimezone}">
+            <div class="formInputs">
+                <label for="timezone">Strefa czasowa</label>
+                <select id="timezone" name="timezone" th:field="*{timezone}">
+                    <option th:each="zone : ${zones}" th:value="${zone}" th:text="${zone}"></option>
+                </select>
+            </div>
+            <input type="hidden" th:field="*{userId}">
+            <input class="update" type="submit" value="Zapisz">
+            <input class="reset" type="reset" value="Resetuj">
+            <div style="clear: both"></div>
+        </form>
+
     </div>
 
 </div>

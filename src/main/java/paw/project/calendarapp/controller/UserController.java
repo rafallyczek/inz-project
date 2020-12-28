@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import paw.project.calendarapp.TO.Register;
 import paw.project.calendarapp.TO.UpdateEmail;
 import paw.project.calendarapp.TO.UpdatePassword;
+import paw.project.calendarapp.TO.UpdateTimezone;
 import paw.project.calendarapp.model.User;
 import paw.project.calendarapp.repository.UserRepository;
 import paw.project.calendarapp.service.UserService;
@@ -54,11 +55,16 @@ public class UserController {
             UpdatePassword updatePassword = new UpdatePassword();
             updatePassword.setUserId(loggedUser.getId());
 
+            UpdateTimezone updateTimezone = new UpdateTimezone();
+            updateTimezone.setUserId(loggedUser.getId());
+            updateTimezone.setTimezone(loggedUser.getTimezone());
+
             model.addAttribute("updateEmail", updateEmail);
             model.addAttribute("updatePassword", updatePassword);
+            model.addAttribute("updateTimezone", updateTimezone);
         }
         model.addAttribute("register", new Register());
-        model.addAttribute("zones",zones);
+        model.addAttribute("zones", zones);
     }
 
     //Wyświetlanie widoku ze szczegółami konta
@@ -107,6 +113,15 @@ public class UserController {
             return "user";
         }
         updateUser.setPassword(passwordEncoder.encode(updatePassword.getPassword()));
+        userRepository.save(updateUser);
+        return "redirect:/user";
+    }
+
+    //Aktualizuj strefę czasową użytkownika
+    @PostMapping("/updateTimezone")
+    public String updateTimezone(@ModelAttribute("updateTimezone") UpdateTimezone updateTimezone){
+        User updateUser = userRepository.findById(updateTimezone.getUserId()).get();
+        updateUser.setTimezone(updateTimezone.getTimezone());
         userRepository.save(updateUser);
         return "redirect:/user";
     }
