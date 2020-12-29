@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.theme.CookieThemeResolver;
 import org.springframework.web.servlet.theme.ThemeChangeInterceptor;
-import paw.project.calendarapp.cookies.CookieRefresh;
+import paw.project.calendarapp.interceptor.CookieRefreshInterceptor;
 
 @Configuration
 public class ThemeConfig implements WebMvcConfigurer {
@@ -16,7 +16,7 @@ public class ThemeConfig implements WebMvcConfigurer {
     //Zarejestruj interceptor zmieniający aktualny motyw oraz interceptor odświeżający czas życia cookie
     @Override
     public void addInterceptors(InterceptorRegistry registry){
-        registry.addInterceptor(new CookieRefresh());
+        registry.addInterceptor(new CookieRefreshInterceptor());
         registry.addInterceptor(themeChangeInterceptor());
     }
 
