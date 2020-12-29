@@ -24,6 +24,7 @@ public class CalendarController {
     private NoteService noteService;
     private CalendarService calendarService;
     private int calendarId;
+    private int dayNumber;
 
     //Wstrzykiwanie obiektu Calendar
     @Autowired
@@ -32,6 +33,7 @@ public class CalendarController {
         this.noteService = noteService;
         this.calendarService = calendarService;
         this.calendarId = -1;
+        this.dayNumber = -1;
     }
 
     //Ustaw atrybuty modelu
@@ -51,6 +53,7 @@ public class CalendarController {
         model.addAttribute("updateNote", updateNote);
         model.addAttribute("calendar", this.calendar);
         model.addAttribute("dbCalendar", dbCalendar);
+        model.addAttribute("dayNumber", this.dayNumber);
     }
 
     //Wyświetl kalendarz
@@ -68,6 +71,22 @@ public class CalendarController {
     public String setCalendarId(@RequestParam int calendarId){
         this.calendarId = calendarId;
         return "redirect:/calendar";
+    }
+
+    //Wyświetl szczegóły dnia
+    @GetMapping("/day")
+    public String showDay(){
+        if(this.dayNumber==-1){
+            return "calendar";
+        }
+        return "day";
+    }
+
+    //Ustaw numer dnia
+    @PostMapping("/setDayNumber")
+    public String setDayNumber(@RequestParam int dayNumber){
+        this.dayNumber = dayNumber;
+        return "redirect:/calendar/day";
     }
 
     //Wyświetl listę kalendarzy
