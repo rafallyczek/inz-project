@@ -31,21 +31,6 @@ body{
     -moz-box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
     box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
 }
-.note{
-    padding: 5px;
-    background-color: lightblue;
-    border-radius: 5px;
-    margin-bottom: 5px;
-}
-.noteHeader{
-    font-weight: bold;
-    padding: 5px;
-    border-bottom: 1px solid lightcyan;
-    position: relative;
-}
-.noteBody{
-    padding: 5px;
-}
 h1{
     text-align: center;
     font-size: 50px;
@@ -57,26 +42,59 @@ h1{
     text-align: center;
     margin: 0;
 }
-.day{
-    padding: 5px 10px;
+.addNoteForm{
+    padding: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 180px;
 }
-.deleteButton{
-    position: absolute;
-    top: 0;
-    right: 0;
-    color: #2e2ed1;
+.addNoteForm p{
+    text-align: center;
+    margin-bottom: 1px;
 }
-.deleteButton:hover{
-    color: #2525a7;
+.addNoteForm hr{
+    margin-top: 0;
+    border: none;
+    height: 1px;
+    background-color: black;
 }
-.editButton{
-    position: absolute;
-    top: 0;
-    right: 25px;
-    color: #2e2ed1;
+.formInputs{
+    margin-bottom: 5px;
 }
-.editButton:hover{
-    color: #2525a7;
+.addNoteForm form{
+    margin-bottom: 5px;
+}
+.addNoteForm form > input{
+    display: block;
+    float: left;
+    margin: 5px 5px 0 0;
+}
+input, label{
+    display: block;
+}
+.add{
+    text-decoration: none;
+    color: white;
+    background-color: seagreen;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+}
+.add:hover{
+    background-color: #39ac6b;
+    cursor: pointer;
+}
+.reset{
+    text-decoration: none;
+    color: white;
+    background-color: firebrick;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+}
+.reset:hover{
+    background-color: #d62929;
+    cursor: pointer;
 }
 .tooltip{
     visibility: hidden;
@@ -171,20 +189,5 @@ h1{
 }
 .logout:hover{
     background-color: #d62929;
-    cursor: pointer;
-}
-.addButton{
-    text-decoration: none;
-    color: white;
-    background-color: seagreen;
-    padding: 5px;
-    border-radius: 5px;
-    display: block;
-    font: 400 13.3333px Arial;
-    width: 72px;
-    margin-bottom: 5px;
-}
-.addButton:hover{
-    background-color: #39ac6b;
     cursor: pointer;
 }

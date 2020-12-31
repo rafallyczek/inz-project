@@ -44,10 +44,13 @@ public class CalendarController {
         DbCalendar dbCalendar = new DbCalendar();
         AddNote addNote = new AddNote();
         UpdateNote updateNote = new UpdateNote();
+        String day = dayNumber<10 ? "0"+dayNumber : String.valueOf(dayNumber);
+        String month = this.calendar.getMonth()<10 ? "0"+this.calendar.getMonth() : String.valueOf(this.calendar.getMonth());
 
         dbCalendar.setOwnerId(user.getId().intValue());
         addNote.setCalendarId(this.calendarId);
         addNote.setUserId(user.getId().intValue());
+        addNote.setDate(this.calendar.getYear()+"-"+month+"-"+day);
 
         model.addAttribute("addNote", addNote);
         model.addAttribute("updateNote", updateNote);
@@ -77,7 +80,7 @@ public class CalendarController {
     @GetMapping("/day")
     public String showDay(){
         if(this.dayNumber==-1){
-            return "calendar";
+            return "redirect:/calendar";
         }
         return "day";
     }
@@ -87,6 +90,15 @@ public class CalendarController {
     public String setDayNumber(@RequestParam int dayNumber){
         this.dayNumber = dayNumber;
         return "redirect:/calendar/day";
+    }
+
+    //Wyświetl formularz dodający dzień
+    @GetMapping("/addNote")
+    public String showNoteForm(){
+        if(this.dayNumber==-1){
+            return "redirect:/calendar";
+        }
+        return "add-note";
     }
 
     //Wyświetl listę kalendarzy
