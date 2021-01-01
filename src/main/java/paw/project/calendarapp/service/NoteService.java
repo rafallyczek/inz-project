@@ -41,6 +41,11 @@ public class NoteService {
         return notes;
     }
 
+    //Zwróć notkę po id
+    public Note getNote(Long id){
+        return noteRepository.findById(id).get();
+    }
+
     //Dodaj notkę
     public void addNote(AddNote addNote){
         Note note = new Note();

@@ -43,7 +43,6 @@ public class CalendarController {
 
         DbCalendar dbCalendar = new DbCalendar();
         AddNote addNote = new AddNote();
-        UpdateNote updateNote = new UpdateNote();
         String day = dayNumber<10 ? "0"+dayNumber : String.valueOf(dayNumber);
         String month = this.calendar.getMonth()<10 ? "0"+this.calendar.getMonth() : String.valueOf(this.calendar.getMonth());
 
@@ -53,7 +52,6 @@ public class CalendarController {
         addNote.setDate(this.calendar.getYear()+"-"+month+"-"+day);
 
         model.addAttribute("addNote", addNote);
-        model.addAttribute("updateNote", updateNote);
         model.addAttribute("calendar", this.calendar);
         model.addAttribute("dbCalendar", dbCalendar);
         model.addAttribute("dayNumber", this.dayNumber);
@@ -92,13 +90,32 @@ public class CalendarController {
         return "redirect:/calendar/day";
     }
 
-    //Wyświetl formularz dodający dzień
+    //Wyświetl formularz dodający notkę
     @GetMapping("/addNote")
-    public String showNoteForm(){
+    public String showAddNoteForm(){
         if(this.dayNumber==-1){
             return "redirect:/calendar";
         }
         return "add-note";
+    }
+
+    //Wyświetł formularz edytujący notkę
+    @GetMapping("/editNote/{id}")
+    public String showEditNoteForm(@PathVariable Long id, Model model){
+        if(this.dayNumber==-1){
+            return "redirect:/calendar";
+        }
+        Note note = noteService.getNote(id);
+        note.setNoteDate();
+        note.setNoteTime();
+        UpdateNote updateNote = new UpdateNote();
+        updateNote.setNoteId(note.getId());
+        updateNote.setTitle(note.getTitle());
+        updateNote.setContent(note.getContent());
+        updateNote.setDate(note.getDate().toString());
+        updateNote.setTime(note.getTime());
+        model.addAttribute("updateNote", updateNote);
+        return "update-note";
     }
 
     //Wyświetl listę kalendarzy
