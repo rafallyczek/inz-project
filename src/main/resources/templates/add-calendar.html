@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>CalendarApp</title>
     <link rel="stylesheet" type="text/css" th:href="${#themes.code('styleSheet')}">
-    <link rel="stylesheet" type="text/css" href="/styles/calendar-list.css">
+    <link rel="stylesheet" type="text/css" href="/styles/add-calendar.css">
 </head>
 <body>
 
@@ -46,21 +46,24 @@
 
     <div class="container">
 
-        <!--Dodaj nowy kalendarz-->
-        <form method="GET" th:action="@{/calendar/addCalendar}" onclick="this.submit()">
-            <div class="calendar">
-                <p>Nowy kalendarz</p>
-            </div>
-        </form>
+        <div class="addCalendarForm">
 
-        <!--Wyświetl kalendarze użytkownika-->
-        <form method="POST" th:each="dbcalendar : ${calendars}" th:action="@{/calendar/setCalendarId}" onclick="this.submit()">
-            <input id="calendarId" type="hidden" th:value="${dbcalendar.id}" name="calendarId">
-            <div class="calendar">
-                <p th:text="${dbcalendar.title}"></p>
-            </div>
-        </form>
-        <div style="clear: both;"></div>
+            <!--Formularz dodający nowy kalendarz-->
+            <p>Dodaj kalendarz</p>
+            <hr>
+            <form method="POST" th:action="@{/calendar/add}" th:object="${dbCalendar}">
+                <div class="formInputs">
+                    <label for="title">Nazwa kalendarza</label>
+                    <input id="title" type="text" th:field="*{title}">
+                </div>
+                <div style="clear: both"></div>
+                <input class="save" type="submit" value="Dodaj">
+                <input class="reset" type="reset" value="Resetuj">
+                <div style="clear: both"></div>
+            </form>
+            <!--Powrót do listy kalendarzy-->
+            <a th:href="@{/calendar/list}">Powrót do kalendarzy</a>
+        </div>
 
     </div>
     <script type="text/javascript">
@@ -70,20 +73,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

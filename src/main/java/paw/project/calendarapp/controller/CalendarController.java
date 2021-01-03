@@ -118,6 +118,12 @@ public class CalendarController {
         return "update-note";
     }
 
+    //Wyświetl formularz dodający kalendarz
+    @GetMapping("/addCalendar")
+    public String showAddCalendarForm(){
+        return "add-calendar";
+    }
+
     //Wyświetl listę kalendarzy
     @GetMapping("/list")
     public String showCalendarList(){
