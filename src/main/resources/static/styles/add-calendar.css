@@ -96,42 +96,6 @@ input, label{
     background-color: #d62929;
     cursor: pointer;
 }
-.tooltip{
-    visibility: hidden;
-    position: absolute;
-    bottom: 120%;
-    right: -30px;
-    background-color: grey;
-    color: white;
-    text-align: center;
-    width: 80px;
-    padding: 5px;
-    border-radius: 5px;
-}
-.icon-cancel .tooltip::after{
-    content: "";
-    position: absolute;
-    top: 100%;
-    right: 40px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: grey transparent transparent transparent;
-}
-.icon-cancel:hover .tooltip{
-    visibility: visible;
-}
-.icon-pencil .tooltip::after{
-    content: "";
-    position: absolute;
-    top: 100%;
-    right: 40px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: grey transparent transparent transparent;
-}
-.icon-pencil:hover .tooltip{
-    visibility: visible;
-}
 .navBar{
     margin: 0 auto 10px auto;
     background-color: cornflowerblue;
