@@ -124,6 +124,24 @@ public class CalendarController {
         return "add-calendar";
     }
 
+    //Wyświetl formularz edytujący kalendarz
+    @GetMapping("/editCalendar")
+    public String showEditCalendarForm(Model model){
+        if(this.calendarId==-1){
+            return "calendar-list";
+        }
+        DbCalendar dbCalendar = calendarService.getCalendar((long) this.calendarId);
+        model.addAttribute("updateCalendar", dbCalendar);
+        return "update-calendar";
+    }
+
+    //Aktualizuj kalendarz
+    @PostMapping("/update")
+    public String updateCalendar(@ModelAttribute("updateCalendar") DbCalendar dbCalendar){
+        calendarService.updateCalendar(dbCalendar);
+        return "redirect:/calendar/editCalendar";
+    }
+
     //Wyświetl listę kalendarzy
     @GetMapping("/list")
     public String showCalendarList(){

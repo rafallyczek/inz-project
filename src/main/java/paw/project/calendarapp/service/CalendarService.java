@@ -45,4 +45,16 @@ public class CalendarService {
         return calendars;
     }
 
+    //Zwróć kalendarz po id
+    public DbCalendar getCalendar(Long id){
+        return calendarRepository.findById(id).get();
+    }
+
+    //Aktualizuj kalendarz
+    public void updateCalendar(DbCalendar dbCalendar){
+        DbCalendar calendar = calendarRepository.findById(dbCalendar.getId()).get();
+        calendar.setTitle(dbCalendar.getTitle());
+        calendarRepository.save(calendar);
+    }
+
 }

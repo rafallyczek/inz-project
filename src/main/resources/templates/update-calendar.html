@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>CalendarApp</title>
+    <link rel="stylesheet" type="text/css" th:href="${#themes.code('styleSheet')}">
+    <link rel="stylesheet" type="text/css" href="/styles/update-calendar.css">
+</head>
+<body>
+
+    <!--Pasek górny-->
+    <div class="userBar">
+        <form class="themeForm" method="POST" th:action="@{/theme}" name="themeForm" id="themeForm">
+            <span>Preferencje:</span>
+            <select id="theme" name="theme" onchange="submitForm()">
+                <option value="" disabled selected>Wybierz motyw</option>
+                <option value="light">Jasny</option>
+                <option value="dark">Ciemny</option>
+            </select>
+        </form>
+        <div class="bar" sec:authorize="isAuthenticated()">
+            <span>Użytkownik:</span>
+            <a sec:authentication="name" th:href="@{/user}"></a>
+            <form method="POST" th:action="@{/logout}">
+                <input class="logout" type="submit" value="Wyloguj">
+            </form>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+
+    <div class="header">
+        <h1>CalendarApp</h1>
+    </div>
+
+    <div class="navBar">
+        <div class="nav">
+            <a th:href="@{/}">Strona główna</a>
+            <a th:href="@{/calendar/list}">Kalendarze</a>
+            <a th:href="@{/notes/list}">Lista notek</a>
+        </div>
+    </div>
+
+    <div class="calendarHeader">
+        <p class="title">Edytuj kalendarz</p>
+    </div>
+
+    <div class="container">
+
+        <div class="editCalendarForm">
+
+            <!--Formularz edytujący kalendarz-->
+            <p>Edytuj kalendarz</p>
+            <hr>
+            <form method="POST" th:action="@{/calendar/update}" th:object="${updateCalendar}">
+                <input id="idEdit" type="hidden" th:field="*{id}">
+                <div class="formInputs">
+                    <label for="titleEdit">Tytuł</label>
+                    <input id="titleEdit" type="text" th:field="*{title}">
+                </div>
+                <input class="save" type="submit" value="Zapisz">
+                <input class="reset" type="reset" value="Resetuj">
+                <div style="clear: both"></div>
+            </form>
+            <!--Powrót do szczegółów dnia-->
+            <a th:href="@{/calendar}">Powrót do kalendarza</a>
+
+        </div>
+
+    </div>
+    <script type="text/javascript">
+        function submitForm() {
+            document.getElementById("themeForm").submit();
+        }
+    </script>
+</body>
+</html>

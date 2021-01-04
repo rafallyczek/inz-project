@@ -30,67 +30,6 @@ body{
     -webkit-box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
     -moz-box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
     box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
-    position: relative;
-}
-.calendar{
-    margin-left: auto;
-    margin-right: auto;
-    width: 745px;
-}
-.dayName{
-    padding: 5px;
-    background-color: grey;
-    float: left;
-    width: 95px;
-    height: 20px;
-    text-align: center;
-    margin: -1px 0 0 -1px;
-}
-.day{
-    padding: 5px;
-    background-color: grey;
-    float: left;
-    width: 93px;
-    height: 93px;
-    border: 1px solid black;
-    margin: -1px 0 0 -1px;
-    cursor: pointer;
-    overflow: hidden;
-    column-width: 93px;
-}
-.day:hover{
-    background-color: #737373;
-}
-.miniNote{
-    margin: 5px;
-    padding: 5px;
-    background-color: lightblue;
-    border-radius: 5px;
-    max-width: 80px;
-    max-height: 20px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    break-inside: avoid;
-}
-.blankDay{
-    padding: 5px;
-    background-color: darkgrey;
-    float: left;
-    width: 95px;
-    height: 95px;
-    margin: -1px 0 0 -1px;
-}
-.next{
-    position: fixed;
-    top: 50%;
-    right: 50px;
-    color: grey;
-}
-.previous{
-    position: fixed;
-    top: 50%;
-    left: 50px;
-    color: grey;
 }
 h1{
     text-align: center;
@@ -98,15 +37,64 @@ h1{
     margin-top: 20px;
     margin-bottom: 20px;
 }
-.year{
+.title{
     font-size: 50px;
     text-align: center;
     margin: 0;
 }
-.month{
-    font-size: 20px;
+.editCalendarForm{
+    padding: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 180px;
+}
+.editCalendarForm p{
     text-align: center;
-    margin: 0;
+    margin-bottom: 1px;
+}
+.editCalendarForm hr{
+    margin-top: 0;
+    border: none;
+    height: 1px;
+    background-color: black;
+}
+.formInputs{
+    margin-bottom: 5px;
+}
+.editCalendarForm form{
+    margin-bottom: 5px;
+}
+.editCalendarForm form > input{
+    display: block;
+    float: left;
+    margin: 5px 5px 0 0;
+}
+input, label{
+    display: block;
+}
+.save{
+    text-decoration: none;
+    color: white;
+    background-color: seagreen;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+}
+.save:hover{
+    background-color: #39ac6b;
+    cursor: pointer;
+}
+.reset{
+    text-decoration: none;
+    color: white;
+    background-color: firebrick;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+}
+.reset:hover{
+    background-color: #d62929;
+    cursor: pointer;
 }
 .navBar{
     margin: 0 auto 10px auto;
@@ -165,20 +153,5 @@ h1{
 }
 .logout:hover{
     background-color: #d62929;
-    cursor: pointer;
-}
-.edit{
-    text-decoration: none;
-    color: white;
-    background-color: seagreen;
-    padding: 5px;
-    border-radius: 5px;
-    border: none;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-}
-.edit:hover{
-    background-color: #39ac6b;
     cursor: pointer;
 }
