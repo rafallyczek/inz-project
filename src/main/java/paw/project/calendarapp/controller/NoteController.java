@@ -18,7 +18,6 @@ import paw.project.calendarapp.model.User;
 import paw.project.calendarapp.pdf.Pdf;
 import paw.project.calendarapp.service.CalendarService;
 import paw.project.calendarapp.service.NoteService;
-import paw.project.calendarapp.service.UserService;
 
 
 import java.io.*;
@@ -31,26 +30,26 @@ public class NoteController {
 
     private NoteService noteService;
     private CalendarService calendarService;
-    private UserService userService;
     private List<Note> notes;
 
     //Wstrzykiwanie serwisu
     @Autowired
-    public NoteController(NoteService noteService, CalendarService calendarService, UserService userService){
+    public NoteController(NoteService noteService, CalendarService calendarService){
         this.noteService = noteService;
         this.calendarService = calendarService;
-        this.userService = userService;
         this.notes = new ArrayList<>();
     }
 
     //Ustaw atrybuty modelu
     @ModelAttribute
     public void notes(Model model, @AuthenticationPrincipal User user){
-        loadCalendars(model, user);
-        if(notes.isEmpty()){
-            notes = getAllNotes(user);
+        if(user!=null){
+            loadCalendars(model, user);
+            if(notes.isEmpty()){
+                notes = getAllNotes(user);
+            }
+            model.addAttribute("notes", notes);
         }
-        model.addAttribute("notes", notes);
     }
 
     //Wyświetl listę notek

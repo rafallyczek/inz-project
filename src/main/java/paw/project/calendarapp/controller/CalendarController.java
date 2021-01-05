@@ -42,22 +42,24 @@ public class CalendarController {
     //Ustaw atrybuty modelu
     @ModelAttribute
     public void setModelAttributes(Model model, @AuthenticationPrincipal User user){
-        loadCalendars(model, user);
+        if(user!=null){
+            loadCalendars(model, user);
 
-        DbCalendar dbCalendar = new DbCalendar();
-        AddNote addNote = new AddNote();
-        String day = dayNumber<10 ? "0"+dayNumber : String.valueOf(dayNumber);
-        String month = this.calendar.getMonth()<10 ? "0"+this.calendar.getMonth() : String.valueOf(this.calendar.getMonth());
+            DbCalendar dbCalendar = new DbCalendar();
+            AddNote addNote = new AddNote();
+            String day = dayNumber<10 ? "0"+dayNumber : String.valueOf(dayNumber);
+            String month = this.calendar.getMonth()<10 ? "0"+this.calendar.getMonth() : String.valueOf(this.calendar.getMonth());
 
-        dbCalendar.setOwnerId(user.getId().intValue());
-        addNote.setCalendarId(this.calendarId);
-        addNote.setUserId(user.getId().intValue());
-        addNote.setDate(this.calendar.getYear()+"-"+month+"-"+day);
+            dbCalendar.setOwnerId(user.getId().intValue());
+            addNote.setCalendarId(this.calendarId);
+            addNote.setUserId(user.getId().intValue());
+            addNote.setDate(this.calendar.getYear()+"-"+month+"-"+day);
 
-        model.addAttribute("addNote", addNote);
-        model.addAttribute("calendar", this.calendar);
-        model.addAttribute("dbCalendar", dbCalendar);
-        model.addAttribute("dayNumber", this.dayNumber);
+            model.addAttribute("addNote", addNote);
+            model.addAttribute("calendar", this.calendar);
+            model.addAttribute("dbCalendar", dbCalendar);
+            model.addAttribute("dayNumber", this.dayNumber);
+        }
     }
 
     //Wyświetl kalendarz
