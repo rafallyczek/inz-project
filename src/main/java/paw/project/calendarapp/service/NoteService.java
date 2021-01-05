@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import paw.project.calendarapp.TO.AddNote;
 import paw.project.calendarapp.TO.UpdateNote;
 import paw.project.calendarapp.model.Note;
+import paw.project.calendarapp.model.User;
 import paw.project.calendarapp.repository.NoteRepository;
+import paw.project.calendarapp.repository.UserRepository;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -15,28 +17,32 @@ import java.util.List;
 public class NoteService {
 
     private NoteRepository noteRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    public NoteService(NoteRepository noteRepository){
+    public NoteService(NoteRepository noteRepository, UserRepository userRepository){
         this.noteRepository = noteRepository;
+        this.userRepository = userRepository;
     }
 
     //Zwróć notki po id użytkownika
-    public List<Note> loadNotesByUserId(int id){
+    public List<Note> loadNotesByUserId(int id, String localTimezone){
         List<Note> notes = noteRepository.findAllByUserId(id);
         for(Note note : notes){
-            note.setNoteDate();
-            note.setNoteTime();
+            User owner = userRepository.findById((long) note.getUserId()).get();
+            note.setNoteDate(localTimezone, owner.getTimezone());
+            note.setNoteTime(localTimezone, owner.getTimezone());
         }
         return notes;
     }
 
     //Zwróć notki po id kalendarza
-    public List<Note> loadNotesByCalendarId(int id){
+    public List<Note> loadNotesByCalendarId(int id, String timezone){
         List<Note> notes = noteRepository.findAllByCalendarId(id);
         for(Note note : notes){
-            note.setNoteDate();
-            note.setNoteTime();
+            User owner = userRepository.findById((long) note.getUserId()).get();
+            note.setNoteDate(timezone, owner.getTimezone());
+            note.setNoteTime(timezone, owner.getTimezone());
         }
         return notes;
     }

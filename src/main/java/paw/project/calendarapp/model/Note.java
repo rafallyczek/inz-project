@@ -6,6 +6,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 @Entity
 @Data
@@ -29,13 +31,17 @@ public class Note {
     private String time;
 
     //Ustaw datę
-    public void setNoteDate(){
-        this.date = dateTime.toLocalDate();
+    public void setNoteDate(String localTimezone, String ownerTimezone){
+        ZonedDateTime ownerDateTime = this.dateTime.atZone(ZoneId.of(ownerTimezone));
+        ZonedDateTime localDateTime = ownerDateTime.withZoneSameInstant(ZoneId.of(localTimezone));
+        this.date = localDateTime.toLocalDate();
     }
 
     //Ustaw czas
-    public void setNoteTime(){
-        this.time = dateTime.toLocalTime().toString();
+    public void setNoteTime(String localTimezone, String ownerTimezone){
+        ZonedDateTime ownerDateTime = this.dateTime.atZone(ZoneId.of(ownerTimezone));
+        ZonedDateTime localDateTime = ownerDateTime.withZoneSameInstant(ZoneId.of(localTimezone));
+        this.time = localDateTime.toLocalTime().toString();
     }
 
 }

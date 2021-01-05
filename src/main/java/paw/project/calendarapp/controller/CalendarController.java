@@ -13,6 +13,7 @@ import paw.project.calendarapp.model.Note;
 import paw.project.calendarapp.model.User;
 import paw.project.calendarapp.service.CalendarService;
 import paw.project.calendarapp.service.NoteService;
+import paw.project.calendarapp.service.UserService;
 
 import java.util.List;
 
@@ -23,15 +24,17 @@ public class CalendarController {
     private Calendar calendar;
     private NoteService noteService;
     private CalendarService calendarService;
+    private UserService userService;
     private int calendarId;
     private int dayNumber;
 
     //Wstrzykiwanie obiektu Calendar
     @Autowired
-    public CalendarController(Calendar calendar, NoteService noteService, CalendarService calendarService){
+    public CalendarController(Calendar calendar, NoteService noteService, CalendarService calendarService, UserService userService){
         this.calendar = calendar;
         this.noteService = noteService;
         this.calendarService = calendarService;
+        this.userService = userService;
         this.calendarId = -1;
         this.dayNumber = -1;
     }
@@ -59,11 +62,11 @@ public class CalendarController {
 
     //Wyświetl kalendarz
     @GetMapping
-    public String showCalendar(){
+    public String showCalendar(@AuthenticationPrincipal User user){
         if(this.calendarId==-1){
             return "calendar-list";
         }
-        loadNotes(this.calendarId);
+        loadNotes(this.calendarId, user.getTimezone());
         return "calendar";
     }
 
@@ -101,13 +104,14 @@ public class CalendarController {
 
     //Wyświetł formularz edytujący notkę
     @GetMapping("/editNote/{id}")
-    public String showEditNoteForm(@PathVariable Long id, Model model){
+    public String showEditNoteForm(@PathVariable Long id, Model model, @AuthenticationPrincipal User user){
         if(this.dayNumber==-1){
             return "redirect:/calendar";
         }
         Note note = noteService.getNote(id);
-        note.setNoteDate();
-        note.setNoteTime();
+        User owner = userService.getUser((long) note.getUserId());
+        note.setNoteDate(user.getTimezone(), owner.getTimezone());
+        note.setNoteTime(user.getTimezone(), owner.getTimezone());
         UpdateNote updateNote = new UpdateNote();
         updateNote.setNoteId(note.getId());
         updateNote.setTitle(note.getTitle());
@@ -172,8 +176,8 @@ public class CalendarController {
     }
 
     //Wczytaj notki użytkownika i zapisz je do kalendarza
-    public void loadNotes(int id){
-        List<Note> notes = noteService.loadNotesByCalendarId(id);
+    public void loadNotes(int id, String timezone){
+        List<Note> notes = noteService.loadNotesByCalendarId(id, timezone);
         this.calendar.setNotes(notes);
     }
 

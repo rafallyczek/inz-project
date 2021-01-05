@@ -23,7 +23,7 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    //Wyszukiwanie użytkownika
+    //Wyszukiwanie użytkownika po nazwie użytkownika
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
@@ -31,6 +31,11 @@ public class UserService implements UserDetailsService {
             return user;
         }
         throw new UsernameNotFoundException("Nie znaleziono użytkownika: "+username);
+    }
+
+    //Wyszukiwanie użytkownika po id
+    public User getUser(Long id){
+        return userRepository.findById(id).get();
     }
 
     //Sprawdzanie czy stare hasło się zgadza
