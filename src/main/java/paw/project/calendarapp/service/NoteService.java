@@ -4,13 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import paw.project.calendarapp.TO.AddNote;
 import paw.project.calendarapp.TO.UpdateNote;
+import paw.project.calendarapp.model.CalendarUser;
 import paw.project.calendarapp.model.Note;
 import paw.project.calendarapp.model.User;
+import paw.project.calendarapp.repository.CalendarUserRepository;
 import paw.project.calendarapp.repository.NoteRepository;
 import paw.project.calendarapp.repository.UserRepository;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,22 +21,24 @@ public class NoteService {
 
     private NoteRepository noteRepository;
     private UserRepository userRepository;
+    private CalendarUserRepository calendarUserRepository;
 
     @Autowired
-    public NoteService(NoteRepository noteRepository, UserRepository userRepository){
+    public NoteService(NoteRepository noteRepository, UserRepository userRepository, CalendarUserRepository calendarUserRepository){
         this.noteRepository = noteRepository;
         this.userRepository = userRepository;
+        this.calendarUserRepository = calendarUserRepository;
     }
 
     //Zwróć notki po id użytkownika
-    public List<Note> loadNotesByUserId(int id, String localTimezone){
-        List<Note> notes = noteRepository.findAllByUserId(id);
-        for(Note note : notes){
-            User owner = userRepository.findById((long) note.getUserId()).get();
-            note.setNoteDate(localTimezone, owner.getTimezone());
-            note.setNoteTime(localTimezone, owner.getTimezone());
+    public List<Note> loadNotesByUserId(int id, String timezone){
+        List<CalendarUser> calendars = calendarUserRepository.findAllByUserId(id);
+        List<Note> allNotes = new ArrayList<>();
+        for(CalendarUser calendar : calendars){
+            List<Note> notes = loadNotesByCalendarId(calendar.getCalendarId(), timezone);
+            allNotes.addAll(notes);
         }
-        return notes;
+        return allNotes;
     }
 
     //Zwróć notki po id kalendarza

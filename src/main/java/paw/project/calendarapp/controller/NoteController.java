@@ -54,7 +54,9 @@ public class NoteController {
 
     //Wyświetl listę notek
     @GetMapping("/list")
-    public String showNoteList(){
+    public String showNoteList(Model model, @AuthenticationPrincipal User user){
+        notes = getAllNotes(user);
+        model.addAttribute("notes", notes);
         return "note-list";
     }
 
