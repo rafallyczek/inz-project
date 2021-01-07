@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>CalendarApp</title>
+    <link rel="stylesheet" type="text/css" th:href="${#themes.code('styleSheet')}">
+    <link rel="stylesheet" type="text/css" href="/styles/task-notes.css">
+    <link rel="stylesheet" type="text/css" href="/fontello/css/fontello.css">
+</head>
+<body>
+
+    <!--Pasek górny-->
+    <div class="userBar">
+        <form class="themeForm" method="POST" th:action="@{/theme}" name="themeForm" id="themeForm">
+            <span>Preferencje:</span>
+            <select id="theme" name="theme" onchange="submitForm()">
+                <option value="" disabled selected>Wybierz motyw</option>
+                <option value="light">Jasny</option>
+                <option value="dark">Ciemny</option>
+            </select>
+        </form>
+        <div class="bar" sec:authorize="isAuthenticated()">
+            <span>Użytkownik:</span>
+            <a sec:authentication="name" th:href="@{/user}"></a>
+            <form method="POST" th:action="@{/logout}">
+                <input class="logout" type="submit" value="Wyloguj">
+            </form>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+
+    <div class="header">
+        <h1>CalendarApp</h1>
+    </div>
+
+    <div class="navBar">
+        <div class="nav">
+            <a th:href="@{/}">Strona główna</a>
+            <a th:href="@{/calendar/list}">Kalendarze</a>
+            <a th:href="@{/notes/list}">Lista notek</a>
+        </div>
+    </div>
+
+    <div class="dayHeader">
+        <p class="date" th:text="${dayNumber}+' '+${calendar.monthName}+' '+${calendar.year}"></p>
+    </div>
+
+    <div class="container">
+
+        <div class="day">
+
+            <!-- Przejście do zwykłych notek -->
+            <a class="normalNoteButton" th:href="@{/calendar/normalNotes}">Zwykłe notki</a>
+            <!-- Przejście do formularza dodania notki -->
+            <a class="addButton" th:href="@{/calendar/addNote}">Dodaj notkę</a>
+            <div style="clear: both"></div>
+
+            <div class="note" th:each="note : ${calendar.notes}" th:if="${note.date.isEqual(#temporals.create(calendar.year,calendar.month,dayNumber))}">
+
+                <div class="noteHeader" th:inline="text">
+                    [[${note.title}]] | [[${note.time}]]
+
+                    <a th:href="@{/notes/delete/{id}(id=${note.id})}" class="deleteButton">
+                        <i class="icon-cancel">
+                            <span class="tooltip">Usuń notkę</span>
+                        </i>
+                    </a>
+                    <!-- Przejście do formularza edycji notki -->
+                    <a th:href="@{/calendar/editNote/{id}(id=${note.id})}" class="editButton">
+                        <i class="icon-pencil">
+                            <span class="tooltip">Edytuj notkę</span>
+                        </i>
+                    </a>
+                </div>
+
+                <div class="noteBody" th:text="${note.content}"></div>
+
+            </div>
+            <!--Powrót do kalendarza-->
+            <a th:href="@{/calendar}">Powrót do kalendarza</a>
+        </div>
+
+    </div>
+    <script type="text/javascript">
+        function submitForm() {
+            document.getElementById("themeForm").submit();
+        }
+    </script>
+</body>
+</html>

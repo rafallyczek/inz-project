@@ -79,20 +79,29 @@ public class CalendarController {
         return "redirect:/calendar";
     }
 
-    //Wyświetl szczegóły dnia
-    @GetMapping("/day")
-    public String showDay(){
+    //Wyświetl szczegóły dnia (zwykłe notki)
+    @GetMapping("/normalNotes")
+    public String showNormalNotes(){
         if(this.dayNumber==-1){
             return "redirect:/calendar";
         }
-        return "day";
+        return "normal-notes";
+    }
+
+    //Wyświetl szczegóły dnia (notki-zadania)
+    @GetMapping("/taskNotes")
+    public String showTaskNotes(){
+        if(this.dayNumber==-1){
+            return "redirect:/calendar";
+        }
+        return "task-notes";
     }
 
     //Ustaw numer dnia
     @PostMapping("/setDayNumber")
     public String setDayNumber(@RequestParam int dayNumber){
         this.dayNumber = dayNumber;
-        return "redirect:/calendar/day";
+        return "redirect:/calendar/normalNotes";
     }
 
     //Wyświetl formularz dodający notkę

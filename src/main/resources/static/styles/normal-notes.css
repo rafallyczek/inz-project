@@ -1,0 +1,208 @@
+body{
+    margin: 0;
+}
+.header{
+    width: 100%;
+    background-color: cornflowerblue;
+    color: white;
+    padding: 10px;
+}
+.dayHeader{
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 980px;
+    background-color: darkgray;
+    padding: 10px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
+    -moz-box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
+    box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
+}
+.container{
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1180px;
+    background-color: darkgray;
+    padding: 10px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
+    -moz-box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
+    box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
+}
+.note{
+    padding: 5px;
+    background-color: lightblue;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+.noteHeader{
+    font-weight: bold;
+    padding: 5px;
+    border-bottom: 1px solid lightcyan;
+    position: relative;
+}
+.noteBody{
+    padding: 5px;
+}
+h1{
+    text-align: center;
+    font-size: 50px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.date{
+    font-size: 50px;
+    text-align: center;
+    margin: 0;
+}
+.day{
+    padding: 5px 10px;
+}
+.deleteButton{
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #2e2ed1;
+}
+.deleteButton:hover{
+    color: #2525a7;
+}
+.editButton{
+    position: absolute;
+    top: 0;
+    right: 25px;
+    color: #2e2ed1;
+}
+.editButton:hover{
+    color: #2525a7;
+}
+.tooltip{
+    visibility: hidden;
+    position: absolute;
+    bottom: 120%;
+    right: -30px;
+    background-color: grey;
+    color: white;
+    text-align: center;
+    width: 80px;
+    padding: 5px;
+    border-radius: 5px;
+}
+.icon-cancel .tooltip::after{
+    content: "";
+    position: absolute;
+    top: 100%;
+    right: 40px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: grey transparent transparent transparent;
+}
+.icon-cancel:hover .tooltip{
+    visibility: visible;
+}
+.icon-pencil .tooltip::after{
+    content: "";
+    position: absolute;
+    top: 100%;
+    right: 40px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: grey transparent transparent transparent;
+}
+.icon-pencil:hover .tooltip{
+    visibility: visible;
+}
+.navBar{
+    margin: 0 auto 10px auto;
+    background-color: cornflowerblue;
+    width: 100%;
+    font-size: 0;
+    text-align: center;
+}
+.nav{
+    margin-left: auto;
+    margin-right: auto;
+    display: inline-block;
+}
+.navBar a{
+    display: inline-block;
+    padding: 5px 10px;
+    color: white;
+    font-size: 20px;
+    text-decoration: none;
+}
+.userBar{
+    width: 100%;
+    height: 25px;
+    padding: 5px;
+    position: relative;
+}
+.bar{
+    position: absolute;
+    right: 15px;
+}
+.themeForm{
+    position: absolute;
+    left: 5px;
+}
+.themeForm select{
+    height: 25px;
+}
+.bar form, .bar a{
+    float: left;
+}
+.bar a{
+    margin: 3px 5px 0 5px;
+}
+.bar span{
+    display: block;
+    margin: 3px 0 0 0;
+    float: left;
+}
+.logout{
+    text-decoration: none;
+    color: white;
+    background-color: firebrick;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+}
+.logout:hover{
+    background-color: #d62929;
+    cursor: pointer;
+}
+.addButton{
+    text-decoration: none;
+    color: white;
+    background-color: seagreen;
+    padding: 5px;
+    border-radius: 5px;
+    display: block;
+    font: 400 13.3333px Arial;
+    width: 72px;
+    margin-bottom: 5px;
+    float: left;
+}
+.addButton:hover{
+    background-color: #39ac6b;
+    cursor: pointer;
+}
+.taskNoteButton{
+    text-decoration: none;
+    color: white;
+    background-color: #707070;
+    padding: 5px;
+    border-radius: 5px;
+    display: block;
+    font: 400 13.3333px Arial;
+    width: 82px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    float: left;
+}
+.taskNoteButton:hover{
+    background-color: gray;
+    cursor: pointer;
+}

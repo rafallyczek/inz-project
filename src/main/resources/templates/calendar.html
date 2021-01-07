@@ -67,7 +67,7 @@
             <div class="blankDay" th:if="${calendar.dayOfWeek>1}" th:each="i : ${#numbers.sequence(1,(calendar.dayOfWeek)-1)}"></div>
 
             <!--Generowanie pól z dniami-->
-            <form method="POST" th:id="'day'+${i}" th:each="i : ${#numbers.sequence(1,calendar.daysInMonth)}" th:action="@{/calendar/setDayNumber}" onclick="this.submit()">
+            <form method="POST" th:each="i : ${#numbers.sequence(1,calendar.daysInMonth)}" th:action="@{/calendar/setDayNumber}" onclick="this.submit()">
                 <input id="dayNumber" type="hidden" th:value="${i}" name="dayNumber">
                 <div class="day" th:inline="text">
                     [[${i}]]

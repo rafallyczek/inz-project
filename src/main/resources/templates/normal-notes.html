@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>CalendarApp</title>
     <link rel="stylesheet" type="text/css" th:href="${#themes.code('styleSheet')}">
-    <link rel="stylesheet" type="text/css" href="/styles/day.css">
+    <link rel="stylesheet" type="text/css" href="/styles/normal-notes.css">
     <link rel="stylesheet" type="text/css" href="/fontello/css/fontello.css">
 </head>
 <body>
@@ -48,8 +48,12 @@
     <div class="container">
 
         <div class="day">
+
+            <!-- Przejście do notek-zadań -->
+            <a class="taskNoteButton" th:href="@{/calendar/taskNotes}">Notki-zadania</a>
             <!-- Przejście do formularza dodania notki -->
             <a class="addButton" th:href="@{/calendar/addNote}">Dodaj notkę</a>
+            <div style="clear: both"></div>
 
             <div class="note" th:each="note : ${calendar.notes}" th:if="${note.date.isEqual(#temporals.create(calendar.year,calendar.month,dayNumber))}">
 
