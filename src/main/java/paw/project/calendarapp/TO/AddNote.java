@@ -11,5 +11,14 @@ public class AddNote {
     private String date;
     private String time;
     private Integer calendarId;
+    private boolean isTask;
+
+    public void setIsTask(boolean isTask){
+        this.isTask = isTask;
+    }
+
+    public boolean getIsTask(){
+        return  this.isTask;
+    }
 
 }

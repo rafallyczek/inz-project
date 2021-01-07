@@ -129,6 +129,7 @@ public class CalendarController {
         updateNote.setContent(note.getContent());
         updateNote.setDate(note.getDate().toString());
         updateNote.setTime(note.getTime());
+        updateNote.setIsTask(note.isTask());
         model.addAttribute("updateNote", updateNote);
         return "update-note";
     }

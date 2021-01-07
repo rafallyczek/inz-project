@@ -10,5 +10,14 @@ public class UpdateNote {
     private String content;
     private String date;
     private String time;
+    private boolean isTask;
+
+    public void setIsTask(boolean isTask){
+        this.isTask = isTask;
+    }
+
+    public boolean getIsTask(){
+        return this.isTask;
+    }
 
 }

@@ -64,6 +64,13 @@
                     <label for="time">Czas</label>
                     <input id="time" type="time" th:field="*{time}">
                 </div>
+                <div class="formInputs">
+                    <label for="istask">Typ</label>
+                    <select id="istask" name="istask" th:field="*{isTask}">
+                        <option th:value="false">Zwykła notka</option>
+                        <option th:value="true">Notka-zadanie</option>
+                    </select>
+                </div>
                 <div style="clear: both"></div>
                 <input id="userId" type="hidden" th:field="*{userId}">
                 <input id="date" type="hidden" th:field="*{date}">

@@ -65,6 +65,7 @@ public class NoteService {
         note.setUserId(addNote.getUserId());
         note.setDateTime(toLocalDateTime(addNote.getDate(),addNote.getTime()));
         note.setCalendarId(addNote.getCalendarId());
+        note.setTask(addNote.getIsTask());
         noteRepository.save(note);
     }
 
@@ -74,6 +75,7 @@ public class NoteService {
         note.setDateTime(toLocalDateTime(updateNote.getDate(),updateNote.getTime()));
         note.setTitle(updateNote.getTitle());
         note.setContent(updateNote.getContent());
+        note.setTask(updateNote.getIsTask());
         noteRepository.save(note);
     }
 
