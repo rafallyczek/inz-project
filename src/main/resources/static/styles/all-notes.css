@@ -37,6 +37,9 @@ body{
     border-radius: 5px;
     margin-bottom: 5px;
 }
+.task{
+    color: red;
+}
 .noteHeader{
     font-weight: bold;
     padding: 5px;

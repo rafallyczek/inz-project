@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>CalendarApp</title>
     <link rel="stylesheet" type="text/css" th:href="${#themes.code('styleSheet')}">
-    <link rel="stylesheet" type="text/css" href="/styles/normal-notes.css">
+    <link rel="stylesheet" type="text/css" href="/styles/all-notes.css">
     <link rel="stylesheet" type="text/css" href="/fontello/css/fontello.css">
 </head>
 <body>
@@ -59,7 +59,7 @@
 
                 <div class="noteHeader" th:inline="text">
                     [[${note.title}]] | [[${note.time}]]
-
+                    <span class="task" th:if="${note.isTask()}">Zadanie</span>
                     <a th:href="@{/notes/delete/{id}(id=${note.id})}" class="deleteButton">
                         <i class="icon-cancel">
                             <span class="tooltip">Usuń notkę</span>

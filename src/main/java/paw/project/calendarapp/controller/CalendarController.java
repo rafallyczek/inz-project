@@ -80,12 +80,12 @@ public class CalendarController {
     }
 
     //Wyświetl szczegóły dnia (zwykłe notki)
-    @GetMapping("/normalNotes")
+    @GetMapping("/allNotes")
     public String showNormalNotes(){
         if(this.dayNumber==-1){
             return "redirect:/calendar";
         }
-        return "normal-notes";
+        return "all-notes";
     }
 
     //Wyświetl szczegóły dnia (notki-zadania)
@@ -101,7 +101,7 @@ public class CalendarController {
     @PostMapping("/setDayNumber")
     public String setDayNumber(@RequestParam int dayNumber){
         this.dayNumber = dayNumber;
-        return "redirect:/calendar/normalNotes";
+        return "redirect:/calendar/allNotes";
     }
 
     //Wyświetl formularz dodający notkę
