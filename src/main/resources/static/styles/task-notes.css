@@ -60,11 +60,17 @@ h1{
 .day{
     padding: 5px 10px;
 }
-.day p{
+.taskGrid{
+    float: left;
+    margin: 5px;
+    width: 376.6666px;
+}
+.taskGrid p{
     text-align: center;
+    margin-top: 0;
     margin-bottom: 1px;
 }
-.day hr{
+.taskGrid hr{
     margin-top: 0;
     border: none;
     height: 1px;
