@@ -66,6 +66,11 @@ public class NoteService {
         note.setDateTime(toLocalDateTime(addNote.getDate(),addNote.getTime()));
         note.setCalendarId(addNote.getCalendarId());
         note.setTask(addNote.getIsTask());
+        if(addNote.getIsTask()){
+            note.setStatus("to-do");
+        }else{
+            note.setStatus("-");
+        }
         noteRepository.save(note);
     }
 
@@ -76,6 +81,13 @@ public class NoteService {
         note.setTitle(updateNote.getTitle());
         note.setContent(updateNote.getContent());
         note.setTask(updateNote.getIsTask());
+        if(updateNote.getIsTask()){
+            if(note.getStatus().equals("-")){
+                note.setStatus("to-do");
+            }
+        }else{
+            note.setStatus("-");
+        }
         noteRepository.save(note);
     }
 

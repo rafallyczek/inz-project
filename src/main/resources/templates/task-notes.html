@@ -59,7 +59,7 @@
 
                 <p>Do zrobienia</p>
                 <hr>
-                <div class="note" th:each="note : ${calendar.notes}" th:if="${note.date.isEqual(#temporals.create(calendar.year,calendar.month,dayNumber))}">
+                <div class="note" th:each="note : ${calendar.notes}" th:if="${note.date.isEqual(#temporals.create(calendar.year,calendar.month,dayNumber)) and note.status == 'to-do'}">
 
                     <div class="noteHeader" th:inline="text">
                         [[${note.title}]] | [[${note.time}]]
@@ -86,7 +86,7 @@
 
                 <p>W trakcie</p>
                 <hr>
-                <div class="note" th:each="note : ${calendar.notes}" th:if="${note.date.isEqual(#temporals.create(calendar.year,calendar.month,dayNumber))}">
+                <div class="note" th:each="note : ${calendar.notes}" th:if="${note.date.isEqual(#temporals.create(calendar.year,calendar.month,dayNumber)) and note.status == 'in-progress'}">
 
                     <div class="noteHeader" th:inline="text">
                         [[${note.title}]] | [[${note.time}]]
@@ -113,7 +113,7 @@
 
                 <p>Zakończone</p>
                 <hr>
-                <div class="note" th:each="note : ${calendar.notes}" th:if="${note.date.isEqual(#temporals.create(calendar.year,calendar.month,dayNumber))}">
+                <div class="note" th:each="note : ${calendar.notes}" th:if="${note.date.isEqual(#temporals.create(calendar.year,calendar.month,dayNumber)) and note.status == 'finished'}">
 
                     <div class="noteHeader" th:inline="text">
                         [[${note.title}]] | [[${note.time}]]

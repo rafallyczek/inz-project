@@ -25,6 +25,7 @@ public class Note {
     private LocalDateTime dateTime;
     private Integer calendarId;
     private boolean isTask;
+    private String status;
 
     @Transient
     private LocalDate date;
