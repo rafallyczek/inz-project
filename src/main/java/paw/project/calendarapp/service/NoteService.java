@@ -96,6 +96,13 @@ public class NoteService {
         noteRepository.deleteById(id);
     }
 
+    //Zmień status notki
+    public void changeStatus(Long id, String status){
+        Note note = noteRepository.findById(id).get();
+        note.setStatus(status);
+        noteRepository.save(note);
+    }
+
     //Konwersja daty i czasu na LocalDateTime
     public LocalDateTime toLocalDateTime(String date, String time){
         String dateTimeFormat = "yyyy-MM-dd HH:mm:ss";

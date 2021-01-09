@@ -18,8 +18,10 @@ import paw.project.calendarapp.model.User;
 import paw.project.calendarapp.pdf.Pdf;
 import paw.project.calendarapp.service.CalendarService;
 import paw.project.calendarapp.service.NoteService;
+import paw.project.calendarapp.service.RequestService;
 
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,13 +32,15 @@ public class NoteController {
 
     private NoteService noteService;
     private CalendarService calendarService;
+    private RequestService requestService;
     private List<Note> notes;
 
     //Wstrzykiwanie serwisu
     @Autowired
-    public NoteController(NoteService noteService, CalendarService calendarService){
+    public NoteController(NoteService noteService, CalendarService calendarService, RequestService requestService){
         this.noteService = noteService;
         this.calendarService = calendarService;
+        this.requestService = requestService;
         this.notes = new ArrayList<>();
     }
 
@@ -86,9 +90,30 @@ public class NoteController {
 
     //Usuń notkę
     @RequestMapping("/delete/{id}")
-    public String deleteNote(@PathVariable Long id){
+    public String deleteNote(@PathVariable Long id, HttpServletRequest request){
         noteService.deleteNote(id);
-        return "redirect:/calendar";
+        return "redirect:"+requestService.determineRequestAddress(request);
+    }
+
+    //Zmień status na do zrobienia
+    @GetMapping("/statusToDo/{id}")
+    public String statusToDo(@PathVariable Long id){
+        noteService.changeStatus(id, "to-do");
+        return "redirect:/calendar/taskNotes";
+    }
+
+    //Zmień status na w trakcie
+    @GetMapping("/statusInProgress/{id}")
+    public String statusInProgress(@PathVariable Long id){
+        noteService.changeStatus(id, "in-progress");
+        return "redirect:/calendar/taskNotes";
+    }
+
+    //Zmień status na zakończone
+    @GetMapping("/statusFinished/{id}")
+    public String statusFinished(@PathVariable Long id){
+        noteService.changeStatus(id, "finished");
+        return "redirect:/calendar/taskNotes";
     }
 
     //Wczytaj notki danego kalendarza

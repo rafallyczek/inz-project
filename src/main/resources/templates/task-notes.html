@@ -78,6 +78,10 @@
                     </div>
 
                     <div class="noteBody" th:text="${note.content}"></div>
+                    <p class="status">Zmień status</p>
+                    <hr>
+                    <a th:href="@{/notes/statusInProgress/{id}(id=${note.id})}">W trakcie</a>
+                    <a th:href="@{/notes/statusFinished/{id}(id=${note.id})}">Zakończone</a>
 
                 </div>
 
@@ -105,6 +109,10 @@
                     </div>
 
                     <div class="noteBody" th:text="${note.content}"></div>
+                    <p class="status">Zmień status</p>
+                    <hr>
+                    <a th:href="@{/notes/statusToDo/{id}(id=${note.id})}">Do zrobienia</a>
+                    <a th:href="@{/notes/statusFinished/{id}(id=${note.id})}">Zakończone</a>
 
                 </div>
 
@@ -132,6 +140,10 @@
                     </div>
 
                     <div class="noteBody" th:text="${note.content}"></div>
+                    <p class="status">Zmień status</p>
+                    <hr>
+                    <a th:href="@{/notes/statusInProgress/{id}(id=${note.id})}">W trakcie</a>
+                    <a th:href="@{/notes/statusToDo/{id}(id=${note.id})}">Do zrobienia</a>
 
                 </div>
 

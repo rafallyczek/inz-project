@@ -81,19 +81,21 @@ public class CalendarController {
 
     //Wyświetl szczegóły dnia (zwykłe notki)
     @GetMapping("/allNotes")
-    public String showNormalNotes(){
+    public String showNormalNotes(@AuthenticationPrincipal User user){
         if(this.dayNumber==-1){
             return "redirect:/calendar";
         }
+        loadNotes(this.calendarId, user.getTimezone());
         return "all-notes";
     }
 
     //Wyświetl szczegóły dnia (notki-zadania)
     @GetMapping("/taskNotes")
-    public String showTaskNotes(){
+    public String showTaskNotes(@AuthenticationPrincipal User user){
         if(this.dayNumber==-1){
             return "redirect:/calendar";
         }
+        loadNotes(this.calendarId, user.getTimezone());
         return "task-notes";
     }
 

@@ -76,6 +76,11 @@ h1{
     height: 1px;
     background-color: black;
 }
+.status{
+    text-align: left;
+    margin-top: 0;
+    margin-bottom: 1px;
+}
 .deleteButton{
     position: absolute;
     top: 0;
