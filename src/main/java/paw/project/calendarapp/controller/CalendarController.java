@@ -7,10 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import paw.project.calendarapp.TO.AddNote;
 import paw.project.calendarapp.TO.UpdateNote;
-import paw.project.calendarapp.model.Calendar;
-import paw.project.calendarapp.model.DbCalendar;
-import paw.project.calendarapp.model.Note;
-import paw.project.calendarapp.model.User;
+import paw.project.calendarapp.model.*;
 import paw.project.calendarapp.service.CalendarService;
 import paw.project.calendarapp.service.NoteService;
 import paw.project.calendarapp.service.UserService;
@@ -151,6 +148,37 @@ public class CalendarController {
         DbCalendar dbCalendar = calendarService.getCalendar((long) this.calendarId);
         model.addAttribute("updateCalendar", dbCalendar);
         return "update-calendar";
+    }
+
+    //Wyświetl szczegóły dnia (notki-zadania)
+    @GetMapping("/editCalendarUser")
+    public String showAddUserForm(Model model){
+        if(this.calendarId==-1){
+            return "redirect:/calendar";
+        }
+        List<User> calendarUsers = userService.getAllUsersByCalendarId(this.calendarId);
+        model.addAttribute("calendarUsers", calendarUsers);
+        return "update-calendar-user";
+    }
+
+    //Znajdź użytkowników, których nazwa użytkownika zawiera podaną frazę
+    @PostMapping("/findUsers")
+    public String findUsers(@RequestParam String username, Model model){
+        List<User> searchedUsers = userService.getAllUsersContainingUsername(username);
+        List<User> calendarUsers = userService.getAllUsersByCalendarId(this.calendarId);
+        searchedUsers.removeIf(calendarUsers::contains);
+        model.addAttribute("searchedUsers", searchedUsers);
+        model.addAttribute("calendarUsers", calendarUsers);
+        return "update-calendar-user";
+    }
+
+    @PostMapping("/addUser")
+    public String addCalendarUser(@RequestParam int id){
+        CalendarUser calendarUser = new CalendarUser();
+        calendarUser.setCalendarId(this.calendarId);
+        calendarUser.setUserId(id);
+        calendarService.addCalendarUser(calendarUser);
+        return "redirect:/calendar/editCalendarUser";
     }
 
     //Aktualizuj kalendarz

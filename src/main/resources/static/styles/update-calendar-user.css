@@ -42,17 +42,17 @@ h1{
     text-align: center;
     margin: 0;
 }
-.editCalendarForm{
+.addUserForm{
     padding: 5px;
     margin-left: auto;
     margin-right: auto;
     width: 180px;
 }
-.editCalendarForm p{
+.addUserForm p{
     text-align: center;
     margin-bottom: 1px;
 }
-.editCalendarForm hr{
+.addUserForm hr{
     margin-top: 0;
     border: none;
     height: 1px;
@@ -61,18 +61,31 @@ h1{
 .formInputs{
     margin-bottom: 5px;
 }
-.editCalendarForm form{
+.addUserForm form{
     margin-bottom: 5px;
 }
-.editCalendarForm form > input{
+.addUserForm form > input{
     display: block;
     float: left;
     margin: 5px 5px 0 0;
 }
+.user{
+    padding: 5px;
+    background-color: grey;
+    float: left;
+    text-align: center;
+    margin-bottom: 2px;
+}
+.user p{
+    margin: 0;
+}
+.userAdd{
+    float: left;
+}
 input, label{
     display: block;
 }
-.save{
+.search{
     text-decoration: none;
     color: white;
     background-color: seagreen;
@@ -80,7 +93,7 @@ input, label{
     border-radius: 5px;
     border: none;
 }
-.save:hover{
+.search:hover{
     background-color: #39ac6b;
     cursor: pointer;
 }
@@ -155,7 +168,7 @@ input, label{
     background-color: #d62929;
     cursor: pointer;
 }
-.addButton{
+.editCalendarButton{
     text-decoration: none;
     color: white;
     background-color: seagreen;
@@ -163,11 +176,12 @@ input, label{
     border-radius: 5px;
     display: block;
     font: 400 13.3333px Arial;
-    width: 74px;
+    width: 72px;
     margin-bottom: 5px;
+    text-align: center;
     float: left;
 }
-.addButton:hover{
+.editCalendarButton:hover{
     background-color: #39ac6b;
     cursor: pointer;
 }

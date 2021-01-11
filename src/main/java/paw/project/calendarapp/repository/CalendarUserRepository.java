@@ -11,4 +11,6 @@ public interface CalendarUserRepository extends CrudRepository<CalendarUser,Long
 
     List<CalendarUser> findAllByUserId(int id);
 
+    List<CalendarUser> findAllByCalendarId(int id);
+
 }
