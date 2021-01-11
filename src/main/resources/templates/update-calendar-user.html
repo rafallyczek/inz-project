@@ -51,40 +51,47 @@
 
         <div class="addUserForm">
 
-            <!--Lsita użytkowników kalendarza-->
-            <p>Użytkownicy kalendarza</p>
-            <hr>
-            <div class="user" th:each="user : ${calendarUsers}" style="float: none;">
-                <p th:text="${user.username}"></p>
-            </div>
-            <!--Dodawanie użytkownika do kalendarza-->
-            <p>Znajdź użytkownika</p>
-            <hr>
-            <form method="POST" th:action="@{/calendar/findUsers}">
-                <div class="formInputs">
-                    <label for="username">Nazwa użytkownika</label>
-                    <input id="username" type="text" name="username">
-                </div>
-                <input class="search" type="submit" value="Wyszukaj">
-                <input class="reset" type="reset" value="Resetuj">
-                <div style="clear: both"></div>
-            </form>
-            <!--Lista znalezionych użytkowników-->
-            <p th:if="${!#lists.isEmpty(searchedUsers)}">Znalezieni użytkownicy</p>
-            <hr th:if="${!#lists.isEmpty(searchedUsers)}">
-            <form method="POST" th:each="searchedUser : ${searchedUsers}" th:action="@{/calendar/addUser}">
-                <input id="id" type="hidden" th:value="${searchedUser.id}" name="id">
-                <div class="user">
-                    <p th:text="${searchedUser.username}"></p>
-                </div>
-                <div class="userAdd">
-                    <input type="submit" value="Dodaj">
-                </div>
-                <div style="clear: both"></div>
-            </form>
-            <!--Powrót do szczegółów dnia-->
-            <a th:href="@{/calendar}">Powrót do kalendarza</a>
+            <!--Lista użytkowników kalendarza-->
+            <div class="userGrid">
 
+                <p>Użytkownicy kalendarza</p>
+                <hr>
+                <div class="user" th:each="user : ${calendarUsers}" style="float: none;">
+                    <p th:text="${user.username}"></p>
+                </div>
+
+            </div>
+            <div class="userGrid">
+
+                <!--Wyszukiwanie użytkowników-->
+                <p>Znajdź użytkowników</p>
+                <hr>
+                <form method="POST" th:action="@{/calendar/findUsers}">
+                    <div class="formInputs">
+                        <label for="username">Nazwa użytkownika</label>
+                        <input id="username" type="text" name="username">
+                    </div>
+                    <input class="search" type="submit" value="Wyszukaj">
+                    <input class="reset" type="reset" value="Resetuj">
+                    <div style="clear: both"></div>
+                </form>
+                <!--Lista znalezionych użytkowników-->
+                <p th:if="${!#lists.isEmpty(searchedUsers)}">Znalezieni użytkownicy</p>
+                <hr th:if="${!#lists.isEmpty(searchedUsers)}">
+                <form method="POST" th:each="searchedUser : ${searchedUsers}" th:action="@{/calendar/addUser}">
+                    <input id="id" type="hidden" th:value="${searchedUser.id}" name="id">
+                    <div class="user">
+                        <p th:text="${searchedUser.username}"></p>
+                    </div>
+                    <div class="userAdd">
+                        <input type="submit" value="Dodaj">
+                    </div>
+                    <div style="clear: both"></div>
+                </form>
+            </div>
+            <div style="clear: both"></div>
+            <!--Powrót do kalendarza-->
+            <a th:href="@{/calendar}">Powrót do kalendarza</a>
         </div>
 
     </div>

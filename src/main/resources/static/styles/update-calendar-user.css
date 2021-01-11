@@ -30,6 +30,7 @@ body{
     -webkit-box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
     -moz-box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
     box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
+    position: relative;
 }
 h1{
     text-align: center;
@@ -43,28 +44,30 @@ h1{
     margin: 0;
 }
 .addUserForm{
-    padding: 5px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 180px;
+    padding: 5px 10px;
 }
-.addUserForm p{
+.formInputs{
+    margin-bottom: 5px;
+}
+.userGrid{
+    float: left;
+    margin: 20px 5px 5px 5px;
+    width: 570px;
+}
+.userGrid p{
     text-align: center;
     margin-bottom: 1px;
 }
-.addUserForm hr{
+.userGrid hr{
     margin-top: 0;
     border: none;
     height: 1px;
     background-color: black;
 }
-.formInputs{
+.userGrid form{
     margin-bottom: 5px;
 }
-.addUserForm form{
-    margin-bottom: 5px;
-}
-.addUserForm form > input{
+.userGrid form > input{
     display: block;
     float: left;
     margin: 5px 5px 0 0;
@@ -75,12 +78,15 @@ h1{
     float: left;
     text-align: center;
     margin-bottom: 2px;
+    min-width: 500px;
 }
 .user p{
     margin: 0;
 }
 .userAdd{
     float: left;
+    margin-left: 5px;
+    margin-top: 3px;
 }
 input, label{
     display: block;
@@ -176,10 +182,12 @@ input, label{
     border-radius: 5px;
     display: block;
     font: 400 13.3333px Arial;
-    width: 72px;
+    width: 60px;
     margin-bottom: 5px;
     text-align: center;
-    float: left;
+    position: absolute;
+    top: 10px;
+    left: 10px;
 }
 .editCalendarButton:hover{
     background-color: #39ac6b;

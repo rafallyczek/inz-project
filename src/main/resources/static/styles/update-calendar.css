@@ -30,6 +30,7 @@ body{
     -webkit-box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
     -moz-box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
     box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
+    position: relative;
 }
 h1{
     text-align: center;
@@ -155,7 +156,7 @@ input, label{
     background-color: #d62929;
     cursor: pointer;
 }
-.addButton{
+.editCalendarUserButton{
     text-decoration: none;
     color: white;
     background-color: seagreen;
@@ -165,9 +166,11 @@ input, label{
     font: 400 13.3333px Arial;
     width: 74px;
     margin-bottom: 5px;
-    float: left;
+    position: absolute;
+    top: 10px;
+    left: 10px;
 }
-.addButton:hover{
+.editCalendarUserButton:hover{
     background-color: #39ac6b;
     cursor: pointer;
 }
