@@ -9,6 +9,7 @@ import paw.project.calendarapp.TO.AddNote;
 import paw.project.calendarapp.TO.UpdateNote;
 import paw.project.calendarapp.model.*;
 import paw.project.calendarapp.service.CalendarService;
+import paw.project.calendarapp.service.InvitationService;
 import paw.project.calendarapp.service.NoteService;
 import paw.project.calendarapp.service.UserService;
 
@@ -22,16 +23,18 @@ public class CalendarController {
     private NoteService noteService;
     private CalendarService calendarService;
     private UserService userService;
+    private InvitationService invitationService;
     private int calendarId;
     private int dayNumber;
 
     //Wstrzykiwanie obiektu Calendar
     @Autowired
-    public CalendarController(Calendar calendar, NoteService noteService, CalendarService calendarService, UserService userService){
+    public CalendarController(Calendar calendar, NoteService noteService, CalendarService calendarService, UserService userService, InvitationService invitationService){
         this.calendar = calendar;
         this.noteService = noteService;
         this.calendarService = calendarService;
         this.userService = userService;
+        this.invitationService = invitationService;
         this.calendarId = -1;
         this.dayNumber = -1;
     }
@@ -157,7 +160,9 @@ public class CalendarController {
             return "redirect:/calendar";
         }
         List<User> calendarUsers = userService.getAllUsersByCalendarId(this.calendarId);
+        List<User> invitedUsers = invitationService.getInvitedUsers(this.calendarId);
         model.addAttribute("calendarUsers", calendarUsers);
+        model.addAttribute("invitedUsers", invitedUsers);
         return "update-calendar-user";
     }
 
@@ -166,18 +171,22 @@ public class CalendarController {
     public String findUsers(@RequestParam String username, Model model){
         List<User> searchedUsers = userService.getAllUsersContainingUsername(username);
         List<User> calendarUsers = userService.getAllUsersByCalendarId(this.calendarId);
+        List<User> invitedUsers = invitationService.getInvitedUsers(this.calendarId);
+        searchedUsers.removeIf(invitedUsers::contains);
         searchedUsers.removeIf(calendarUsers::contains);
         model.addAttribute("searchedUsers", searchedUsers);
         model.addAttribute("calendarUsers", calendarUsers);
+        model.addAttribute("invitedUsers", invitedUsers);
         return "update-calendar-user";
     }
 
-    @PostMapping("/addUser")
-    public String addCalendarUser(@RequestParam int id){
-        CalendarUser calendarUser = new CalendarUser();
-        calendarUser.setCalendarId(this.calendarId);
-        calendarUser.setUserId(id);
-        calendarService.addCalendarUser(calendarUser);
+    @PostMapping("/inviteUser")
+    public String inviteUser(@RequestParam int id, @AuthenticationPrincipal User user){
+        Invitation invitation = new Invitation();
+        invitation.setCalendarId(this.calendarId);
+        invitation.setReceiverId(id);
+        invitation.setSenderId(user.getId().intValue());
+        invitationService.addInvitation(invitation);
         return "redirect:/calendar/editCalendarUser";
     }
 

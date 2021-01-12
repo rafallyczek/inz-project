@@ -83,6 +83,9 @@ h1{
 .user p{
     margin: 0;
 }
+.invitation{
+    color: limegreen;
+}
 .userAdd{
     float: left;
     margin-left: 5px;

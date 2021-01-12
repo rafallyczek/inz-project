@@ -56,8 +56,11 @@
 
                 <p>Użytkownicy kalendarza</p>
                 <hr>
-                <div class="user" th:each="user : ${calendarUsers}" style="float: none;">
-                    <p th:text="${user.username}"></p>
+                <div class="user" th:each="calendarUser : ${calendarUsers}" style="float: none;">
+                    <p th:text="${calendarUser.username}"></p>
+                </div>
+                <div class="user" th:each="invitedUser : ${invitedUsers}" style="float: none;">
+                    <p th:inline="text">[[${invitedUser.username}]]<span class="invitation"> (Wysłano zaproszenie)</span></p>
                 </div>
 
             </div>
@@ -78,7 +81,7 @@
                 <!--Lista znalezionych użytkowników-->
                 <p th:if="${!#lists.isEmpty(searchedUsers)}">Znalezieni użytkownicy</p>
                 <hr th:if="${!#lists.isEmpty(searchedUsers)}">
-                <form method="POST" th:each="searchedUser : ${searchedUsers}" th:action="@{/calendar/addUser}">
+                <form method="POST" th:each="searchedUser : ${searchedUsers}" th:action="@{/calendar/inviteUser}">
                     <input id="id" type="hidden" th:value="${searchedUser.id}" name="id">
                     <div class="user">
                         <p th:text="${searchedUser.username}"></p>
