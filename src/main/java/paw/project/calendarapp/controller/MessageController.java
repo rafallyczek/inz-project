@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import paw.project.calendarapp.model.Invitation;
 import paw.project.calendarapp.model.User;
@@ -37,6 +38,20 @@ public class MessageController {
     @GetMapping
     public String messages(){
         return "messages";
+    }
+
+    //Akceptuj zaproszenie
+    @GetMapping("/accept/{id}")
+    public String acceptInvitation(@PathVariable Long id){
+        invitationService.acceptInvitation(id);
+        return "redirect:/messages";
+    }
+
+    //Odrzuć zaproszenie
+    @GetMapping("/reject/{id}")
+    public String rejectInvitation(@PathVariable Long id){
+        invitationService.deleteInvitation(id);
+        return "redirect:/messages";
     }
 
     //Wczytaj zaproszenia użytkownika i zapisz jako atrybut modelu

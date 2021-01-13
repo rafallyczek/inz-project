@@ -49,8 +49,14 @@
 
         <div class="messages">
 
+            <p>Wiadomości</p>
+            <hr>
             <div class="message" th:each="invitation : ${invitations}">
                 <p th:inline="text">Otrzymano zaproszenie do kalendarza: <b>[[${invitation.calendarTitle}]]</b></p>
+                <p th:inline="text">Od użytkownika: <b>[[${invitation.senderName}]]</b></p>
+                <a class="acceptButton" th:href="@{/messages/accept/{id}(id=${invitation.id})}">Akceptuj</a>
+                <a class="rejectButton" th:href="@{/messages/reject/{id}(id=${invitation.id})}">Odrzuć</a>
+                <div style="clear: both;"></div>
             </div>
             <p th:if="${invitations.isEmpty()}" class="noMessages">Nie masz żadnych wiadomości.</p>
 

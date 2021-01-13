@@ -53,6 +53,17 @@ h1{
 .messages{
     padding: 5px 10px;
 }
+.messages > p{
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 1px;
+}
+.messages hr{
+    margin-top: 0;
+    border: none;
+    height: 1px;
+    background-color: black;
+}
 .navBar{
     margin: 0 auto 10px auto;
     background-color: cornflowerblue;
@@ -114,4 +125,37 @@ h1{
 }
 .noMessages{
     text-align: center;
+}
+.acceptButton{
+    text-decoration: none;
+    color: white;
+    background-color: seagreen;
+    padding: 5px;
+    border-radius: 5px;
+    display: block;
+    font: 400 13.3333px Arial;
+    width: 52px;
+    margin-top: 5px;
+    margin-right: 5px;
+    float: left;
+}
+.acceptButton:hover{
+    background-color: #39ac6b;
+    cursor: pointer;
+}
+.rejectButton{
+    text-decoration: none;
+    color: white;
+    background-color: firebrick;
+    padding: 5px;
+    border-radius: 5px;
+    display: block;
+    font: 400 13.3333px Arial;
+    width: 44px;
+    margin-top: 5px;
+    float: left;
+}
+.rejectButton:hover{
+    background-color: #d62929;
+    cursor: pointer;
 }

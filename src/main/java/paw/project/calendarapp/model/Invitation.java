@@ -19,5 +19,7 @@ public class Invitation {
 
     @Transient
     private String calendarTitle;
+    @Transient
+    private String senderName;
 
 }
