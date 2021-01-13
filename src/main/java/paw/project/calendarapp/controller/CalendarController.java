@@ -27,7 +27,7 @@ public class CalendarController {
     private int calendarId;
     private int dayNumber;
 
-    //Wstrzykiwanie obiektu Calendar
+    //Wstrzykiwanie zależności
     @Autowired
     public CalendarController(Calendar calendar, NoteService noteService, CalendarService calendarService, UserService userService, InvitationService invitationService){
         this.calendar = calendar;

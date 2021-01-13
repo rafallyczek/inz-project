@@ -1,0 +1,117 @@
+body{
+    margin: 0;
+}
+.header{
+    width: 100%;
+    background-color: cornflowerblue;
+    color: white;
+    padding: 10px;
+}
+.messagesHeader{
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 980px;
+    background-color: darkgray;
+    padding: 10px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
+    -moz-box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
+    box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
+}
+.container{
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1180px;
+    background-color: darkgray;
+    padding: 10px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
+    -moz-box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
+    box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
+}
+.message{
+    padding: 10px;
+    background-color: grey;
+    margin-bottom: 2px;
+}
+.message p{
+    margin: 0;
+}
+h1{
+    text-align: center;
+    font-size: 50px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.title{
+    font-size: 50px;
+    text-align: center;
+    margin: 0;
+}
+.messages{
+    padding: 5px 10px;
+}
+.navBar{
+    margin: 0 auto 10px auto;
+    background-color: cornflowerblue;
+    width: 100%;
+    font-size: 0;
+    text-align: center;
+}
+.nav{
+    margin-left: auto;
+    margin-right: auto;
+    display: inline-block;
+}
+.navBar a{
+    display: inline-block;
+    padding: 5px 10px;
+    color: white;
+    font-size: 20px;
+    text-decoration: none;
+}
+.userBar{
+    width: 100%;
+    height: 25px;
+    padding: 5px;
+    position: relative;
+}
+.bar{
+    position: absolute;
+    right: 15px;
+}
+.themeForm{
+    position: absolute;
+    left: 5px;
+}
+.themeForm select{
+    height: 25px;
+}
+.bar form, .bar a{
+    float: left;
+}
+.bar a{
+    margin: 3px 5px 0 5px;
+}
+.bar span{
+    display: block;
+    margin: 3px 0 0 0;
+    float: left;
+}
+.logout{
+    text-decoration: none;
+    color: white;
+    background-color: firebrick;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+}
+.logout:hover{
+    background-color: #d62929;
+    cursor: pointer;
+}
+.noMessages{
+    text-align: center;
+}

@@ -19,7 +19,8 @@
             </select>
         </form>
         <div class="bar" sec:authorize="isAuthenticated()">
-            <span>Użytkownik:</span>
+            <a th:href="@{/messages}">Wiadomosci</a>
+            <span>| Użytkownik:</span>
             <a sec:authentication="name" th:href="@{/user}"></a>
             <form method="POST" th:action="@{/logout}">
                 <input class="logout" type="submit" value="Wyloguj">

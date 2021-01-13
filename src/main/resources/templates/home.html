@@ -8,55 +8,56 @@
 </head>
 <body>
 
-<!--Pasek górny-->
-<div class="userBar">
-    <form class="themeForm" method="POST" th:action="@{/theme}" name="themeForm" id="themeForm">
-        <span th:text="#{lang.preferences}"></span>
-        <select id="theme" name="theme" onchange="submitForm()">
-            <option value="" th:text="#{lang.chooseTheme}" disabled selected></option>
-            <option value="light" th:text="#{lang.lightTheme}"></option>
-            <option value="dark" th:text="#{lang.darkTheme}"></option>
-        </select>
-    </form>
-    <div class="bar" sec:authorize="isAuthenticated()">
-        <span th:text="#{lang.user}"></span>
-        <a sec:authentication="name" th:href="@{/user}"></a>
-        <form method="POST" th:action="@{/logout}">
-            <input class="logout" type="submit" th:value="#{lang.logOut}">
+    <!--Pasek górny-->
+    <div class="userBar">
+        <form class="themeForm" method="POST" th:action="@{/theme}" name="themeForm" id="themeForm">
+            <span th:text="#{lang.preferences}"></span>
+            <select id="theme" name="theme" onchange="submitForm()">
+                <option value="" th:text="#{lang.chooseTheme}" disabled selected></option>
+                <option value="light" th:text="#{lang.lightTheme}"></option>
+                <option value="dark" th:text="#{lang.darkTheme}"></option>
+            </select>
         </form>
-        <div style="clear: both;"></div>
+        <div class="bar" sec:authorize="isAuthenticated()">
+            <a th:href="@{/messages}">Wiadomości</a>
+            <span th:inline="text">| [[#{lang.user}]]</span>
+            <a sec:authentication="name" th:href="@{/user}"></a>
+            <form method="POST" th:action="@{/logout}">
+                <input class="logout" type="submit" th:value="#{lang.logOut}">
+            </form>
+            <div style="clear: both;"></div>
+        </div>
+        <div class="barLogin" sec:authorize="!isAuthenticated()">
+            <a class="loginButton" th:href="@{/login}" th:text="#{lang.logging}"></a>
+            <div style="clear: both;"></div>
+        </div>
     </div>
-    <div class="barLogin" sec:authorize="!isAuthenticated()">
-        <a class="loginButton" th:href="@{/login}" th:text="#{lang.logging}"></a>
-        <div style="clear: both;"></div>
+
+    <div class="header">
+        <h1>CalendarApp</h1>
     </div>
-</div>
 
-<div class="header">
-    <h1>CalendarApp</h1>
-</div>
-
-<div class="navBar">
-    <div class="nav">
-        <a th:href="@{/}" th:text="#{lang.mainPage}"></a>
-        <a th:href="@{/calendar/list}" th:text="#{lang.calendars}"></a>
-        <a th:href="@{/notes/list}" th:text="#{lang.noteList}"></a>
+    <div class="navBar">
+        <div class="nav">
+            <a th:href="@{/}" th:text="#{lang.mainPage}"></a>
+            <a th:href="@{/calendar/list}" th:text="#{lang.calendars}"></a>
+            <a th:href="@{/notes/list}" th:text="#{lang.noteList}"></a>
+        </div>
     </div>
-</div>
 
-<div class="homeHeader">
-    <p class="title" th:text="#{lang.mainPage}"></p>
-</div>
+    <div class="homeHeader">
+        <p class="title" th:text="#{lang.mainPage}"></p>
+    </div>
 
-<div class="container">
+    <div class="container">
 
-    <p class="hello" th:text="#{lang.greeting}"></p>
+        <p class="hello" th:text="#{lang.greeting}"></p>
 
-</div>
-<script type="text/javascript">
-    function submitForm() {
-        document.getElementById("themeForm").submit();
-    }
-</script>
+    </div>
+    <script type="text/javascript">
+        function submitForm() {
+            document.getElementById("themeForm").submit();
+        }
+    </script>
 </body>
 </html>

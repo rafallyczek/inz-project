@@ -1,8 +1,10 @@
 package paw.project.calendarapp.service;
 
 import org.springframework.stereotype.Service;
+import paw.project.calendarapp.model.DbCalendar;
 import paw.project.calendarapp.model.Invitation;
 import paw.project.calendarapp.model.User;
+import paw.project.calendarapp.repository.CalendarRepository;
 import paw.project.calendarapp.repository.InvitationRepository;
 import paw.project.calendarapp.repository.UserRepository;
 
@@ -14,10 +16,12 @@ public class InvitationService {
 
     private InvitationRepository invitationRepository;
     private UserRepository userRepository;
+    private CalendarRepository calendarRepository;
 
-    public InvitationService(InvitationRepository invitationRepository, UserRepository userRepository){
+    public InvitationService(InvitationRepository invitationRepository, UserRepository userRepository, CalendarRepository calendarRepository){
         this.invitationRepository = invitationRepository;
         this.userRepository = userRepository;
+        this.calendarRepository = calendarRepository;
     }
 
     //Dodaj zaproszenie
@@ -27,7 +31,12 @@ public class InvitationService {
 
     //Zwróć zaproszenia po id użytkownika
     public List<Invitation> getInvitationsByUserId(int id){
-        return invitationRepository.findAllByReceiverId(id);
+        List<Invitation> invitations = invitationRepository.findAllByReceiverId(id);
+        for(Invitation invitation : invitations){
+            DbCalendar dbCalendar = calendarRepository.findById((long) invitation.getCalendarId()).get();
+            invitation.setCalendarTitle(dbCalendar.getTitle());
+        }
+        return invitations;
     }
 
     //Zwróć zaproszenia po id kalendarza
