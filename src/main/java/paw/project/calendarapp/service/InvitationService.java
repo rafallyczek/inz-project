@@ -10,6 +10,7 @@ import paw.project.calendarapp.repository.CalendarUserRepository;
 import paw.project.calendarapp.repository.InvitationRepository;
 import paw.project.calendarapp.repository.UserRepository;
 
+import javax.mail.MessagingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,16 +21,23 @@ public class InvitationService {
     private UserRepository userRepository;
     private CalendarRepository calendarRepository;
     private CalendarUserRepository calendarUserRepository;
+    private EmailService emailService;
 
-    public InvitationService(InvitationRepository invitationRepository, UserRepository userRepository, CalendarRepository calendarRepository, CalendarUserRepository calendarUserRepository){
+    public InvitationService(InvitationRepository invitationRepository, UserRepository userRepository, CalendarRepository calendarRepository, CalendarUserRepository calendarUserRepository, EmailService emailService){
         this.invitationRepository = invitationRepository;
         this.userRepository = userRepository;
         this.calendarRepository = calendarRepository;
         this.calendarUserRepository = calendarUserRepository;
+        this.emailService = emailService;
     }
 
     //Dodaj zaproszenie
-    public void addInvitation(Invitation invitation){
+    public void addInvitation(Invitation invitation) throws MessagingException {
+        User user = userRepository.findById((long) invitation.getReceiverId()).get();
+        DbCalendar dbCalendar = calendarRepository.findById((long) invitation.getCalendarId()).get();
+        emailService.sendEmail(user.getEmail(),"Zaproszenie","<p>Otrzymano zaproszenie do kalendarza: <b>"+dbCalendar.getTitle()+"</b></p>" +
+                "<p>Od użytkownika: <b>"+user.getUsername()+"</b></p>" +
+                "<a href='https://localhost:8443/messages'>Zobacz zaproszenie</a>");
         invitationRepository.save(invitation);
     }
 

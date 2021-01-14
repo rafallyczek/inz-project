@@ -13,6 +13,7 @@ import paw.project.calendarapp.service.InvitationService;
 import paw.project.calendarapp.service.NoteService;
 import paw.project.calendarapp.service.UserService;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 @Controller
@@ -181,7 +182,7 @@ public class CalendarController {
     }
 
     @PostMapping("/inviteUser")
-    public String inviteUser(@RequestParam int id, @AuthenticationPrincipal User user){
+    public String inviteUser(@RequestParam int id, @AuthenticationPrincipal User user) throws MessagingException {
         Invitation invitation = new Invitation();
         invitation.setCalendarId(this.calendarId);
         invitation.setReceiverId(id);
