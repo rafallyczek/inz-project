@@ -28,12 +28,6 @@ public class EmailService{
         helper.setSubject(subject);
         helper.setText(text,true);
         javaMailSender.send(msg);
-//        SimpleMailMessage message = new SimpleMailMessage();
-//        message.setFrom("noreply@calendarapp.com");
-//        message.setTo(to);
-//        message.setSubject(subject);
-//        message.setText(text);
-//        javaMailSender.send(message);
     }
 
 }
