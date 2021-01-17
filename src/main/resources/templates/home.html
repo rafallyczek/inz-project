@@ -5,8 +5,27 @@
     <title>CalendarApp</title>
     <link rel="stylesheet" type="text/css" th:href="${#themes.code('styleSheet')}">
     <link rel="stylesheet" type="text/css" href="/styles/home.css">
+    <script src="/js/sockjs.js"></script>
+    <script src="/js/stomp.js"></script>
+    <script type="text/javascript">
+        var stompClient = null;
+        function connect(){
+            var socket = new SockJS('/websocket');
+            stompClient = Stomp.over(socket);
+            stompClient.connect({}, function(frame){
+                stompClient.subscribe('/user/queue/message',function(message){
+                    console.log(message);
+                });
+            });
+        }
+        function disconnect(){
+            if(stompClient!=null){
+                stompClient.disconnect();
+            }
+        }
+    </script>
 </head>
-<body>
+<body onload="connect()">
 
     <!--Pasek górny-->
     <div class="userBar">
@@ -23,7 +42,7 @@
             <span th:inline="text">| [[#{lang.user}]]</span>
             <a sec:authentication="name" th:href="@{/user}"></a>
             <form method="POST" th:action="@{/logout}">
-                <input class="logout" type="submit" th:value="#{lang.logOut}">
+                <input class="logout" type="submit" th:value="#{lang.logOut}" onclick="disconnect()">
             </form>
             <div style="clear: both;"></div>
         </div>
