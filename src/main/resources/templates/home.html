@@ -14,7 +14,7 @@
             stompClient = Stomp.over(socket);
             stompClient.connect({}, function(frame){
                 stompClient.subscribe('/user/queue/message',function(message){
-                    console.log(message);
+                    showMessage(JSON.parse(message.body));
                 });
             });
         }
@@ -22,6 +22,13 @@
             if(stompClient!=null){
                 stompClient.disconnect();
             }
+        }
+        function showMessage(message){
+            document.getElementById("wsMessageTitle").innerText = message.title;
+            document.getElementById("wsMessageContent").innerHTML = "Nadchodzące wydarzenie: <span style='font-weight: bold'>"+message.content+"</span>";
+            document.getElementById("wsMessageDate").innerHTML = "Data: <span style='text-decoration: underline'>"+message.date+"</span>";
+            document.getElementById("wsMessageTime").innerHTML = "Godzina: <span style='text-decoration: underline'>"+message.time+"</span>";
+            document.getElementById("wsMessage").style.display = "block";
         }
     </script>
 </head>
@@ -73,6 +80,14 @@
         <p class="hello" th:text="#{lang.greeting}"></p>
 
     </div>
+
+    <div id="wsMessage">
+        <p id="wsMessageTitle"></p>
+        <p id="wsMessageContent"></p>
+        <p id="wsMessageDate"></p>
+        <p id="wsMessageTime"></p>
+    </div>
+
     <script type="text/javascript">
         function submitForm() {
             document.getElementById("themeForm").submit();

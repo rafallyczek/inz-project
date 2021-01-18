@@ -117,3 +117,26 @@ h1{
     background-color: #39ac6b;
     cursor: pointer;
 }
+#wsMessage{
+    display: none;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 200px;
+    height: 130px;
+    background-color: gray;
+}
+#wsMessage p{
+    margin-bottom: 0;
+    margin-top: 5px;
+}
+#wsMessageDate, #wsMessageTime{
+    margin-left: 10px;
+}
+#wsMessageTitle{
+    text-align: center;
+    font-weight: bold;
+}
+#wsMessageContent{
+    text-align: center;
+}

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import paw.project.calendarapp.model.Reminder;
 import paw.project.calendarapp.model.Note;
 import paw.project.calendarapp.model.User;
 import paw.project.calendarapp.repository.NoteRepository;
@@ -49,7 +50,8 @@ public class ReminderService {
                     emailService.sendEmail(user.getEmail(),"Wydarzenie","<p>Przypomnienie o nadchodzącym wydarzeniu.</p><p>Wydarzenie: <b>" +
                             note.getTitle()+"</b></p>"+"<p>Opis: <b>"+note.getContent()+"</b></p><p>Zaplanowano na: <b>"+localDateTime.toLocalDate().toString() +
                             "</b>, godzina: <b>"+localDateTime.toLocalTime().toString()+"</b></p>");
-                    template.convertAndSendToUser(user.getUsername(),"/queue/message","Wiadomość");
+                    template.convertAndSendToUser(user.getUsername(),"/queue/message", new Reminder("Powiadomienie",
+                            note.getTitle(),localDateTime.toLocalDate().toString(),localDateTime.toLocalTime().toString()));
                 }
             }
         }
