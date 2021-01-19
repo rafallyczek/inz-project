@@ -22,11 +22,11 @@ function showMessage(message){
     wsMessage.style.display = "block";
     var styles = window.getComputedStyle(wsMessage);
     var bottom = parseInt(styles.getPropertyValue("bottom"),10);
-    if(bottom!==0){
+    if(bottom!==10){
         var interval = setInterval(move,5);
     }
     function move(){
-        if(bottom!==0){
+        if(bottom!==10){
             bottom++;
             wsMessage.style.bottom = bottom+"px";
         }else{

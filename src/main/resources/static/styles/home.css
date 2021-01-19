@@ -117,18 +117,60 @@ h1{
     background-color: #39ac6b;
     cursor: pointer;
 }
+@keyframes blink {
+    0% {-webkit-box-shadow: 0 0 15px 1px rgba(0,0,0,1);
+        -moz-box-shadow: 0 0 15px 1px rgba(0,0,0,1);
+        box-shadow: 0 0 15px 1px rgba(0,0,0,1);}
+    10% {-webkit-box-shadow: 0 0 15px 1px rgba(0,0,0,0.9);
+        -moz-box-shadow: 0 0 15px 1px rgba(0,0,0,0.9);
+        box-shadow: 0 0 15px 1px rgba(0,0,0,0.9);}
+    20% {-webkit-box-shadow: 0 0 15px 1px rgba(0,0,0,0.8);
+        -moz-box-shadow: 0 0 15px 1px rgba(0,0,0,0.8);
+        box-shadow: 0 0 15px 1px rgba(0,0,0,0.8);}
+    30% {-webkit-box-shadow: 0 0 15px 1px rgba(0,0,0,0.7);
+        -moz-box-shadow: 0 0 15px 1px rgba(0,0,0,0.7);
+        box-shadow: 0 0 15px 1px rgba(0,0,0,0.7);}
+    40% {-webkit-box-shadow: 0 0 15px 1px rgba(0,0,0,0.6);
+        -moz-box-shadow: 0 0 15px 1px rgba(0,0,0,0.6);
+        box-shadow: 0 0 15px 1px rgba(0,0,0,0.6);}
+    50% {-webkit-box-shadow: 0 0 15px 1px rgba(0,0,0,0.5);
+        -moz-box-shadow: 0 0 15px 1px rgba(0,0,0,0.5);
+        box-shadow: 0 0 15px 1px rgba(0,0,0,0.5);}
+    60% {-webkit-box-shadow: 0 0 15px 1px rgba(0,0,0,0.4);
+        -moz-box-shadow: 0 0 15px 1px rgba(0,0,0,0.4);
+        box-shadow: 0 0 15px 1px rgba(0,0,0,0.4);}
+    70% {-webkit-box-shadow: 0 0 15px 1px rgba(0,0,0,0.3);
+        -moz-box-shadow: 0 0 15px 1px rgba(0,0,0,0.3);
+        box-shadow: 0 0 15px 1px rgba(0,0,0,0.3);}
+    80% {-webkit-box-shadow: 0 0 15px 1px rgba(0,0,0,0.2);
+        -moz-box-shadow: 0 0 15px 1px rgba(0,0,0,0.2);
+        box-shadow: 0 0 15px 1px rgba(0,0,0,0.2);}
+    90% {-webkit-box-shadow: 0 0 15px 1px rgba(0,0,0,0.1);
+        -moz-box-shadow: 0 0 15px 1px rgba(0,0,0,0.1);
+        box-shadow: 0 0 15px 1px rgba(0,0,0,0.1);}
+    100% {-webkit-box-shadow: 0 0 15px 1px rgba(0,0,0,0);
+        -moz-box-shadow: 0 0 15px 1px rgba(0,0,0,0);
+        box-shadow: 0 0 15px 1px rgba(0,0,0,0);}
+}
 #wsMessage{
     display: none;
     position: fixed;
     bottom: -130px;
-    right: 0;
+    right: 10px;
     width: 200px;
     height: 130px;
     background-color: darkgray;
+    border-radius: 5px;
+    animation: blink 1s infinite;
+    cursor: pointer;
+}
+#wsMessage:hover{
+    animation: none;
 }
 #wsMessage p{
     margin-bottom: 0;
     margin-top: 5px;
+    cursor: pointer;
 }
 #wsMessageDate, #wsMessageTime{
     margin-left: 10px;
