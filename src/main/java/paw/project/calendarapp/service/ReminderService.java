@@ -46,7 +46,7 @@ public class ReminderService {
                 ZonedDateTime now = ZonedDateTime.now(ZoneId.of(user.getTimezone()));
                 Duration duration = Duration.between(now, localDateTime);
                 //Czy w przeciągu 30 minut jest jakieś wydarzenie
-                if(!duration.isNegative() && duration.toMinutes()<30){
+                if(!duration.isNegative() && duration.toMinutes()<user.getReminderTime()){
                     emailService.sendEmail(user.getEmail(),"Wydarzenie","<p>Przypomnienie o nadchodzącym wydarzeniu.</p><p>Wydarzenie: <b>" +
                             note.getTitle()+"</b></p>"+"<p>Opis: <b>"+note.getContent()+"</b></p><p>Zaplanowano na: <b>"+localDateTime.toLocalDate().toString() +
                             "</b>, godzina: <b>"+localDateTime.toLocalTime().toString()+"</b></p>");

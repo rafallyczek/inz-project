@@ -7,10 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import paw.project.calendarapp.TO.Register;
-import paw.project.calendarapp.TO.UpdateEmail;
-import paw.project.calendarapp.TO.UpdatePassword;
-import paw.project.calendarapp.TO.UpdateTimezone;
+import paw.project.calendarapp.TO.*;
 import paw.project.calendarapp.model.User;
 import paw.project.calendarapp.repository.UserRepository;
 import paw.project.calendarapp.service.UserService;
@@ -59,9 +56,14 @@ public class UserController {
             updateTimezone.setUserId(loggedUser.getId());
             updateTimezone.setTimezone(loggedUser.getTimezone());
 
+            UpdateReminderTime updateReminderTime = new UpdateReminderTime();
+            updateReminderTime.setUserId(loggedUser.getId());
+            updateReminderTime.setReminderTime(loggedUser.getReminderTime());
+
             model.addAttribute("updateEmail", updateEmail);
             model.addAttribute("updatePassword", updatePassword);
             model.addAttribute("updateTimezone", updateTimezone);
+            model.addAttribute("updateReminderTime", updateReminderTime);
         }
         model.addAttribute("register", new Register());
         model.addAttribute("zones", zones);
@@ -85,7 +87,7 @@ public class UserController {
         if(errors.hasErrors()){
             return "register";
         }
-        User newUser = new User(register.getUsername(),passwordEncoder.encode(register.getPassword()),register.getEmail(),register.getTimezone());
+        User newUser = new User(register.getUsername(),passwordEncoder.encode(register.getPassword()),register.getEmail(),register.getTimezone(),30);
         userRepository.save(newUser);
         return "redirect:/login";
     }
@@ -122,6 +124,15 @@ public class UserController {
     public String updateTimezone(@ModelAttribute("updateTimezone") UpdateTimezone updateTimezone){
         User updateUser = userRepository.findById(updateTimezone.getUserId()).get();
         updateUser.setTimezone(updateTimezone.getTimezone());
+        userRepository.save(updateUser);
+        return "redirect:/user";
+    }
+
+    //Aktualizuj czas przypomnienia
+    @PostMapping("/updateReminderTime")
+    public String updateReminderTime(@ModelAttribute("updateReminderTime") UpdateReminderTime updateReminderTime){
+        User updateUser = userRepository.findById(updateReminderTime.getUserId()).get();
+        updateUser.setReminderTime(updateReminderTime.getReminderTime());
         userRepository.save(updateUser);
         return "redirect:/user";
     }

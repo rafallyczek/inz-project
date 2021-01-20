@@ -26,13 +26,15 @@ public class User implements UserDetails {
     private String password;
     private String email;
     private String timezone;
+    private Integer reminderTime;
 
     //Konstruktor parametrowy
-    public User(String username, String password, String email, String timezone) {
+    public User(String username, String password, String email, String timezone, Integer reminderTime) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.timezone = timezone;
+        this.reminderTime = reminderTime;
     }
 
     //Metody interfejsu UserDetails

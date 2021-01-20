@@ -8,109 +8,128 @@
 </head>
 <body>
 
-<!--Pasek górny-->
-<div class="userBar">
-    <form class="themeForm" method="POST" th:action="@{/theme}" name="themeForm" id="themeForm">
-        <span>Preferencje:</span>
-        <select id="theme" name="theme" onchange="submitForm()">
-            <option value="" disabled selected>Wybierz motyw</option>
-            <option value="light">Jasny</option>
-            <option value="dark">Ciemny</option>
-        </select>
-    </form>
-    <div class="bar" sec:authorize="isAuthenticated()">
-        <a th:href="@{/messages}">Wiadomości</a>
-        <span>| Użytkownik:</span>
-        <a sec:authentication="name" th:href="@{/user}"></a>
-        <form method="POST" th:action="@{/logout}">
-            <input class="logout" type="submit" value="Wyloguj">
+    <!--Pasek górny-->
+    <div class="userBar">
+        <form class="themeForm" method="POST" th:action="@{/theme}" name="themeForm" id="themeForm">
+            <span>Preferencje:</span>
+            <select id="theme" name="theme" onchange="submitForm()">
+                <option value="" disabled selected>Wybierz motyw</option>
+                <option value="light">Jasny</option>
+                <option value="dark">Ciemny</option>
+            </select>
         </form>
-        <div style="clear: both;"></div>
+        <div class="bar" sec:authorize="isAuthenticated()">
+            <a th:href="@{/messages}">Wiadomości</a>
+            <span>| Użytkownik:</span>
+            <a sec:authentication="name" th:href="@{/user}"></a>
+            <form method="POST" th:action="@{/logout}">
+                <input class="logout" type="submit" value="Wyloguj">
+            </form>
+            <div style="clear: both;"></div>
+        </div>
     </div>
-</div>
 
-<div class="header">
-    <h1>CalendarApp</h1>
-</div>
-
-<div class="navBar">
-    <div class="nav">
-        <a th:href="@{/}">Strona główna</a>
-        <a th:href="@{/calendar/list}">Kalendarze</a>
-        <a th:href="@{/notes/list}">Lista notek</a>
+    <div class="header">
+        <h1>CalendarApp</h1>
     </div>
-</div>
 
-<div class="userHeader">
-    <p class="title">Szczegóły konta</p>
-</div>
+    <div class="navBar">
+        <div class="nav">
+            <a th:href="@{/}">Strona główna</a>
+            <a th:href="@{/calendar/list}">Kalendarze</a>
+            <a th:href="@{/notes/list}">Lista notek</a>
+        </div>
+    </div>
 
-<div class="container">
+    <div class="userHeader">
+        <p class="title">Szczegóły konta</p>
+    </div>
 
-    <div class="userForm">
+    <div class="container">
 
-        <p>Zmień email</p>
-        <hr>
-        <form method="POST" th:action="@{/user/updateEmail}" th:object="${updateEmail}">
-            <div class="formInputs">
-                <label for="email">Email</label>
-                <input id="email" type="email" th:field="*{email}">
-            </div>
-            <input type="hidden" th:field="*{userId}">
-            <input class="update" type="submit" value="Zapisz">
-            <input class="reset" type="reset" value="Resetuj">
-            <div style="clear: both"></div>
-        </form>
+        <div class="userForm">
 
-        <p>Zmień hasło</p>
-        <hr>
-        <form method="POST" th:action="@{/user/updatePassword}" th:object="${updatePassword}">
-            <div class="formInputs">
-                <label for="oldPassword">Stare hasło</label>
-                <input id="oldPassword" type="password" th:field="*{oldPassword}">
-            </div>
-            <div class="formInputs">
-                <label for="password">Nowe hasło</label>
-                <input id="password" type="password" th:field="*{password}">
-                <div class="error">
-                    <span class="tooltip" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+            <p>Zmień email</p>
+            <hr>
+            <form method="POST" th:action="@{/user/updateEmail}" th:object="${updateEmail}">
+                <div class="formInputs">
+                    <label for="email">Email</label>
+                    <input id="email" type="email" th:field="*{email}">
                 </div>
-            </div>
-            <div class="formInputs">
-                <label for="matchPassword">Powtórz hasło</label>
-                <input id="matchPassword" type="password" th:field="*{matchPassword}">
-                <div class="error">
-                    <span class="tooltip" th:if="${#fields.hasErrors('matchPassword')}" th:errors="*{matchPassword}"></span>
-                </div>
-            </div>
-            <input type="hidden" th:field="*{userId}">
-            <input class="update" type="submit" value="Zapisz">
-            <input class="reset" type="reset" value="Resetuj">
-            <div style="clear: both"></div>
-        </form>
+                <input type="hidden" th:field="*{userId}">
+                <input class="update" type="submit" value="Zapisz">
+                <input class="reset" type="reset" value="Resetuj">
+                <div style="clear: both"></div>
+            </form>
 
-        <p>Zmień strefę czasową</p>
-        <hr>
-        <form method="POST" th:action="@{/user/updateTimezone}" th:object="${updateTimezone}">
-            <div class="formInputs">
-                <label for="timezone">Strefa czasowa</label>
-                <select id="timezone" name="timezone" th:field="*{timezone}">
-                    <option th:each="zone : ${zones}" th:value="${zone}" th:text="${zone}"></option>
-                </select>
-            </div>
-            <input type="hidden" th:field="*{userId}">
-            <input class="update" type="submit" value="Zapisz">
-            <input class="reset" type="reset" value="Resetuj">
-            <div style="clear: both"></div>
-        </form>
+            <p>Zmień hasło</p>
+            <hr>
+            <form method="POST" th:action="@{/user/updatePassword}" th:object="${updatePassword}">
+                <div class="formInputs">
+                    <label for="oldPassword">Stare hasło</label>
+                    <input id="oldPassword" type="password" th:field="*{oldPassword}">
+                </div>
+                <div class="formInputs">
+                    <label for="password">Nowe hasło</label>
+                    <input id="password" type="password" th:field="*{password}">
+                    <div class="error">
+                        <span class="tooltip" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                    </div>
+                </div>
+                <div class="formInputs">
+                    <label for="matchPassword">Powtórz hasło</label>
+                    <input id="matchPassword" type="password" th:field="*{matchPassword}">
+                    <div class="error">
+                        <span class="tooltip" th:if="${#fields.hasErrors('matchPassword')}" th:errors="*{matchPassword}"></span>
+                    </div>
+                </div>
+                <input type="hidden" th:field="*{userId}">
+                <input class="update" type="submit" value="Zapisz">
+                <input class="reset" type="reset" value="Resetuj">
+                <div style="clear: both"></div>
+            </form>
+
+            <p>Zmień strefę czasową</p>
+            <hr>
+            <form method="POST" th:action="@{/user/updateTimezone}" th:object="${updateTimezone}">
+                <div class="formInputs">
+                    <label for="timezone">Strefa czasowa</label>
+                    <select id="timezone" name="timezone" th:field="*{timezone}">
+                        <option th:each="zone : ${zones}" th:value="${zone}" th:text="${zone}"></option>
+                    </select>
+                </div>
+                <input type="hidden" th:field="*{userId}">
+                <input class="update" type="submit" value="Zapisz">
+                <input class="reset" type="reset" value="Resetuj">
+                <div style="clear: both"></div>
+            </form>
+
+            <p>Zmień czas przypomnienia</p>
+            <hr>
+            <form method="POST" th:action="@{/user/updateReminderTime}" th:object="${updateReminderTime}">
+                <div class="formInputs">
+                    <label for="time">Strefa czasowa</label>
+                    <select id="time" name="timezone" th:field="*{reminderTime}">
+                        <option th:value="30">30 minut wcześniej</option>
+                        <option th:value="60">1 godzinę wcześniej</option>
+                        <option th:value="360">6 godzin wcześniej</option>
+                        <option th:value="720">12 godzin wcześniej</option>
+                        <option th:value="1440">Dzień wcześniej</option>
+                    </select>
+                </div>
+                <input type="hidden" th:field="*{userId}">
+                <input class="update" type="submit" value="Zapisz">
+                <input class="reset" type="reset" value="Resetuj">
+                <div style="clear: both"></div>
+            </form>
+
+        </div>
 
     </div>
-
-</div>
-<script type="text/javascript">
-    function submitForm() {
-        document.getElementById("themeForm").submit();
-    }
-</script>
+    <script type="text/javascript">
+        function submitForm() {
+            document.getElementById("themeForm").submit();
+        }
+    </script>
 </body>
 </html>
