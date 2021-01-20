@@ -8,69 +8,69 @@
 </head>
 <body>
 
-<!--Pasek górny-->
-<div class="userBar">
-    <form class="themeForm" method="POST" th:action="@{/theme}" name="themeForm" id="themeForm">
-        <span>Preferencje:</span>
-        <select id="theme" name="theme" onchange="submitThemeForm()">
-            <option value="" disabled selected>Wybierz motyw</option>
-            <option value="light">Jasny</option>
-            <option value="dark">Ciemny</option>
-        </select>
-    </form>
-    <div class="bar" sec:authorize="isAuthenticated()">
-        <a th:href="@{/messages}">Wiadomości</a>
-        <span>| Użytkownik:</span>
-        <a sec:authentication="name" th:href="@{/user}"></a>
-        <form method="POST" th:action="@{/logout}">
-            <input class="logout" type="submit" value="Wyloguj">
+    <!--Pasek górny-->
+    <div class="userBar">
+        <form class="themeForm" method="POST" th:action="@{/theme}" name="themeForm" id="themeForm">
+            <span>Preferencje:</span>
+            <select id="theme" name="theme" onchange="submitThemeForm()">
+                <option value="" disabled selected>Wybierz motyw</option>
+                <option value="light">Jasny</option>
+                <option value="dark">Ciemny</option>
+            </select>
         </form>
+        <div class="bar" sec:authorize="isAuthenticated()">
+            <a th:href="@{/messages}">Wiadomości</a>
+            <span>| Użytkownik:</span>
+            <a sec:authentication="name" th:href="@{/user}"></a>
+            <form method="POST" th:action="@{/logout}">
+                <input class="logout" type="submit" value="Wyloguj">
+            </form>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+
+    <div class="header">
+        <h1>CalendarApp</h1>
+    </div>
+
+    <div class="navBar">
+        <div class="nav">
+            <a th:href="@{/}">Strona główna</a>
+            <a th:href="@{/calendar/list}">Kalendarze</a>
+            <a th:href="@{/notes/list}">Lista notek</a>
+        </div>
+    </div>
+
+    <div class="listHeader">
+        <p class="title">Lista Notek</p>
+    </div>
+
+    <div class="container">
+
+        <form method="POST" th:if="${!calendars.isEmpty()}" th:action="@{/notes/getCalendarNotes}" id="calendarForm">
+            <select name="calendarId" form="calendarForm" onchange="submitCalendarForm()">
+                <option value="" disabled selected>Wybierz kalendarz</option>
+                <option value="0">Wszystkie kalendarze</option>
+                <option th:each="dbcalendar : ${calendars}" th:text="${dbcalendar.title}" th:value="${dbcalendar.id}"></option>
+            </select>
+        </form>
+
+        <div class="note" th:if="${!notes.isEmpty()}" th:each="note : ${notes}">
+            <div class="noteHeader" th:inline="text">[[${note.title}]] | [[${note.time}]]</div>
+            <div class="noteBody" th:text="${note.content}"></div>
+        </div>
+        <p th:if="${notes.isEmpty()}" class="noNotes">Brak notek w kalendarzu.</p>
         <div style="clear: both;"></div>
+        <a th:if="${!notes.isEmpty()}" class="pdf" th:href="@{/notes/pdf}">Pobierz pdf</a>
+
     </div>
-</div>
-
-<div class="header">
-    <h1>CalendarApp</h1>
-</div>
-
-<div class="navBar">
-    <div class="nav">
-        <a th:href="@{/}">Strona główna</a>
-        <a th:href="@{/calendar/list}">Kalendarze</a>
-        <a th:href="@{/notes/list}">Lista notek</a>
-    </div>
-</div>
-
-<div class="listHeader">
-    <p class="title">Lista Notek</p>
-</div>
-
-<div class="container">
-
-    <form method="POST" th:if="${!calendars.isEmpty()}" th:action="@{/notes/getCalendarNotes}" id="calendarForm">
-        <select name="calendarId" form="calendarForm" onchange="submitCalendarForm()">
-            <option value="" disabled selected>Wybierz kalendarz</option>
-            <option value="0">Wszystkie kalendarze</option>
-            <option th:each="dbcalendar : ${calendars}" th:text="${dbcalendar.title}" th:value="${dbcalendar.id}"></option>
-        </select>
-    </form>
-
-    <div class="note" th:if="${!notes.isEmpty()}" th:each="note : ${notes}">
-        <div class="noteHeader" th:inline="text">[[${note.title}]] | [[${note.time}]]</div>
-        <div class="noteBody" th:text="${note.content}"></div>
-    </div>
-    <p th:if="${notes.isEmpty()}" class="noNotes">Brak notek w kalendarzu.</p>
-    <div style="clear: both;"></div>
-    <a th:if="${!notes.isEmpty()}" class="pdf" th:href="@{/notes/pdf}">Pobierz pdf</a>
-
-</div>
-<script type="text/javascript">
-    function submitThemeForm() {
-        document.getElementById("themeForm").submit();
-    }
-    function submitCalendarForm() {
-        document.getElementById("calendarForm").submit();
-    }
-</script>
+    <script type="text/javascript">
+        function submitThemeForm() {
+            document.getElementById("themeForm").submit();
+        }
+        function submitCalendarForm() {
+            document.getElementById("calendarForm").submit();
+        }
+    </script>
 </body>
 </html>

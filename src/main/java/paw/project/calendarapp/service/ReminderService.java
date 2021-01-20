@@ -41,6 +41,11 @@ public class ReminderService {
         return reminderCheckRepository.findAllByUserId(id);
     }
 
+    //Zwróć sprawdzenie
+    public ReminderCheck getReminderCheckById(Long id){
+        return reminderCheckRepository.findById(id).get();
+    }
+
     //Zaktualizuj sprawdzenie
     public void updateReminderCheck(ReminderCheck reminderCheck){
         reminderCheckRepository.save(reminderCheck);
@@ -65,7 +70,7 @@ public class ReminderService {
                             note.getTitle()+"</b></p>"+"<p>Opis: <b>"+note.getContent()+"</b></p><p>Zaplanowano na: <b>"+localDateTime.toLocalDate().toString() +
                             "</b>, godzina: <b>"+localDateTime.toLocalTime().toString()+"</b></p>");
                     template.convertAndSendToUser(user.getUsername(),"/queue/message", new Reminder("Powiadomienie",
-                            note.getTitle(),localDateTime.toLocalDate().toString(),localDateTime.toLocalTime().toString()));
+                            note.getTitle(),localDateTime.toLocalDate().toString(),localDateTime.toLocalTime().toString(),reminderCheck.getId().intValue()));
                 }
             }
         }

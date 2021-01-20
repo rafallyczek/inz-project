@@ -2,11 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
     <title>CalendarApp</title>
     <link rel="stylesheet" type="text/css" th:href="${#themes.code('styleSheet')}">
     <link rel="stylesheet" type="text/css" href="/styles/home.css">
     <script src="/webjars/sockjs-client/1.1.2/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/2.3.3-1/stomp.min.js"></script>
+    <script src="/webjars/jquery/3.5.1/jquery.min.js"></script>
     <script src="/js/ws.js"></script>
 </head>
 <body onload="connect()">
@@ -63,6 +65,7 @@
         <p id="wsMessageContent"></p>
         <p id="wsMessageDate"></p>
         <p id="wsMessageTime"></p>
+        <button class="remindLaterButton" onclick="remindLater()">Przypomnij później</button>
     </div>
 
     <script type="text/javascript">

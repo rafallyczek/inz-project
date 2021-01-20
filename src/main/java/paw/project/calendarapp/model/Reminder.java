@@ -9,12 +9,14 @@ public class Reminder {
     private String content;
     private String date;
     private String time;
+    private Integer reminderId;
 
-    public Reminder(String title, String content, String date, String time){
+    public Reminder(String title, String content, String date, String time, Integer reminderId){
         this.title = title;
         this.content = content;
         this.date = date;
         this.time = time;
+        this.reminderId = reminderId;
     }
 
 }

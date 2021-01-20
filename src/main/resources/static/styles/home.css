@@ -155,10 +155,10 @@ h1{
 #wsMessage{
     display: none;
     position: fixed;
-    bottom: -130px;
+    bottom: -160px;
     right: 10px;
-    width: 200px;
-    height: 130px;
+    width: 220px;
+    height: 160px;
     background-color: darkgray;
     border-radius: 5px;
     animation: blink 1s infinite;
@@ -182,4 +182,20 @@ h1{
 }
 #wsMessageContent{
     text-align: center;
+}
+.remindLaterButton{
+    text-decoration: none;
+    color: white;
+    background-color: #707070;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+    display: block;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.remindLaterButton:hover{
+    background-color: gray;
+    cursor: pointer;
 }
