@@ -15,11 +15,6 @@ public class ReminderCheckService {
         this.reminderCheckRepository = reminderCheckRepository;
     }
 
-    //Dodaj sprawdzenie
-    public void addReminderCheck(ReminderCheck reminderCheck){
-        reminderCheckRepository.save(reminderCheck);
-    }
-
     //Zwróć sprawdzenie dla danego użytkownika i danej notki
     public ReminderCheck getReminderCheckByUserIdAndNoteId(int userId, int noteId){
         return reminderCheckRepository.findByUserIdAndNoteId(userId,noteId);
