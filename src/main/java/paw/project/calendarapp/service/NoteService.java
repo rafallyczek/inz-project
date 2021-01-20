@@ -78,9 +78,11 @@ public class NoteService {
         noteRepository.save(note);
         List<CalendarUser> calendarUsers = calendarUserRepository.findAllByCalendarId(note.getCalendarId());
         for(CalendarUser calendarUser : calendarUsers){
+            User user = userRepository.findById((long) calendarUser.getUserId()).get();
             ReminderCheck reminderCheck = new ReminderCheck();
             reminderCheck.setNoteId(note.getId().intValue());
             reminderCheck.setUserId(calendarUser.getUserId());
+            reminderCheck.setReminderTime(user.getReminderTime());
             reminderCheck.setReminded(false);
             reminderCheckRepository.save(reminderCheck);
         }

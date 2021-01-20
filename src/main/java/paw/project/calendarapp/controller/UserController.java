@@ -8,8 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import paw.project.calendarapp.TO.*;
+import paw.project.calendarapp.model.ReminderCheck;
 import paw.project.calendarapp.model.User;
 import paw.project.calendarapp.repository.UserRepository;
+import paw.project.calendarapp.service.ReminderService;
 import paw.project.calendarapp.service.UserService;
 
 import javax.validation.Valid;
@@ -26,14 +28,16 @@ public class UserController {
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
     private UserService userService;
+    private ReminderService reminderService;
     private List<String> zones;
 
     //Wstrzykiwanie repozytorium
     @Autowired
-    public UserController(UserRepository userRepository, PasswordEncoder passwordEncoder, UserService userService){
+    public UserController(UserRepository userRepository, PasswordEncoder passwordEncoder, UserService userService, ReminderService reminderService){
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
+        this.reminderService = reminderService;
         Set<String> zonesSet = ZoneId.getAvailableZoneIds();
         zones = new ArrayList<>(zonesSet);
         Collections.sort(zones);
@@ -134,6 +138,11 @@ public class UserController {
         User updateUser = userRepository.findById(updateReminderTime.getUserId()).get();
         updateUser.setReminderTime(updateReminderTime.getReminderTime());
         userRepository.save(updateUser);
+        List<ReminderCheck> reminderChecks = reminderService.getAllReminderChecksByUserId(updateUser.getId().intValue());
+        for(ReminderCheck reminderCheck : reminderChecks){
+            reminderCheck.setReminderTime(updateReminderTime.getReminderTime());
+            reminderService.updateReminderCheck(reminderCheck);
+        }
         return "redirect:/user";
     }
 

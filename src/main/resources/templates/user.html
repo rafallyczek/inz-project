@@ -108,7 +108,7 @@
             <hr>
             <form method="POST" th:action="@{/user/updateReminderTime}" th:object="${updateReminderTime}">
                 <div class="formInputs">
-                    <label for="time">Strefa czasowa</label>
+                    <label for="time">Czas przypomnienia</label>
                     <select id="time" name="timezone" th:field="*{reminderTime}">
                         <option th:value="30">30 minut wcześniej</option>
                         <option th:value="60">1 godzinę wcześniej</option>
