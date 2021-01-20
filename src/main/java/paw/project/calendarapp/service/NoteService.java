@@ -6,9 +6,11 @@ import paw.project.calendarapp.TO.AddNote;
 import paw.project.calendarapp.TO.UpdateNote;
 import paw.project.calendarapp.model.CalendarUser;
 import paw.project.calendarapp.model.Note;
+import paw.project.calendarapp.model.ReminderCheck;
 import paw.project.calendarapp.model.User;
 import paw.project.calendarapp.repository.CalendarUserRepository;
 import paw.project.calendarapp.repository.NoteRepository;
+import paw.project.calendarapp.repository.ReminderCheckRepository;
 import paw.project.calendarapp.repository.UserRepository;
 
 import java.time.LocalDateTime;
@@ -22,12 +24,14 @@ public class NoteService {
     private NoteRepository noteRepository;
     private UserRepository userRepository;
     private CalendarUserRepository calendarUserRepository;
+    private ReminderCheckRepository reminderCheckRepository;
 
     @Autowired
-    public NoteService(NoteRepository noteRepository, UserRepository userRepository, CalendarUserRepository calendarUserRepository){
+    public NoteService(NoteRepository noteRepository, UserRepository userRepository, CalendarUserRepository calendarUserRepository, ReminderCheckRepository reminderCheckRepository){
         this.noteRepository = noteRepository;
         this.userRepository = userRepository;
         this.calendarUserRepository = calendarUserRepository;
+        this.reminderCheckRepository = reminderCheckRepository;
     }
 
     //Zwróć notki po id użytkownika
@@ -72,6 +76,14 @@ public class NoteService {
             note.setStatus("-");
         }
         noteRepository.save(note);
+        List<CalendarUser> calendarUsers = calendarUserRepository.findAllByCalendarId(note.getCalendarId());
+        for(CalendarUser calendarUser : calendarUsers){
+            ReminderCheck reminderCheck = new ReminderCheck();
+            reminderCheck.setNoteId(note.getId().intValue());
+            reminderCheck.setUserId(calendarUser.getUserId());
+            reminderCheck.setReminded(false);
+            reminderCheckRepository.save(reminderCheck);
+        }
     }
 
     //Aktualizuj notkę
@@ -94,6 +106,7 @@ public class NoteService {
     //Usuń notkę
     public void deleteNote(Long id){
         noteRepository.deleteById(id);
+        reminderCheckRepository.deleteAllByNoteId(id.intValue());
     }
 
     //Zmień status notki
