@@ -63,7 +63,7 @@
 
     <div id="wsMessage">
         <p id="wsMessageTitle"></p>
-        <form id="wsMessageForm" method="POST" th:action="@{/messages/setEdited}">
+        <form id="wsMessageForm" method="POST" th:action="@{/messages/goToNote}">
             <p id="wsMessageContent">Nadchodzące wydarzenie: <span id="goToNote" onclick="goToNote()"></span></p>
         </form>
         <p id="wsMessageDate">Data: <span class="bold" id="eventDate"></span></p>

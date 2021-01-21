@@ -73,7 +73,7 @@ public class MessageController {
         reminderService.updateReminderCheck(reminderCheck);
     }
 
-    @PostMapping("/setEdited/{id}")
+    @PostMapping("/goToNote/{id}")
     public String goToNote(@PathVariable Long id, RedirectAttributes redirectAttributes, @AuthenticationPrincipal User user){
         ReminderCheck reminderCheck = reminderService.getReminderCheckById(id);
         reminderCheck.setReminded(true);

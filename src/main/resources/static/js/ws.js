@@ -20,7 +20,7 @@ function showMessage(message){
     document.getElementById("goToNote").innerText = message.content;
     document.getElementById("eventDate").innerText = message.date;
     document.getElementById("eventTime").innerText = message.time;
-    document.getElementById("wsMessageForm").action = "/messages/setEdited/" + message.reminderId;
+    document.getElementById("wsMessageForm").action = "/messages/goToNote/" + message.reminderId;
     remindLaterURL = "/messages/remindLater/" + message.reminderId;
     wsMessage.style.display = "block";
     var styles = window.getComputedStyle(wsMessage);
