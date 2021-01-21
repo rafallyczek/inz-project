@@ -107,6 +107,14 @@ public class CalendarController {
         return "redirect:/calendar/allNotes";
     }
 
+    //Ustaw numer dnia i id kalendarza
+    @GetMapping("/setDayNumberAndCalendarId")
+    public String setDayNumberAndCalendarId(@ModelAttribute("calendarId") Integer calendarId, @ModelAttribute("dayNum") int dayNum){
+        this.calendarId = calendarId;
+        this.dayNumber = dayNum;
+        return "redirect:/calendar/allNotes";
+    }
+
     //Wyświetl formularz dodający notkę
     @GetMapping("/addNote")
     public String showAddNoteForm(){

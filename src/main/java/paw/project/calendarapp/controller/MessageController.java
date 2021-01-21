@@ -6,11 +6,15 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import paw.project.calendarapp.model.Invitation;
+import paw.project.calendarapp.model.Note;
 import paw.project.calendarapp.model.ReminderCheck;
 import paw.project.calendarapp.model.User;
 import paw.project.calendarapp.service.InvitationService;
+import paw.project.calendarapp.service.NoteService;
 import paw.project.calendarapp.service.ReminderService;
+import paw.project.calendarapp.service.UserService;
 
 import java.util.List;
 
@@ -20,12 +24,16 @@ public class MessageController {
 
     private InvitationService invitationService;
     private ReminderService reminderService;
+    private NoteService noteService;
+    private UserService userService;
 
     //Wstrzykiwanie zależności
     @Autowired
-    public MessageController(InvitationService invitationService, ReminderService reminderService){
+    public MessageController(InvitationService invitationService, ReminderService reminderService, NoteService noteService, UserService userService){
         this.invitationService = invitationService;
         this.reminderService = reminderService;
+        this.noteService = noteService;
+        this.userService = userService;
     }
 
     //Ustaw atrybuty modelu
@@ -63,6 +71,19 @@ public class MessageController {
         ReminderCheck reminderCheck = reminderService.getReminderCheckById(id);
         reminderCheck.setReminderTime(30);
         reminderService.updateReminderCheck(reminderCheck);
+    }
+
+    @PostMapping("/setEdited/{id}")
+    public String goToNote(@PathVariable Long id, RedirectAttributes redirectAttributes, @AuthenticationPrincipal User user){
+        ReminderCheck reminderCheck = reminderService.getReminderCheckById(id);
+        reminderCheck.setReminded(true);
+        reminderService.updateReminderCheck(reminderCheck);
+        Note note = noteService.getNote((long) reminderCheck.getNoteId());
+        User owner = userService.getUser((long) note.getUserId());
+        note.setNoteDate(user.getTimezone(),owner.getTimezone());
+        redirectAttributes.addFlashAttribute("calendarId",note.getCalendarId());
+        redirectAttributes.addFlashAttribute("dayNum",note.getDate().getDayOfMonth());
+        return "redirect:/calendar/setDayNumberAndCalendarId";
     }
 
     //Wczytaj zaproszenia użytkownika i zapisz jako atrybut modelu

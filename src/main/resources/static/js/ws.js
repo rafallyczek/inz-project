@@ -17,9 +17,10 @@ function disconnect(){
 function showMessage(message){
     var wsMessage = document.getElementById("wsMessage");
     document.getElementById("wsMessageTitle").innerText = message.title;
-    document.getElementById("wsMessageContent").innerHTML = "Nadchodzące wydarzenie: <span style='font-weight: bold'>"+message.content+"</span>";
-    document.getElementById("wsMessageDate").innerHTML = "Data: <span style='text-decoration: underline'>"+message.date+"</span>";
-    document.getElementById("wsMessageTime").innerHTML = "Godzina: <span style='text-decoration: underline'>"+message.time+"</span>";
+    document.getElementById("goToNote").innerText = message.content;
+    document.getElementById("eventDate").innerText = message.date;
+    document.getElementById("eventTime").innerText = message.time;
+    document.getElementById("wsMessageForm").action = "/messages/setEdited/" + message.reminderId;
     remindLaterURL = "/messages/remindLater/" + message.reminderId;
     wsMessage.style.display = "block";
     var styles = window.getComputedStyle(wsMessage);
@@ -44,4 +45,7 @@ function remindLater(){
     $.post(remindLaterURL);
     document.getElementById("wsMessage").style.bottom = "-160px";
     document.getElementById("wsMessage").style.display = "none";
+}
+function goToNote(){
+    document.getElementById("wsMessageForm").submit();
 }
