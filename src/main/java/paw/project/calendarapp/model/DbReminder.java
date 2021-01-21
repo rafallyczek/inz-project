@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 @Data
 @Table(name = "reminders")
-public class ReminderCheck {
+public class DbReminder {
 
     //Pola
     @Id
@@ -17,5 +17,12 @@ public class ReminderCheck {
     private Integer userId;
     private Integer reminderTime;
     private boolean isReminded;
+
+    @Transient
+    private String noteTitle;
+    @Transient
+    private String noteDate;
+    @Transient
+    private String noteTime;
 
 }

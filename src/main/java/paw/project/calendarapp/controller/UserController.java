@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import paw.project.calendarapp.TO.*;
-import paw.project.calendarapp.model.ReminderCheck;
+import paw.project.calendarapp.model.DbReminder;
 import paw.project.calendarapp.model.User;
 import paw.project.calendarapp.repository.UserRepository;
 import paw.project.calendarapp.service.ReminderService;
@@ -138,10 +138,10 @@ public class UserController {
         User updateUser = userRepository.findById(updateReminderTime.getUserId()).get();
         updateUser.setReminderTime(updateReminderTime.getReminderTime());
         userRepository.save(updateUser);
-        List<ReminderCheck> reminderChecks = reminderService.getAllReminderChecksByUserId(updateUser.getId().intValue());
-        for(ReminderCheck reminderCheck : reminderChecks){
-            reminderCheck.setReminderTime(updateReminderTime.getReminderTime());
-            reminderService.updateReminderCheck(reminderCheck);
+        List<DbReminder> dbReminders = reminderService.getAllRemindersByUserId(updateUser.getId().intValue(),updateUser.getTimezone());
+        for(DbReminder dbReminder : dbReminders){
+            dbReminder.setReminderTime(updateReminderTime.getReminderTime());
+            reminderService.updateReminder(dbReminder);
         }
         return "redirect:/user";
     }

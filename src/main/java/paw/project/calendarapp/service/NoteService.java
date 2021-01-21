@@ -6,11 +6,11 @@ import paw.project.calendarapp.TO.AddNote;
 import paw.project.calendarapp.TO.UpdateNote;
 import paw.project.calendarapp.model.CalendarUser;
 import paw.project.calendarapp.model.Note;
-import paw.project.calendarapp.model.ReminderCheck;
+import paw.project.calendarapp.model.DbReminder;
 import paw.project.calendarapp.model.User;
 import paw.project.calendarapp.repository.CalendarUserRepository;
 import paw.project.calendarapp.repository.NoteRepository;
-import paw.project.calendarapp.repository.ReminderCheckRepository;
+import paw.project.calendarapp.repository.ReminderRepository;
 import paw.project.calendarapp.repository.UserRepository;
 
 import java.time.LocalDateTime;
@@ -24,14 +24,14 @@ public class NoteService {
     private NoteRepository noteRepository;
     private UserRepository userRepository;
     private CalendarUserRepository calendarUserRepository;
-    private ReminderCheckRepository reminderCheckRepository;
+    private ReminderRepository reminderRepository;
 
     @Autowired
-    public NoteService(NoteRepository noteRepository, UserRepository userRepository, CalendarUserRepository calendarUserRepository, ReminderCheckRepository reminderCheckRepository){
+    public NoteService(NoteRepository noteRepository, UserRepository userRepository, CalendarUserRepository calendarUserRepository, ReminderRepository reminderRepository){
         this.noteRepository = noteRepository;
         this.userRepository = userRepository;
         this.calendarUserRepository = calendarUserRepository;
-        this.reminderCheckRepository = reminderCheckRepository;
+        this.reminderRepository = reminderRepository;
     }
 
     //Zwróć notki po id użytkownika
@@ -79,12 +79,12 @@ public class NoteService {
         List<CalendarUser> calendarUsers = calendarUserRepository.findAllByCalendarId(note.getCalendarId());
         for(CalendarUser calendarUser : calendarUsers){
             User user = userRepository.findById((long) calendarUser.getUserId()).get();
-            ReminderCheck reminderCheck = new ReminderCheck();
-            reminderCheck.setNoteId(note.getId().intValue());
-            reminderCheck.setUserId(calendarUser.getUserId());
-            reminderCheck.setReminderTime(user.getReminderTime());
-            reminderCheck.setReminded(false);
-            reminderCheckRepository.save(reminderCheck);
+            DbReminder dbReminder = new DbReminder();
+            dbReminder.setNoteId(note.getId().intValue());
+            dbReminder.setUserId(calendarUser.getUserId());
+            dbReminder.setReminderTime(user.getReminderTime());
+            dbReminder.setReminded(false);
+            reminderRepository.save(dbReminder);
         }
     }
 
@@ -108,7 +108,7 @@ public class NoteService {
     //Usuń notkę
     public void deleteNote(Long id){
         noteRepository.deleteById(id);
-        reminderCheckRepository.deleteAllByNoteId(id.intValue());
+        reminderRepository.deleteAllByNoteId(id.intValue());
     }
 
     //Zmień status notki

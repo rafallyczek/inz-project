@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import paw.project.calendarapp.model.Invitation;
 import paw.project.calendarapp.model.Note;
-import paw.project.calendarapp.model.ReminderCheck;
+import paw.project.calendarapp.model.DbReminder;
 import paw.project.calendarapp.model.User;
 import paw.project.calendarapp.service.InvitationService;
 import paw.project.calendarapp.service.NoteService;
@@ -41,6 +41,7 @@ public class MessageController {
     public void setModelAttributes(Model model, @AuthenticationPrincipal User user){
         if(user!=null){
             loadInvitations(model, user);
+            loadReminders(model, user);
         }
     }
 
@@ -68,17 +69,18 @@ public class MessageController {
     @PostMapping("/remindLater/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void remindLater(@PathVariable Long id){
-        ReminderCheck reminderCheck = reminderService.getReminderCheckById(id);
-        reminderCheck.setReminderTime(30);
-        reminderService.updateReminderCheck(reminderCheck);
+        DbReminder dbReminder = reminderService.getReminderById(id);
+        dbReminder.setReminderTime(30);
+        reminderService.updateReminder(dbReminder);
     }
 
+    //Przejdź do notki z przypomnienia
     @PostMapping("/goToNote/{id}")
     public String goToNote(@PathVariable Long id, RedirectAttributes redirectAttributes, @AuthenticationPrincipal User user){
-        ReminderCheck reminderCheck = reminderService.getReminderCheckById(id);
-        reminderCheck.setReminded(true);
-        reminderService.updateReminderCheck(reminderCheck);
-        Note note = noteService.getNote((long) reminderCheck.getNoteId());
+        DbReminder dbReminder = reminderService.getReminderById(id);
+        dbReminder.setReminded(true);
+        reminderService.updateReminder(dbReminder);
+        Note note = noteService.getNote((long) dbReminder.getNoteId());
         User owner = userService.getUser((long) note.getUserId());
         note.setNoteDate(user.getTimezone(),owner.getTimezone());
         redirectAttributes.addFlashAttribute("calendarId",note.getCalendarId());
@@ -90,6 +92,13 @@ public class MessageController {
     public void loadInvitations(Model model, User user){
         List<Invitation> invitations = invitationService.getInvitationsByUserId(user.getId().intValue());
         model.addAttribute("invitations", invitations);
+    }
+
+    //Wczytaj przypomnienia użytkownika i zapisz jako atrybut modelu
+    public void loadReminders(Model model, User user){
+        List<DbReminder> reminders = reminderService.getAllRemindersByUserId(user.getId().intValue(),user.getTimezone());
+        reminders.removeIf(DbReminder::isReminded);
+        model.addAttribute("reminders", reminders);
     }
 
 }
