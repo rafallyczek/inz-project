@@ -182,7 +182,7 @@ public class CalendarController {
 
     //Znajdź użytkowników, których nazwa użytkownika zawiera podaną frazę
     @PostMapping("/findUsers")
-    public String findUsers(@RequestParam String username, Model model, RedirectAttributes redirectAttributes){
+    public String findUsers(@RequestParam String username, RedirectAttributes redirectAttributes){
         List<User> searchedUsers = userService.getAllUsersContainingUsername(username);
         List<User> calendarUsers = userService.getAllUsersByCalendarId(this.calendarId);
         List<User> invitedUsers = invitationService.getInvitedUsers(this.calendarId);
