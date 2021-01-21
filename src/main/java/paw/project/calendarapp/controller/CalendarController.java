@@ -5,6 +5,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import paw.project.calendarapp.TO.AddNote;
 import paw.project.calendarapp.TO.UpdateNote;
 import paw.project.calendarapp.model.*;
@@ -170,6 +171,10 @@ public class CalendarController {
         }
         List<User> calendarUsers = userService.getAllUsersByCalendarId(this.calendarId);
         List<User> invitedUsers = invitationService.getInvitedUsers(this.calendarId);
+        List<User> searchResult = (List<User>) model.getAttribute("searchResult");
+        if(searchResult!=null){
+            model.addAttribute("searchedUsers", searchResult);
+        }
         model.addAttribute("calendarUsers", calendarUsers);
         model.addAttribute("invitedUsers", invitedUsers);
         return "update-calendar-user";
@@ -177,18 +182,17 @@ public class CalendarController {
 
     //Znajdź użytkowników, których nazwa użytkownika zawiera podaną frazę
     @PostMapping("/findUsers")
-    public String findUsers(@RequestParam String username, Model model){
+    public String findUsers(@RequestParam String username, Model model, RedirectAttributes redirectAttributes){
         List<User> searchedUsers = userService.getAllUsersContainingUsername(username);
         List<User> calendarUsers = userService.getAllUsersByCalendarId(this.calendarId);
         List<User> invitedUsers = invitationService.getInvitedUsers(this.calendarId);
         searchedUsers.removeIf(invitedUsers::contains);
         searchedUsers.removeIf(calendarUsers::contains);
-        model.addAttribute("searchedUsers", searchedUsers);
-        model.addAttribute("calendarUsers", calendarUsers);
-        model.addAttribute("invitedUsers", invitedUsers);
-        return "update-calendar-user";
+        redirectAttributes.addFlashAttribute("searchResult", searchedUsers);
+        return "redirect:/calendar/editCalendarUser";
     }
 
+    //Zaproś użytkownika do kalendarza
     @PostMapping("/inviteUser")
     public String inviteUser(@RequestParam int id, @AuthenticationPrincipal User user) throws MessagingException {
         Invitation invitation = new Invitation();
