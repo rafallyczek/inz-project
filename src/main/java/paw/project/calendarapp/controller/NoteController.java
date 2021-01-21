@@ -66,8 +66,8 @@ public class NoteController {
 
     //Pobierz pdf
     @GetMapping("/pdf")
-    public ResponseEntity<InputStreamResource> pdf() throws DocumentException, IOException {
-        Pdf pdf = new Pdf(notes);
+    public ResponseEntity<InputStreamResource> pdf(@AuthenticationPrincipal User user) throws DocumentException, IOException {
+        Pdf pdf = new Pdf(notes,user.getTimezone());
         ByteArrayInputStream in = pdf.buildPdf();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition","attachment; filename=notes.pdf");
