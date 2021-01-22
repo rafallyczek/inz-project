@@ -56,6 +56,9 @@
 
     <div class="container">
 
+        <!-- Edytuj kalendarz -->
+        <a th:href="@{/calendar/editCalendar}" class="edit">Edytuj kalendarz</a>
+
         <!--    Nagłówek kalendarza z nazwami dni    -->
         <div class="calendar">
             <div class="dayName">Poniedziałek</div>
@@ -85,8 +88,6 @@
             </form>
             <div style="clear: both;"></div>
         </div>
-
-        <a th:href="@{/calendar/editCalendar}" class="edit">Edytuj kalendarz</a>
 
         <!--Przejście do następnego miesiąca-->
         <a class="next" href="/calendar/next"><i class="icon-right-open"></i></a>

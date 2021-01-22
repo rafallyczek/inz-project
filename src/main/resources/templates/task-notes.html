@@ -63,100 +63,102 @@
             <a class="addButton" th:href="@{/calendar/addNote}">Dodaj notkę</a>
             <div style="clear: both"></div>
 
-            <div class="taskGrid">
+            <div class="taskGridWrapper">
+                <div class="taskGrid">
 
-                <p>Do zrobienia</p>
-                <hr>
-                <div class="note" th:each="note : ${calendar.notes}" th:if="${note.date.isEqual(#temporals.create(calendar.year,calendar.month,dayNumber)) and note.status == 'to-do'}">
+                    <p>Do zrobienia</p>
+                    <hr>
+                    <div class="note" th:each="note : ${calendar.notes}" th:if="${note.date.isEqual(#temporals.create(calendar.year,calendar.month,dayNumber)) and note.status == 'to-do'}">
 
-                    <div class="noteHeader" th:inline="text">
-                        [[${note.title}]] | [[${note.time}]]
+                        <div class="noteHeader" th:inline="text">
+                            [[${note.title}]] | [[${note.time}]]
 
-                        <a th:href="@{/notes/delete/{id}(id=${note.id})}" class="deleteButton">
-                            <i class="icon-cancel">
-                                <span class="tooltip">Usuń notkę</span>
-                            </i>
-                        </a>
-                        <!-- Przejście do formularza edycji notki -->
-                        <a th:href="@{/calendar/editNote/{id}(id=${note.id})}" class="editButton">
-                            <i class="icon-pencil">
-                                <span class="tooltip">Edytuj notkę</span>
-                            </i>
-                        </a>
+                            <a th:href="@{/notes/delete/{id}(id=${note.id})}" class="deleteButton">
+                                <i class="icon-cancel">
+                                    <span class="tooltip">Usuń notkę</span>
+                                </i>
+                            </a>
+                            <!-- Przejście do formularza edycji notki -->
+                            <a th:href="@{/calendar/editNote/{id}(id=${note.id})}" class="editButton">
+                                <i class="icon-pencil">
+                                    <span class="tooltip">Edytuj notkę</span>
+                                </i>
+                            </a>
+                        </div>
+
+                        <div class="noteBody" th:text="${note.content}"></div>
+                        <p class="status">Zmień status</p>
+                        <hr>
+                        <a th:href="@{/notes/statusInProgress/{id}(id=${note.id})}">W trakcie</a>
+                        <a th:href="@{/notes/statusFinished/{id}(id=${note.id})}">Zakończone</a>
+
                     </div>
 
-                    <div class="noteBody" th:text="${note.content}"></div>
-                    <p class="status">Zmień status</p>
-                    <hr>
-                    <a th:href="@{/notes/statusInProgress/{id}(id=${note.id})}">W trakcie</a>
-                    <a th:href="@{/notes/statusFinished/{id}(id=${note.id})}">Zakończone</a>
-
                 </div>
+                <div class="taskGrid">
 
-            </div>
-            <div class="taskGrid">
+                    <p>W trakcie</p>
+                    <hr>
+                    <div class="note" th:each="note : ${calendar.notes}" th:if="${note.date.isEqual(#temporals.create(calendar.year,calendar.month,dayNumber)) and note.status == 'in-progress'}">
 
-                <p>W trakcie</p>
-                <hr>
-                <div class="note" th:each="note : ${calendar.notes}" th:if="${note.date.isEqual(#temporals.create(calendar.year,calendar.month,dayNumber)) and note.status == 'in-progress'}">
+                        <div class="noteHeader" th:inline="text">
+                            [[${note.title}]] | [[${note.time}]]
 
-                    <div class="noteHeader" th:inline="text">
-                        [[${note.title}]] | [[${note.time}]]
+                            <a th:href="@{/notes/delete/{id}(id=${note.id})}" class="deleteButton">
+                                <i class="icon-cancel">
+                                    <span class="tooltip">Usuń notkę</span>
+                                </i>
+                            </a>
+                            <!-- Przejście do formularza edycji notki -->
+                            <a th:href="@{/calendar/editNote/{id}(id=${note.id})}" class="editButton">
+                                <i class="icon-pencil">
+                                    <span class="tooltip">Edytuj notkę</span>
+                                </i>
+                            </a>
+                        </div>
 
-                        <a th:href="@{/notes/delete/{id}(id=${note.id})}" class="deleteButton">
-                            <i class="icon-cancel">
-                                <span class="tooltip">Usuń notkę</span>
-                            </i>
-                        </a>
-                        <!-- Przejście do formularza edycji notki -->
-                        <a th:href="@{/calendar/editNote/{id}(id=${note.id})}" class="editButton">
-                            <i class="icon-pencil">
-                                <span class="tooltip">Edytuj notkę</span>
-                            </i>
-                        </a>
+                        <div class="noteBody" th:text="${note.content}"></div>
+                        <p class="status">Zmień status</p>
+                        <hr>
+                        <a th:href="@{/notes/statusToDo/{id}(id=${note.id})}">Do zrobienia</a>
+                        <a th:href="@{/notes/statusFinished/{id}(id=${note.id})}">Zakończone</a>
+
                     </div>
 
-                    <div class="noteBody" th:text="${note.content}"></div>
-                    <p class="status">Zmień status</p>
-                    <hr>
-                    <a th:href="@{/notes/statusToDo/{id}(id=${note.id})}">Do zrobienia</a>
-                    <a th:href="@{/notes/statusFinished/{id}(id=${note.id})}">Zakończone</a>
-
                 </div>
+                <div class="taskGrid">
 
-            </div>
-            <div class="taskGrid">
+                    <p>Zakończone</p>
+                    <hr>
+                    <div class="note" th:each="note : ${calendar.notes}" th:if="${note.date.isEqual(#temporals.create(calendar.year,calendar.month,dayNumber)) and note.status == 'finished'}">
 
-                <p>Zakończone</p>
-                <hr>
-                <div class="note" th:each="note : ${calendar.notes}" th:if="${note.date.isEqual(#temporals.create(calendar.year,calendar.month,dayNumber)) and note.status == 'finished'}">
+                        <div class="noteHeader" th:inline="text">
+                            [[${note.title}]] | [[${note.time}]]
 
-                    <div class="noteHeader" th:inline="text">
-                        [[${note.title}]] | [[${note.time}]]
+                            <a th:href="@{/notes/delete/{id}(id=${note.id})}" class="deleteButton">
+                                <i class="icon-cancel">
+                                    <span class="tooltip">Usuń notkę</span>
+                                </i>
+                            </a>
+                            <!-- Przejście do formularza edycji notki -->
+                            <a th:href="@{/calendar/editNote/{id}(id=${note.id})}" class="editButton">
+                                <i class="icon-pencil">
+                                    <span class="tooltip">Edytuj notkę</span>
+                                </i>
+                            </a>
+                        </div>
 
-                        <a th:href="@{/notes/delete/{id}(id=${note.id})}" class="deleteButton">
-                            <i class="icon-cancel">
-                                <span class="tooltip">Usuń notkę</span>
-                            </i>
-                        </a>
-                        <!-- Przejście do formularza edycji notki -->
-                        <a th:href="@{/calendar/editNote/{id}(id=${note.id})}" class="editButton">
-                            <i class="icon-pencil">
-                                <span class="tooltip">Edytuj notkę</span>
-                            </i>
-                        </a>
+                        <div class="noteBody" th:text="${note.content}"></div>
+                        <p class="status">Zmień status</p>
+                        <hr>
+                        <a th:href="@{/notes/statusInProgress/{id}(id=${note.id})}">W trakcie</a>
+                        <a th:href="@{/notes/statusToDo/{id}(id=${note.id})}">Do zrobienia</a>
+
                     </div>
 
-                    <div class="noteBody" th:text="${note.content}"></div>
-                    <p class="status">Zmień status</p>
-                    <hr>
-                    <a th:href="@{/notes/statusInProgress/{id}(id=${note.id})}">W trakcie</a>
-                    <a th:href="@{/notes/statusToDo/{id}(id=${note.id})}">Do zrobienia</a>
-
                 </div>
-
+                <div style="clear: both"></div>
             </div>
-            <div style="clear: both"></div>
 
             <!--Powrót do kalendarza-->
             <a th:href="@{/calendar}">Powrót do kalendarza</a>

@@ -63,28 +63,30 @@
             <a class="addButton" th:href="@{/calendar/addNote}">Dodaj notkę</a>
             <div style="clear: both"></div>
 
-            <div class="note" th:each="note : ${calendar.notes}" th:if="${note.date.isEqual(#temporals.create(calendar.year,calendar.month,dayNumber))}">
+            <div class="notesWrapper">
+                <div class="note" th:each="note : ${calendar.notes}" th:if="${note.date.isEqual(#temporals.create(calendar.year,calendar.month,dayNumber))}">
 
-                <div class="noteHeader" th:inline="text">
-                    [[${note.title}]] | [[${note.time}]]
-                    <span class="task" th:if="${note.isTask()}">Zadanie</span>
-                    <a th:href="@{/notes/delete/{id}(id=${note.id})}" class="deleteButton">
-                        <i class="icon-cancel">
-                            <span class="tooltip">Usuń notkę</span>
-                        </i>
-                    </a>
-                    <!-- Przejście do formularza edycji notki -->
-                    <a th:href="@{/calendar/editNote/{id}(id=${note.id})}" class="editButton">
-                        <i class="icon-pencil">
-                            <span class="tooltip">Edytuj notkę</span>
-                        </i>
-                    </a>
+                    <div class="noteHeader" th:inline="text">
+                        [[${note.title}]] | [[${note.time}]]
+                        <span class="task" th:if="${note.isTask()}">Zadanie</span>
+                        <a th:href="@{/notes/delete/{id}(id=${note.id})}" class="deleteButton">
+                            <i class="icon-cancel">
+                                <span class="tooltip">Usuń notkę</span>
+                            </i>
+                        </a>
+                        <!-- Przejście do formularza edycji notki -->
+                        <a th:href="@{/calendar/editNote/{id}(id=${note.id})}" class="editButton">
+                            <i class="icon-pencil">
+                                <span class="tooltip">Edytuj notkę</span>
+                            </i>
+                        </a>
+                    </div>
+
+                    <div class="noteBody" th:text="${note.content}"></div>
+
                 </div>
-
-                <div class="noteBody" th:text="${note.content}"></div>
-
+                <div style="clear: both"></div>
             </div>
-            <div style="clear: both"></div>
             <!--Powrót do kalendarza-->
             <a th:href="@{/calendar}">Powrót do kalendarza</a>
         </div>
