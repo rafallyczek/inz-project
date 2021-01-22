@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import paw.project.calendarapp.TO.AddNote;
 import paw.project.calendarapp.TO.UpdateNote;
-import paw.project.calendarapp.model.CalendarUser;
-import paw.project.calendarapp.model.Note;
-import paw.project.calendarapp.model.DbReminder;
-import paw.project.calendarapp.model.User;
+import paw.project.calendarapp.model.*;
 import paw.project.calendarapp.repository.CalendarUserRepository;
 import paw.project.calendarapp.repository.NoteRepository;
 import paw.project.calendarapp.repository.ReminderRepository;
@@ -79,12 +76,12 @@ public class NoteService {
         List<CalendarUser> calendarUsers = calendarUserRepository.findAllByCalendarId(note.getCalendarId());
         for(CalendarUser calendarUser : calendarUsers){
             User user = userRepository.findById((long) calendarUser.getUserId()).get();
-            DbReminder dbReminder = new DbReminder();
-            dbReminder.setNoteId(note.getId().intValue());
-            dbReminder.setUserId(calendarUser.getUserId());
-            dbReminder.setReminderTime(user.getReminderTime());
-            dbReminder.setReminded(false);
-            reminderRepository.save(dbReminder);
+            Reminder reminder = new Reminder();
+            reminder.setNoteId(note.getId().intValue());
+            reminder.setUserId(calendarUser.getUserId());
+            reminder.setReminderTime(user.getReminderTime());
+            reminder.setReminded(false);
+            reminderRepository.save(reminder);
         }
     }
 

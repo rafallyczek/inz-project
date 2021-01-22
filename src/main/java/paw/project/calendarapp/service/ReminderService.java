@@ -6,7 +6,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import paw.project.calendarapp.model.Reminder;
 import paw.project.calendarapp.model.Note;
-import paw.project.calendarapp.model.DbReminder;
 import paw.project.calendarapp.model.User;
 import paw.project.calendarapp.repository.NoteRepository;
 import paw.project.calendarapp.repository.ReminderRepository;
@@ -37,28 +36,28 @@ public class ReminderService {
     }
 
     //Zwróć wszystkie przypomnienia dla danego użytkownika
-    public List<DbReminder> getAllRemindersByUserId(int id, String timezone){
-        List<DbReminder> reminders = reminderRepository.findAllByUserId(id);
-        for(DbReminder reminder : reminders){
+    public List<Reminder> getAllRemindersByUserId(int id, String timezone){
+        List<Reminder> reminders = reminderRepository.findAllByUserId(id);
+        for(Reminder reminder : reminders){
             Note note = noteRepository.findById((long)reminder.getNoteId()).get();
             User owner = userService.getUser((long)note.getUserId());
             note.setNoteDate(timezone,owner.getTimezone());
             note.setNoteTime(timezone,owner.getTimezone());
-            reminder.setNoteTitle(note.getTitle());
-            reminder.setNoteDate(note.getDate().toString());
-            reminder.setNoteTime(note.getTime());
+            reminder.setContent(note.getTitle());
+            reminder.setDate(note.getDate().toString());
+            reminder.setTime(note.getTime());
         }
         return reminders;
     }
 
     //Zwróć przypomnienie
-    public DbReminder getReminderById(Long id){
+    public Reminder getReminderById(Long id){
         return reminderRepository.findById(id).get();
     }
 
     //Zaktualizuj przypomnienie
-    public void updateReminder(DbReminder dbReminder){
-        reminderRepository.save(dbReminder);
+    public void updateReminder(Reminder reminder){
+        reminderRepository.save(reminder);
     }
 
     //Wyślij wiadomość email z przypomnieniem; 30*60*1000 = 1800000 (wywołaj co 30 minut); 60*1000 = 60000 (pierwsze wywołanie po 1 minucie)
@@ -74,13 +73,16 @@ public class ReminderService {
                 ZonedDateTime localDateTime = ownerDateTime.withZoneSameInstant(ZoneId.of(user.getTimezone()));
                 ZonedDateTime now = ZonedDateTime.now(ZoneId.of(user.getTimezone()));
                 Duration duration = Duration.between(now, localDateTime);
-                DbReminder dbReminder = reminderRepository.findByUserIdAndNoteId(user.getId().intValue(),note.getId().intValue());
-                if(!dbReminder.isReminded() && !duration.isNegative() && duration.toMinutes()< dbReminder.getReminderTime()){
+                Reminder reminder = reminderRepository.findByUserIdAndNoteId(user.getId().intValue(),note.getId().intValue());
+                if(!reminder.isReminded() && !duration.isNegative() && duration.toMinutes()< reminder.getReminderTime()){
                     emailService.sendEmail(user.getEmail(),"Wydarzenie","<p>Przypomnienie o nadchodzącym wydarzeniu.</p><p>Wydarzenie: <b>" +
                             note.getTitle()+"</b></p>"+"<p>Opis: <b>"+note.getContent()+"</b></p><p>Zaplanowano na: <b>"+localDateTime.toLocalDate().toString() +
                             "</b>, godzina: <b>"+localDateTime.toLocalTime().toString()+"</b></p>");
-                    template.convertAndSendToUser(user.getUsername(),"/queue/message", new Reminder("Powiadomienie",
-                            note.getTitle(),localDateTime.toLocalDate().toString(),localDateTime.toLocalTime().toString(), dbReminder.getId().intValue()));
+                    reminder.setTitle("Powiadomienie");
+                    reminder.setContent(note.getTitle());
+                    reminder.setDate(localDateTime.toLocalDate().toString());
+                    reminder.setTime(localDateTime.toLocalTime().toString());
+                    template.convertAndSendToUser(user.getUsername(),"/queue/message", reminder);
                 }
             }
         }

@@ -7,10 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import paw.project.calendarapp.model.Invitation;
-import paw.project.calendarapp.model.Note;
-import paw.project.calendarapp.model.DbReminder;
-import paw.project.calendarapp.model.User;
+import paw.project.calendarapp.model.*;
 import paw.project.calendarapp.service.InvitationService;
 import paw.project.calendarapp.service.NoteService;
 import paw.project.calendarapp.service.ReminderService;
@@ -69,18 +66,18 @@ public class MessageController {
     @PostMapping("/remindLater/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void remindLater(@PathVariable Long id){
-        DbReminder dbReminder = reminderService.getReminderById(id);
-        dbReminder.setReminderTime(30);
-        reminderService.updateReminder(dbReminder);
+        Reminder reminder = reminderService.getReminderById(id);
+        reminder.setReminderTime(30);
+        reminderService.updateReminder(reminder);
     }
 
     //Przejdź do notki z przypomnienia
     @PostMapping("/goToNote/{id}")
     public String goToNote(@PathVariable Long id, RedirectAttributes redirectAttributes, @AuthenticationPrincipal User user){
-        DbReminder dbReminder = reminderService.getReminderById(id);
-        dbReminder.setReminded(true);
-        reminderService.updateReminder(dbReminder);
-        Note note = noteService.getNote((long) dbReminder.getNoteId());
+        Reminder reminder = reminderService.getReminderById(id);
+        reminder.setReminded(true);
+        reminderService.updateReminder(reminder);
+        Note note = noteService.getNote((long) reminder.getNoteId());
         User owner = userService.getUser((long) note.getUserId());
         note.setNoteDate(user.getTimezone(),owner.getTimezone());
         redirectAttributes.addFlashAttribute("calendarId",note.getCalendarId());
@@ -96,8 +93,8 @@ public class MessageController {
 
     //Wczytaj przypomnienia użytkownika i zapisz jako atrybut modelu
     public void loadReminders(Model model, User user){
-        List<DbReminder> reminders = reminderService.getAllRemindersByUserId(user.getId().intValue(),user.getTimezone());
-        reminders.removeIf(DbReminder::isReminded);
+        List<Reminder> reminders = reminderService.getAllRemindersByUserId(user.getId().intValue(),user.getTimezone());
+        reminders.removeIf(Reminder::isReminded);
         model.addAttribute("reminders", reminders);
     }
 

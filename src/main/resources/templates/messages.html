@@ -59,8 +59,8 @@
                 <div style="clear: both;"></div>
             </div>
             <div class="message" th:each="reminder : ${reminders}">
-                <p th:inline="text">Zaplanowane wydarzenie: <b>[[${reminder.noteTitle}]]</b></p>
-                <p th:inline="text">W dniu: <b>[[${reminder.noteDate}]]</b>, o godzinie: <b>[[${reminder.noteTime}]]</b></p>
+                <p th:inline="text">Zaplanowane wydarzenie: <b>[[${reminder.content}]]</b></p>
+                <p th:inline="text">W dniu: <b>[[${reminder.date}]]</b>, o godzinie: <b>[[${reminder.time}]]</b></p>
                 <div style="clear: both;"></div>
             </div>
             <p th:if="${invitations.isEmpty() and reminders.isEmpty()}" class="noMessages">Nie masz żadnych wiadomości.</p>
