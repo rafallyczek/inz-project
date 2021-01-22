@@ -1,3 +1,6 @@
+
+//Websocket
+//Zmienne
 var stompClient = null;
 var remindLaterURL = null;
 //Zasubskrybuj przypomnienia
@@ -53,4 +56,16 @@ function remindLater(){
 //Pokaż notkę
 function goToNote(){
     document.getElementById("wsMessageForm").submit();
+}
+
+//Theme
+//Zmień motyw
+function submitThemeForm() {
+    document.getElementById("themeForm").submit();
+}
+
+//Lista notek
+//Wybierz kalendarz
+function submitCalendarForm() {
+    document.getElementById("calendarForm").submit();
 }
