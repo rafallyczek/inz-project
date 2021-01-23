@@ -9,10 +9,8 @@ import java.util.List;
 @Repository
 public interface ReminderRepository extends CrudRepository<Reminder,Long> {
 
-    Reminder findByUserIdAndNoteId(int userId, int noteId);
-
     List<Reminder> findAllByUserId(int id);
 
-    void deleteAllByNoteId(int id);
+    void deleteAllByObjectId(int id);
 
 }

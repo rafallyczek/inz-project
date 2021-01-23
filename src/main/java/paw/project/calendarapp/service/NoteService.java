@@ -77,10 +77,11 @@ public class NoteService {
         for(CalendarUser calendarUser : calendarUsers){
             User user = userRepository.findById((long) calendarUser.getUserId()).get();
             Reminder reminder = new Reminder();
-            reminder.setNoteId(note.getId().intValue());
+            reminder.setObjectId(note.getId().intValue());
             reminder.setUserId(calendarUser.getUserId());
             reminder.setReminderTime(user.getReminderTime());
             reminder.setReminded(false);
+            reminder.setType("note");
             reminderRepository.save(reminder);
         }
     }
@@ -105,7 +106,7 @@ public class NoteService {
     //Usuń notkę
     public void deleteNote(Long id){
         noteRepository.deleteById(id);
-        reminderRepository.deleteAllByNoteId(id.intValue());
+        reminderRepository.deleteAllByObjectId(id.intValue());
     }
 
     //Zmień status notki

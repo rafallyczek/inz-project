@@ -2,7 +2,6 @@
 //Websocket
 //Zmienne
 var stompClient = null;
-var remindLaterURL = null;
 //Zasubskrybuj przypomnienia
 function connect(){
     var socket = new SockJS('/websocket');
@@ -22,12 +21,28 @@ function disconnect(){
 //Pokaż wiadomość
 function showMessage(message){
     var wsMessage = document.getElementById("wsMessage");
+    var data = message.data;
     document.getElementById("wsMessageTitle").innerText = message.title;
-    document.getElementById("goToNote").innerText = message.content;
-    document.getElementById("eventDate").innerText = message.date;
-    document.getElementById("eventTime").innerText = message.time;
-    document.getElementById("wsMessageForm").action = "/messages/goToNote/" + message.id;
-    remindLaterURL = "/messages/remindLater/" + message.id;
+    document.getElementById("wsMessageContent").innerHTML = message.content;
+    for(var key in data){
+        if(data.hasOwnProperty(key)){
+            if(key!=="id" && key!=="type"){
+                var p = document.createElement("p");
+                p.classList.add("wsMessageData");
+                p.innerHTML = key+"<span class='bold'>"+data[key]+"</span>";
+                wsMessage.appendChild(p);
+            }else if(data[key]==="note"){
+                var button = document.createElement("button");
+                button.classList.add("remindLaterButton");
+                button.setAttribute("onclick","remindLater("+data["id"]+")");
+                button.innerText = "Przypomnij później";
+                wsMessage.appendChild(button);
+                document.getElementById("wsMessageForm").action = "/messages/goTo/note/"+data["id"];
+            }else if(data[key]==="invitation"){
+                document.getElementById("wsMessageForm").action = "/messages/goTo/messages/"+data["id"];
+            }
+        }
+    }
     wsMessage.style.display = "block";
     var styles = window.getComputedStyle(wsMessage);
     var bottom = parseInt(styles.getPropertyValue("bottom"),10);
@@ -44,7 +59,8 @@ function showMessage(message){
     }
 }
 //Przypomnij później
-function remindLater(){
+function remindLater(id){
+    var remindLaterURL = "/messages/remindLater/" + id;
     var token = $("meta[name='_csrf']").attr("content");
     $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
         jqXHR.setRequestHeader('X-CSRF-Token', token);
@@ -54,7 +70,7 @@ function remindLater(){
     document.getElementById("wsMessage").style.display = "none";
 }
 //Pokaż notkę
-function goToNote(){
+function goTo(){
     document.getElementById("wsMessageForm").submit();
 }
 

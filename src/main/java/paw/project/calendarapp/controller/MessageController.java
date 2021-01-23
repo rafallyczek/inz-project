@@ -38,7 +38,6 @@ public class MessageController {
     public void setModelAttributes(Model model, @AuthenticationPrincipal User user){
         if(user!=null){
             loadInvitations(model, user);
-            loadReminders(model, user);
         }
     }
 
@@ -72,12 +71,12 @@ public class MessageController {
     }
 
     //Przejdź do notki z przypomnienia
-    @PostMapping("/goToNote/{id}")
+    @PostMapping("/goTo/note/{id}")
     public String goToNote(@PathVariable Long id, RedirectAttributes redirectAttributes, @AuthenticationPrincipal User user){
         Reminder reminder = reminderService.getReminderById(id);
         reminder.setReminded(true);
         reminderService.updateReminder(reminder);
-        Note note = noteService.getNote((long) reminder.getNoteId());
+        Note note = noteService.getNote((long) reminder.getObjectId());
         User owner = userService.getUser((long) note.getUserId());
         note.setNoteDate(user.getTimezone(),owner.getTimezone());
         redirectAttributes.addFlashAttribute("calendarId",note.getCalendarId());
@@ -85,17 +84,19 @@ public class MessageController {
         return "redirect:/calendar/setDayNumberAndCalendarId";
     }
 
+    //Przejdź do wiadomości z przypomnienia
+    @PostMapping("/goTo/messages/{id}")
+    public String goToMessages(@PathVariable Long id){
+        Reminder reminder = reminderService.getReminderById(id);
+        reminder.setReminded(true);
+        reminderService.updateReminder(reminder);
+        return "redirect:/messages";
+    }
+
     //Wczytaj zaproszenia użytkownika i zapisz jako atrybut modelu
     public void loadInvitations(Model model, User user){
         List<Invitation> invitations = invitationService.getInvitationsByUserId(user.getId().intValue());
         model.addAttribute("invitations", invitations);
-    }
-
-    //Wczytaj przypomnienia użytkownika i zapisz jako atrybut modelu
-    public void loadReminders(Model model, User user){
-        List<Reminder> reminders = reminderService.getAllRemindersByUserId(user.getId().intValue(),user.getTimezone());
-        reminders.removeIf(Reminder::isReminded);
-        model.addAttribute("reminders", reminders);
     }
 
 }

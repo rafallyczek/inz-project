@@ -1,14 +1,8 @@
 package paw.project.calendarapp.service;
 
 import org.springframework.stereotype.Service;
-import paw.project.calendarapp.model.CalendarUser;
-import paw.project.calendarapp.model.DbCalendar;
-import paw.project.calendarapp.model.Invitation;
-import paw.project.calendarapp.model.User;
-import paw.project.calendarapp.repository.CalendarRepository;
-import paw.project.calendarapp.repository.CalendarUserRepository;
-import paw.project.calendarapp.repository.InvitationRepository;
-import paw.project.calendarapp.repository.UserRepository;
+import paw.project.calendarapp.model.*;
+import paw.project.calendarapp.repository.*;
 
 import javax.mail.MessagingException;
 import java.util.ArrayList;
@@ -21,13 +15,20 @@ public class InvitationService {
     private UserRepository userRepository;
     private CalendarRepository calendarRepository;
     private CalendarUserRepository calendarUserRepository;
+    private ReminderRepository reminderRepository;
     private EmailService emailService;
 
-    public InvitationService(InvitationRepository invitationRepository, UserRepository userRepository, CalendarRepository calendarRepository, CalendarUserRepository calendarUserRepository, EmailService emailService){
+    public InvitationService(InvitationRepository invitationRepository,
+                             UserRepository userRepository,
+                             CalendarRepository calendarRepository,
+                             CalendarUserRepository calendarUserRepository,
+                             ReminderRepository reminderRepository,
+                             EmailService emailService){
         this.invitationRepository = invitationRepository;
         this.userRepository = userRepository;
         this.calendarRepository = calendarRepository;
         this.calendarUserRepository = calendarUserRepository;
+        this.reminderRepository = reminderRepository;
         this.emailService = emailService;
     }
 
@@ -39,6 +40,18 @@ public class InvitationService {
                 "<p>Od użytkownika: <b>"+user.getUsername()+"</b></p>" +
                 "<a href='https://localhost:8443/messages'>Zobacz zaproszenie</a>");
         invitationRepository.save(invitation);
+        Reminder reminder = new Reminder();
+        reminder.setObjectId(invitation.getId().intValue());
+        reminder.setUserId(invitation.getReceiverId());
+        reminder.setReminderTime(user.getReminderTime());
+        reminder.setReminded(false);
+        reminder.setType("invitation");
+        reminderRepository.save(reminder);
+    }
+
+    //Zwróć zaproszenie
+    public Invitation getInvitation(Long id){
+        return invitationRepository.findById(id).get();
     }
 
     //Zwróć zaproszenia po id użytkownika

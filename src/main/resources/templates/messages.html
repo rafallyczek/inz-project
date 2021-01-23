@@ -65,12 +65,7 @@
                 <a class="rejectButton" th:href="@{/messages/reject/{id}(id=${invitation.id})}">Odrzuć</a>
                 <div style="clear: both;"></div>
             </div>
-            <div class="message" th:each="reminder : ${reminders}">
-                <p th:inline="text">Zaplanowane wydarzenie: <b>[[${reminder.content}]]</b></p>
-                <p th:inline="text">W dniu: <b>[[${reminder.date}]]</b>, o godzinie: <b>[[${reminder.time}]]</b></p>
-                <div style="clear: both;"></div>
-            </div>
-            <p th:if="${invitations.isEmpty() and reminders.isEmpty()}" class="noMessages">Nie masz żadnych wiadomości.</p>
+            <p th:if="${invitations.isEmpty()}" class="noMessages">Nie masz żadnych wiadomości.</p>
 
         </div>
 

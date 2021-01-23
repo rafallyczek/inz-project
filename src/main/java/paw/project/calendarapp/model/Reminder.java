@@ -13,10 +13,11 @@ public class Reminder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer noteId;
+    private Integer objectId;
     private Integer userId;
     private Integer reminderTime;
     private boolean isReminded;
+    private String type;
 
     @Transient
     private String title;
