@@ -31,7 +31,11 @@ public class CalendarController {
 
     //Wstrzykiwanie zależności
     @Autowired
-    public CalendarController(Calendar calendar, NoteService noteService, CalendarService calendarService, UserService userService, InvitationService invitationService){
+    public CalendarController(Calendar calendar,
+                              NoteService noteService,
+                              CalendarService calendarService,
+                              UserService userService,
+                              InvitationService invitationService){
         this.calendar = calendar;
         this.noteService = noteService;
         this.calendarService = calendarService;

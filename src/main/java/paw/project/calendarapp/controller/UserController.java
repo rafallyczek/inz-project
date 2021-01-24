@@ -33,7 +33,10 @@ public class UserController {
 
     //Wstrzykiwanie repozytorium
     @Autowired
-    public UserController(UserRepository userRepository, PasswordEncoder passwordEncoder, UserService userService, ReminderService reminderService){
+    public UserController(UserRepository userRepository,
+                          PasswordEncoder passwordEncoder,
+                          UserService userService,
+                          ReminderService reminderService){
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;

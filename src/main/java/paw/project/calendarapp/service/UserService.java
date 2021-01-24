@@ -24,7 +24,9 @@ public class UserService implements UserDetailsService {
 
     //Wstrzykiwanie repozytorium użytkowników
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, CalendarUserRepository calendarUserRepository){
+    public UserService(UserRepository userRepository,
+                       PasswordEncoder passwordEncoder,
+                       CalendarUserRepository calendarUserRepository){
         this.userRepository = userRepository;
         this.calendarUserRepository = calendarUserRepository;
         this.passwordEncoder = passwordEncoder;

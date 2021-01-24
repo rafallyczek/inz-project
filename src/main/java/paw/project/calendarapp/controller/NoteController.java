@@ -37,7 +37,9 @@ public class NoteController {
 
     //Wstrzykiwanie serwisu
     @Autowired
-    public NoteController(NoteService noteService, CalendarService calendarService, RequestService requestService){
+    public NoteController(NoteService noteService,
+                          CalendarService calendarService,
+                          RequestService requestService){
         this.noteService = noteService;
         this.calendarService = calendarService;
         this.requestService = requestService;

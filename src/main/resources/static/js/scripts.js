@@ -2,13 +2,17 @@
 //Websocket
 //Zmienne
 var stompClient = null;
+var isDisplayed = false;
 //Zasubskrybuj przypomnienia
 function connect(){
     var socket = new SockJS('/websocket');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function(frame){
         stompClient.subscribe('/user/queue/message',function(message){
-            showMessage(JSON.parse(message.body));
+            if(!isDisplayed){
+                showMessage(JSON.parse(message.body));
+                isDisplayed = true;
+            }
         });
     });
 }
@@ -68,10 +72,12 @@ function remindLater(id){
     $.post(remindLaterURL);
     document.getElementById("wsMessage").style.bottom = "-160px";
     document.getElementById("wsMessage").style.display = "none";
+    isDisplayed = false;
 }
 //Pokaż notkę
 function goTo(){
     document.getElementById("wsMessageForm").submit();
+    isDisplayed = false;
 }
 
 //Theme

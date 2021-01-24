@@ -24,7 +24,10 @@ public class NoteService {
     private ReminderRepository reminderRepository;
 
     @Autowired
-    public NoteService(NoteRepository noteRepository, UserRepository userRepository, CalendarUserRepository calendarUserRepository, ReminderRepository reminderRepository){
+    public NoteService(NoteRepository noteRepository,
+                       UserRepository userRepository,
+                       CalendarUserRepository calendarUserRepository,
+                       ReminderRepository reminderRepository){
         this.noteRepository = noteRepository;
         this.userRepository = userRepository;
         this.calendarUserRepository = calendarUserRepository;

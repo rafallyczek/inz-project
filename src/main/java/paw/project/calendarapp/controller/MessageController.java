@@ -26,7 +26,10 @@ public class MessageController {
 
     //Wstrzykiwanie zależności
     @Autowired
-    public MessageController(InvitationService invitationService, ReminderService reminderService, NoteService noteService, UserService userService){
+    public MessageController(InvitationService invitationService,
+                             ReminderService reminderService,
+                             NoteService noteService,
+                             UserService userService){
         this.invitationService = invitationService;
         this.reminderService = reminderService;
         this.noteService = noteService;

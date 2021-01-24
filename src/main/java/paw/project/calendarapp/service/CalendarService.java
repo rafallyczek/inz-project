@@ -15,7 +15,8 @@ public class CalendarService {
     private CalendarRepository calendarRepository;
     private CalendarUserRepository calendarUserRepository;
 
-    public CalendarService(CalendarRepository calendarRepository, CalendarUserRepository calendarUserRepository){
+    public CalendarService(CalendarRepository calendarRepository,
+                           CalendarUserRepository calendarUserRepository){
         this.calendarRepository = calendarRepository;
         this.calendarUserRepository = calendarUserRepository;
     }
