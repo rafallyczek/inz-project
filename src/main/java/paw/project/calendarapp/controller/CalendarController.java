@@ -122,10 +122,18 @@ public class CalendarController {
 
     //Wyświetl formularz dodający notkę
     @GetMapping("/addNote")
-    public String showAddNoteForm(){
+    public String showAddNoteForm(@AuthenticationPrincipal User user, Model model){
         if(this.dayNumber==-1){
             return "redirect:/calendar";
         }
+        DbCalendar dbCalendar = calendarService.getCalendar((long) this.calendarId);
+        if(dbCalendar.getOwnerId()==user.getId().intValue()){
+            model.addAttribute("isOwner",true);
+        }else{
+            model.addAttribute("isOwner",false);
+        }
+        List<User> calendarUsers = userService.getAllUsersByCalendarId(this.calendarId);
+        model.addAttribute("calendarUsers",calendarUsers);
         return "add-note";
     }
 
