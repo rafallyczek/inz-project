@@ -109,7 +109,12 @@ public class NoteService {
     //Usuń notkę
     public void deleteNote(Long id){
         noteRepository.deleteById(id);
-        reminderRepository.deleteAllByObjectId(id.intValue());
+        List<Reminder> noteReminders = reminderRepository.findAllByObjectId(id.intValue());
+        for(Reminder reminder : noteReminders){
+            if(reminder.getType().equals("note")){
+                reminderRepository.deleteById(reminder.getId());
+            }
+        }
     }
 
     //Zmień status notki

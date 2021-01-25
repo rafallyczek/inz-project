@@ -11,6 +11,6 @@ public interface ReminderRepository extends CrudRepository<Reminder,Long> {
 
     List<Reminder> findAllByUserId(int id);
 
-    void deleteAllByObjectId(int id);
+    List<Reminder> findAllByObjectId(int id);
 
 }
