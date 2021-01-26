@@ -60,9 +60,10 @@
         <div class="editCalendarForm">
 
             <!--Formularz edytujący kalendarz-->
-            <p>Edytuj kalendarz</p>
-            <hr>
-            <form method="POST" th:action="@{/calendar/update}" th:object="${updateCalendar}">
+            <p th:if="${!isOwner}" class="noPrivileges">Nie posiadasz uprawnień do edycji kalendarza.</p>
+            <p th:if="${isOwner}">Edytuj kalendarz</p>
+            <hr th:if="${isOwner}">
+            <form method="POST" th:action="@{/calendar/update}" th:object="${updateCalendar}" th:if="${isOwner}">
                 <input id="idEdit" type="hidden" th:field="*{id}">
                 <div class="formInputs">
                     <label for="titleEdit">Tytuł</label>

@@ -166,12 +166,17 @@ public class CalendarController {
 
     //Wyświetl formularz edytujący kalendarz
     @GetMapping("/editCalendar")
-    public String showEditCalendarForm(Model model){
+    public String showEditCalendarForm(Model model, @AuthenticationPrincipal User user){
         if(this.calendarId==-1){
             return "calendar-list";
         }
         DbCalendar dbCalendar = calendarService.getCalendar((long) this.calendarId);
-        model.addAttribute("updateCalendar", dbCalendar);
+        if(dbCalendar.getOwnerId()==user.getId().intValue()){
+            model.addAttribute("isOwner",true);
+            model.addAttribute("updateCalendar", dbCalendar);
+        }else{
+            model.addAttribute("isOwner",false);
+        }
         return "update-calendar";
     }
 

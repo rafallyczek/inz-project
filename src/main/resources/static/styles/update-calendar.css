@@ -176,3 +176,6 @@ input, label{
     background-color: #39ac6b;
     cursor: pointer;
 }
+.noPrivileges{
+    margin-bottom: 10px !important;
+}
