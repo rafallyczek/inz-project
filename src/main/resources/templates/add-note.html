@@ -72,7 +72,7 @@
                     <label for="time">Czas</label>
                     <input id="time" type="time" th:field="*{time}">
                 </div>
-                <div class="formInputs" th:if="${isOwner}">
+                <div id="userIdInputs" class="formInputs" th:if="${isOwner}">
                     <label for="id">Użytkownik</label>
                     <select id="id" name="id" th:field="*{userId}">
                         <option th:each="user : ${calendarUsers}" th:text="${user.username}" th:value="${user.id}"></option>
@@ -80,7 +80,7 @@
                 </div>
                 <div class="formInputs">
                     <label for="istask">Typ</label>
-                    <select id="istask" name="istask" th:field="*{isTask}">
+                    <select id="istask" name="istask" th:field="*{isTask}" onchange="changeDisplay()">
                         <option th:value="false">Zwykła notka</option>
                         <option th:value="true">Notka-zadanie</option>
                     </select>

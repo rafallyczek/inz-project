@@ -62,6 +62,9 @@ h1{
 .formInputs{
     margin-bottom: 5px;
 }
+#userIdInputs{
+    display: none;
+}
 .addNoteForm form{
     margin-bottom: 5px;
 }

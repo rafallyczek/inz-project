@@ -78,7 +78,10 @@ public class NoteController {
 
     //Dodaj notkę
     @PostMapping("/add")
-    public String addNote(@ModelAttribute("addNote") AddNote addNote){
+    public String addNote(@ModelAttribute("addNote") AddNote addNote, @AuthenticationPrincipal User user){
+        if(!addNote.getIsTask()){
+            addNote.setUserId(user.getId().intValue());
+        }
         noteService.addNote(addNote);
         return "redirect:/calendar";
     }

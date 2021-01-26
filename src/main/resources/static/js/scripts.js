@@ -91,3 +91,17 @@ function submitThemeForm() {
 function submitCalendarForm() {
     document.getElementById("calendarForm").submit();
 }
+
+//Dodawanie notek
+//Pokaż lub schowaj pole z userId
+function changeDisplay(){
+    var div = document.getElementById("userIdInputs");
+    if(div!==null){
+        var styles = window.getComputedStyle(div);
+        if(styles.getPropertyValue("display")==="none"){
+            div.style.display = "block";
+        }else{
+            div.style.display = "none";
+        }
+    }
+}
