@@ -182,7 +182,7 @@ public class CalendarController {
 
     //Wyświetl szczegóły dnia (notki-zadania)
     @GetMapping("/editCalendarUser")
-    public String showAddUserForm(Model model){
+    public String showAddUserForm(Model model, @AuthenticationPrincipal User user){
         if(this.calendarId==-1){
             return "redirect:/calendar";
         }
@@ -194,6 +194,12 @@ public class CalendarController {
         }
         model.addAttribute("calendarUsers", calendarUsers);
         model.addAttribute("invitedUsers", invitedUsers);
+        DbCalendar dbCalendar = calendarService.getCalendar((long) this.calendarId);
+        if(dbCalendar.getOwnerId()==user.getId().intValue()){
+            model.addAttribute("isOwner",true);
+        }else{
+            model.addAttribute("isOwner",false);
+        }
         return "update-calendar-user";
     }
 
