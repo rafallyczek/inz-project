@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" th:href="${#themes.code('styleSheet')}">
     <link rel="stylesheet" type="text/css" href="/styles/all-notes.css">
     <link rel="stylesheet" type="text/css" href="/fontello/css/fontello.css">
-    <link rel="stylesheet" type="text/css" href="/styles/websocket.css">
+    <link rel="stylesheet" type="text/css" href="/styles/common.css">
     <script src="/webjars/sockjs-client/1.1.2/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/2.3.3-1/stomp.min.js"></script>
     <script src="/webjars/jquery/3.5.1/jquery.min.js"></script>
@@ -98,6 +98,12 @@
         <form id="wsMessageForm" method="POST" th:action="@{/}">
             <p id="wsMessageContent"></p>
         </form>
+    </div>
+
+    <div th:if="${#request.getAttribute('noCookieConsent')}" class="cookieConsent">
+        <p>Strona używa plików cookie.</p>
+        <a th:href="@{/setCookie}" class="greenButton">OK</a>
+        <div style="clear: both;"></div>
     </div>
 
 </body>

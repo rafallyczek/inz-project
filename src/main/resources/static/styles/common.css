@@ -1,3 +1,4 @@
+/* Websocket */
 @keyframes blink {
     0% {-webkit-box-shadow: 0 0 15px 1px rgba(0,0,0,1);
         -moz-box-shadow: 0 0 15px 1px rgba(0,0,0,1);
@@ -88,4 +89,41 @@
 .remindLaterButton:hover{
     background-color: gray;
     cursor: pointer;
+}
+
+/* Cookie consent */
+
+.greenButton{
+    text-decoration: none;
+    color: white;
+    background-color: seagreen;
+    padding: 5px;
+    border-radius: 5px;
+    display: block;
+    font: 400 13.3333px Arial;
+}
+.greenButton:hover{
+    background-color: #39ac6b;
+    cursor: pointer;
+}
+.cookieConsent{
+    position: fixed;
+    left: 10px;
+    bottom: 10px;
+    background-color: darkgray;
+    border-radius: 5px;
+    padding: 5px;
+}
+.cookieConsent p{
+    display: block;
+    float: left;
+    margin-top: 3px;
+    margin-bottom: 0;
+}
+.cookieConsent a{
+    display: block;
+    float: left;
+    width: 30px;
+    text-align: center;
+    margin-left: 5px;
 }

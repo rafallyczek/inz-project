@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.theme.CookieThemeResolver;
 import org.springframework.web.servlet.theme.ThemeChangeInterceptor;
-import paw.project.calendarapp.interceptor.CookieRefreshInterceptor;
+import paw.project.calendarapp.request.CookieRefreshInterceptor;
 
 @Configuration
 public class ThemeConfig implements WebMvcConfigurer {

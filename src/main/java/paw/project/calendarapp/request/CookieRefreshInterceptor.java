@@ -1,4 +1,4 @@
-package paw.project.calendarapp.interceptor;
+package paw.project.calendarapp.request;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 

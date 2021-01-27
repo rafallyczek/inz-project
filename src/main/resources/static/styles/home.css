@@ -106,7 +106,7 @@ h1{
     background-color: #d62929;
     cursor: pointer;
 }
-.loginButton{
+.greenButton{
     text-decoration: none;
     color: white;
     background-color: seagreen;
@@ -115,7 +115,7 @@ h1{
     display: block;
     font: 400 13.3333px Arial;
 }
-.loginButton:hover{
+.greenButton:hover{
     background-color: #39ac6b;
     cursor: pointer;
 }
