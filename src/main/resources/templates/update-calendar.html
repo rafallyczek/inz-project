@@ -30,7 +30,7 @@
             <span>| Użytkownik:</span>
             <a sec:authentication="name" th:href="@{/user}"></a>
             <form method="POST" th:action="@{/logout}">
-                <input class="logout" type="submit" value="Wyloguj" onclick="disconnect()">
+                <input class="redInputButton" type="submit" value="Wyloguj" onclick="disconnect()">
             </form>
             <div style="clear: both;"></div>
         </div>
@@ -48,14 +48,14 @@
         </div>
     </div>
 
-    <div class="calendarHeader">
+    <div class="contentHeader">
         <p class="title">Edytuj kalendarz</p>
     </div>
 
     <div class="container">
 
         <!-- Przejście do dodawania użytkowników do kalendarza -->
-        <a class="editCalendarUserButton" th:href="@{/calendar/editCalendarUser}">Użytkownicy</a>
+        <a class="greenHyperlinkButton" th:href="@{/calendar/editCalendarUser}">Użytkownicy</a>
 
         <div class="editCalendarForm">
 
@@ -69,8 +69,8 @@
                     <label for="titleEdit">Tytuł</label>
                     <input id="titleEdit" type="text" th:field="*{title}">
                 </div>
-                <input class="save" type="submit" value="Zapisz">
-                <input class="reset" type="reset" value="Resetuj">
+                <input class="greenInputButton" type="submit" value="Zapisz">
+                <input class="redInputButton" type="reset" value="Resetuj">
                 <div style="clear: both"></div>
             </form>
             <!--Powrót do szczegółów dnia-->

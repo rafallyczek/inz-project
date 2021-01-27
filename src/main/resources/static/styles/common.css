@@ -1,4 +1,169 @@
-/* Websocket */
+/* Wspólne */
+
+body{
+    margin: 0;
+}
+.userBar{
+    width: 100%;
+    height: 35px;
+    padding: 5px;
+    position: relative;
+    box-sizing: border-box;
+}
+.bar, .barLogin{
+    position: absolute;
+    right: 5px;
+}
+.themeForm{
+    position: absolute;
+    left: 5px;
+}
+.themeForm select{
+    height: 25px;
+}
+.bar form, .bar a, .barLogin a{
+    float: left;
+}
+.bar a{
+    margin: 3px 5px 0 5px;
+}
+.bar span{
+    display: block;
+    margin: 3px 0 0 0;
+    float: left;
+}
+.redInputButton{
+    text-decoration: none;
+    color: white;
+    background-color: firebrick;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+}
+.redInputButton:hover{
+    background-color: #d62929;
+    cursor: pointer;
+}
+.greenInputButton{
+    text-decoration: none;
+    color: white;
+    background-color: seagreen;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+}
+.greenInputButton:hover{
+    background-color: #39ac6b;
+    cursor: pointer;
+}
+.redHyperlinkButton{
+    text-decoration: none;
+    color: white;
+    background-color: firebrick;
+    padding: 5px;
+    border-radius: 5px;
+    display: block;
+    font: 400 13.3333px Arial;
+}
+.redHyperlinkButton:hover{
+    background-color: #d62929;
+    cursor: pointer;
+}
+.greenHyperlinkButton{
+    text-decoration: none;
+    color: white;
+    background-color: seagreen;
+    padding: 5px;
+    border-radius: 5px;
+    display: block;
+    font: 400 13.3333px Arial;
+}
+.greenHyperlinkButton:hover{
+    background-color: #39ac6b;
+    cursor: pointer;
+}
+.greyHyperlinkButton{
+    text-decoration: none;
+    color: white;
+    background-color: #707070;
+    padding: 5px;
+    border-radius: 5px;
+    display: block;
+    font: 400 13.3333px Arial;
+}
+.greyHyperlinkButton:hover{
+    background-color: gray;
+    cursor: pointer;
+}
+.header{
+    width: 100%;
+    background-color: cornflowerblue;
+    color: white;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.navBar{
+    margin: 0 auto 10px auto;
+    background-color: cornflowerblue;
+    width: 100%;
+    font-size: 0;
+    text-align: center;
+}
+.nav{
+    margin-left: auto;
+    margin-right: auto;
+    display: inline-block;
+}
+.navBar a{
+    display: inline-block;
+    padding: 5px 10px;
+    color: white;
+    font-size: 20px;
+    text-decoration: none;
+}
+h1{
+    text-align: center;
+    font-size: 50px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.contentHeader{
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+    background-color: darkgray;
+    padding: 10px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
+    -moz-box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
+    box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
+}
+.title{
+    font-size: 50px;
+    text-align: center;
+    margin: 0;
+}
+.container{
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    background-color: darkgray;
+    padding: 10px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
+    -moz-box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
+    box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
+}
+.formInputs{
+    margin-bottom: 5px;
+}
+input, label{
+    display: block;
+}
+
+/* WebSocket */
 @keyframes blink {
     0% {-webkit-box-shadow: 0 0 15px 1px rgba(0,0,0,1);
         -moz-box-shadow: 0 0 15px 1px rgba(0,0,0,1);
@@ -91,7 +256,7 @@
     cursor: pointer;
 }
 
-/* Cookie consent */
+/* Cookies */
 
 .greenButton{
     text-decoration: none;

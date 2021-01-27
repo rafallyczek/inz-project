@@ -30,12 +30,12 @@
             <span>| Użytkownik:</span>
             <a sec:authentication="name" th:href="@{/user}"></a>
             <form method="POST" th:action="@{/logout}">
-                <input class="logout" type="submit" value="Wyloguj" onclick="disconnect()">
+                <input class="redInputButton" type="submit" value="Wyloguj" onclick="disconnect()">
             </form>
             <div style="clear: both;"></div>
         </div>
         <div class="barLogin" sec:authorize="!isAuthenticated()">
-            <a class="loginButton" th:href="@{/login}">Logowanie</a>
+            <a class="greenHyperlinkButton" th:href="@{/login}">Logowanie</a>
             <div style="clear: both;"></div>
         </div>
     </div>
@@ -52,7 +52,7 @@
         </div>
     </div>
 
-    <div class="loginHeader">
+    <div class="contentHeader">
         <p class="title">Logowanie</p>
     </div>
 
@@ -68,7 +68,7 @@
                     <label for="password">Hasło</label>
                     <input id="password" name="password" type="password">
                 </div>
-                <input class="login" type="submit" value="Zaloguj">
+                <input class="greenInputButton" type="submit" value="Zaloguj">
             </form>
             <a href="/user/register">Nie masz konta? Zarejestruj się</a>
         </div>

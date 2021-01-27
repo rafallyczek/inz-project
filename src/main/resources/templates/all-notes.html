@@ -27,11 +27,11 @@
         </form>
         <div class="bar" sec:authorize="isAuthenticated()">
             <script type="text/javascript">connect()</script>
-            <a th:href="@{/messages}">Wiadomosci</a>
+            <a th:href="@{/messages}">Wiadomości</a>
             <span>| Użytkownik:</span>
             <a sec:authentication="name" th:href="@{/user}"></a>
             <form method="POST" th:action="@{/logout}">
-                <input class="logout" type="submit" value="Wyloguj" onclick="disconnect()">
+                <input class="redInputButton" type="submit" value="Wyloguj" onclick="disconnect()">
             </form>
             <div style="clear: both;"></div>
         </div>
@@ -49,8 +49,8 @@
         </div>
     </div>
 
-    <div class="dayHeader">
-        <p class="date" th:text="${dayNumber}+' '+${calendar.monthName}+' '+${calendar.year}"></p>
+    <div class="contentHeader">
+        <p class="title" th:text="${dayNumber}+' '+${calendar.monthName}+' '+${calendar.year}"></p>
     </div>
 
     <div class="container">
@@ -58,9 +58,9 @@
         <div class="day">
 
             <!-- Przejście do notek-zadań -->
-            <a class="taskNoteButton" th:href="@{/calendar/taskNotes}">Notki-zadania</a>
+            <a class="greyHyperlinkButton" th:href="@{/calendar/taskNotes}">Notki-zadania</a>
             <!-- Przejście do formularza dodania notki -->
-            <a class="addButton" th:href="@{/calendar/addNote}">Dodaj notkę</a>
+            <a class="greenHyperlinkButton" th:href="@{/calendar/addNote}">Dodaj notkę</a>
             <div style="clear: both"></div>
 
             <div class="notesWrapper">

@@ -30,7 +30,7 @@
             <span>| Użytkownik:</span>
             <a sec:authentication="name" th:href="@{/user}"></a>
             <form method="POST" th:action="@{/logout}">
-                <input class="logout" type="submit" value="Wyloguj" onclick="disconnect()">
+                <input class="redInputButton" type="submit" value="Wyloguj" onclick="disconnect()">
             </form>
             <div style="clear: both;"></div>
         </div>
@@ -48,8 +48,8 @@
         </div>
     </div>
 
-    <div class="dayHeader">
-        <p class="date" th:text="${dayNumber}+' '+${calendar.monthName}+' '+${calendar.year}"></p>
+    <div class="contentHeader">
+        <p class="title" th:text="${dayNumber}+' '+${calendar.monthName}+' '+${calendar.year}"></p>
     </div>
 
     <div class="container">
@@ -82,12 +82,12 @@
                 </div>
                 <div style="clear: both"></div>
                 <input id="dateEdit" type="hidden" th:field="*{date}">
-                <input class="save" type="submit" value="Zapisz">
-                <input class="reset" type="reset" value="Resetuj">
+                <input class="greenInputButton" type="submit" value="Zapisz">
+                <input class="redInputButton" type="reset" value="Resetuj">
                 <div style="clear: both"></div>
             </form>
             <!--Powrót do szczegółów dnia-->
-            <a th:href="@{/calendar/day}">Powrót do dnia</a>
+            <a th:href="@{/calendar/allNotes}">Powrót do dnia</a>
 
         </div>
 

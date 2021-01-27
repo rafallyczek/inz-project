@@ -30,12 +30,12 @@
             <span th:inline="text">| [[#{lang.user}]]</span>
             <a sec:authentication="name" th:href="@{/user}"></a>
             <form method="POST" th:action="@{/logout}">
-                <input class="logout" type="submit" th:value="#{lang.logOut}" onclick="disconnect()">
+                <input class="redInputButton" type="submit" th:value="#{lang.logOut}" onclick="disconnect()">
             </form>
             <div style="clear: both;"></div>
         </div>
         <div class="barLogin" sec:authorize="!isAuthenticated()">
-            <a class="greenButton" th:href="@{/login}" th:text="#{lang.logging}"></a>
+            <a class="greenHyperlinkButton" th:href="@{/login}" th:text="#{lang.logging}"></a>
             <div style="clear: both;"></div>
         </div>
     </div>
@@ -52,7 +52,7 @@
         </div>
     </div>
 
-    <div class="homeHeader">
+    <div class="contentHeader">
         <p class="title" th:text="#{lang.mainPage}"></p>
     </div>
 
@@ -71,7 +71,8 @@
 
     <div th:if="${#request.getAttribute('noCookieConsent')}" class="cookieConsent">
         <p>Strona używa plików cookie.</p>
-        <a th:href="@{/setCookie}" class="greenButton">OK</a>
+        <p th:text="${#request.getAttribute('noCookieConsent')}"></p>
+        <a th:href="@{/setCookie}" class="greenHyperlinkButton">OK</a>
         <div style="clear: both;"></div>
     </div>
 

@@ -23,6 +23,7 @@ public class CookieFilter implements Filter {
             for(Cookie cookie : cookies){
                 if(cookie.getName().equals("cookieConsent")){
                     servletRequest.setAttribute("noCookieConsent",false);
+                    break;
                 }else{
                     servletRequest.setAttribute("noCookieConsent",true);
                 }

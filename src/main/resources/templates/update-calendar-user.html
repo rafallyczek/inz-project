@@ -30,7 +30,7 @@
             <span>| Użytkownik:</span>
             <a sec:authentication="name" th:href="@{/user}"></a>
             <form method="POST" th:action="@{/logout}">
-                <input class="logout" type="submit" value="Wyloguj" onclick="disconnect()">
+                <input class="redInputButton" type="submit" value="Wyloguj" onclick="disconnect()">
             </form>
             <div style="clear: both;"></div>
         </div>
@@ -48,14 +48,14 @@
         </div>
     </div>
 
-    <div class="calendarHeader">
+    <div class="contentHeader">
         <p class="title">Edytuj kalendarz</p>
     </div>
 
     <div class="container">
 
         <!-- Przejście do edycji kalendarza -->
-        <a class="editCalendarButton" th:href="@{/calendar/editCalendar}">Edytuj kalendarz</a>
+        <a class="greenHyperlinkButton" th:href="@{/calendar/editCalendar}">Edytuj kalendarz</a>
 
         <div class="addUserForm">
 
@@ -82,8 +82,8 @@
                         <label for="username">Nazwa użytkownika</label>
                         <input id="username" type="text" name="username">
                     </div>
-                    <input class="search" type="submit" value="Wyszukaj">
-                    <input class="reset" type="reset" value="Resetuj">
+                    <input class="greenInputButton" type="submit" value="Wyszukaj">
+                    <input class="redInputButton" type="reset" value="Resetuj">
                     <div style="clear: both"></div>
                 </form>
                 <!--Lista znalezionych użytkowników-->

@@ -30,12 +30,12 @@
             <span>| Użytkownik:</span>
             <a sec:authentication="name" th:href="@{/user}"></a>
             <form method="POST" th:action="@{/logout}">
-                <input class="reset" type="submit" value="Wyloguj" onclick="disconnect()">
+                <input class="redInputButton" type="submit" value="Wyloguj" onclick="disconnect()">
             </form>
             <div style="clear: both;"></div>
         </div>
         <div class="barLogin" sec:authorize="!isAuthenticated()">
-            <a class="loginButton" th:href="@{/login}">Logowanie</a>
+            <a class="greenHyperlinkButton" th:href="@{/login}">Logowanie</a>
             <div style="clear: both;"></div>
         </div>
     </div>
@@ -52,7 +52,7 @@
         </div>
     </div>
 
-    <div class="registerHeader">
+    <div class="contentHeader">
         <p class="title">Rejestracja</p>
     </div>
 
@@ -92,8 +92,8 @@
                         <option th:each="zone : ${zones}" th:value="${zone}" th:text="${zone}"></option>
                     </select>
                 </div>
-                <input class="register" type="submit" value="Zarejestruj">
-                <input class="reset" type="reset" value="Resetuj">
+                <input class="greenInputButton" type="submit" value="Zarejestruj">
+                <input class="redInputButton" type="reset" value="Resetuj">
                 <div style="clear: both"></div>
             </form>
             <a href="/login">Powrót do logowania</a>

@@ -30,7 +30,7 @@
             <span>| Użytkownik:</span>
             <a sec:authentication="name" th:href="@{/user}"></a>
             <form method="POST" th:action="@{/logout}">
-                <input class="logout" type="submit" value="Wyloguj" onclick="disconnect()">
+                <input class="redInputButton" type="submit" value="Wyloguj" onclick="disconnect()">
             </form>
             <div style="clear: both;"></div>
         </div>
@@ -48,7 +48,7 @@
         </div>
     </div>
 
-    <div class="calendarHeader">
+    <div class="contentHeader">
         <p class="title">Kalendarze</p>
     </div>
 

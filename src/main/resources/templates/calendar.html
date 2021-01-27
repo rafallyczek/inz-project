@@ -31,7 +31,7 @@
             <span>| Użytkownik:</span>
             <a sec:authentication="name" th:href="@{/user}"></a>
             <form method="POST" th:action="@{/logout}">
-                <input class="logout" type="submit" value="Wyloguj" onclick="disconnect()">
+                <input class="redInputButton" type="submit" value="Wyloguj" onclick="disconnect()">
             </form>
             <div style="clear: both;"></div>
         </div>
@@ -49,15 +49,15 @@
         </div>
     </div>
 
-    <div class="calendarHeader">
-        <p class="year" th:text="${calendar.year}"></p>
-        <p class="month" th:text="${calendar.monthName}"></p>
+    <div class="contentHeader">
+        <p class="title" th:text="${calendar.year}"></p>
+        <p class="title" style="font-size: 20px;" th:text="${calendar.monthName}"></p>
     </div>
 
     <div class="container">
 
         <!-- Edytuj kalendarz -->
-        <a th:href="@{/calendar/editCalendar}" class="edit">Edytuj kalendarz</a>
+        <a class="greenHyperlinkButton" th:href="@{/calendar/editCalendar}">Edytuj kalendarz</a>
 
         <!--    Nagłówek kalendarza z nazwami dni    -->
         <div class="calendar">

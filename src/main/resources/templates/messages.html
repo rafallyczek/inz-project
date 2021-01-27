@@ -30,7 +30,7 @@
             <span>| Użytkownik:</span>
             <a sec:authentication="name" th:href="@{/user}"></a>
             <form method="POST" th:action="@{/logout}">
-                <input class="logout" type="submit" value="Wyloguj" onclick="disconnect()">
+                <input class="redInputButton" type="submit" value="Wyloguj" onclick="disconnect()">
             </form>
             <div style="clear: both;"></div>
         </div>
@@ -48,7 +48,7 @@
         </div>
     </div>
 
-    <div class="messagesHeader">
+    <div class="contentHeader">
         <p class="title">Wiadomości</p>
     </div>
 
@@ -61,8 +61,8 @@
             <div class="message" th:each="invitation : ${invitations}">
                 <p th:inline="text">Otrzymano zaproszenie do kalendarza: <b>[[${invitation.calendarTitle}]]</b></p>
                 <p th:inline="text">Od użytkownika: <b>[[${invitation.senderName}]]</b></p>
-                <a class="acceptButton" th:href="@{/messages/accept/{id}(id=${invitation.id})}">Akceptuj</a>
-                <a class="rejectButton" th:href="@{/messages/reject/{id}(id=${invitation.id})}">Odrzuć</a>
+                <a class="greenHyperlinkButton" th:href="@{/messages/accept/{id}(id=${invitation.id})}">Akceptuj</a>
+                <a class="redHyperlinkButton" th:href="@{/messages/reject/{id}(id=${invitation.id})}">Odrzuć</a>
                 <div style="clear: both;"></div>
             </div>
             <p th:if="${invitations.isEmpty()}" class="noMessages">Nie masz żadnych wiadomości.</p>

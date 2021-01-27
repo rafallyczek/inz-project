@@ -1,48 +1,3 @@
-body{
-    margin: 0;
-}
-.header{
-    width: 100%;
-    background-color: cornflowerblue;
-    color: white;
-    padding: 10px;
-    box-sizing: border-box;
-}
-.dayHeader{
-    margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 60%;
-    background-color: darkgray;
-    padding: 10px;
-    border-radius: 5px;
-    -webkit-box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
-    -moz-box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
-    box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
-}
-.container{
-    margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 80%;
-    background-color: darkgray;
-    padding: 10px;
-    border-radius: 5px;
-    -webkit-box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
-    -moz-box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
-    box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
-}
-h1{
-    text-align: center;
-    font-size: 50px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-.date{
-    font-size: 50px;
-    text-align: center;
-    margin: 0;
-}
 .addNoteForm{
     padding: 5px;
     margin-left: auto;
@@ -59,9 +14,6 @@ h1{
     height: 1px;
     background-color: black;
 }
-.formInputs{
-    margin-bottom: 5px;
-}
 #userIdInputs{
     display: none;
 }
@@ -72,91 +24,4 @@ h1{
     display: block;
     float: left;
     margin: 5px 5px 0 0;
-}
-input, label{
-    display: block;
-}
-.add{
-    text-decoration: none;
-    color: white;
-    background-color: seagreen;
-    padding: 5px;
-    border-radius: 5px;
-    border: none;
-}
-.add:hover{
-    background-color: #39ac6b;
-    cursor: pointer;
-}
-.reset{
-    text-decoration: none;
-    color: white;
-    background-color: firebrick;
-    padding: 5px;
-    border-radius: 5px;
-    border: none;
-}
-.reset:hover{
-    background-color: #d62929;
-    cursor: pointer;
-}
-.navBar{
-    margin: 0 auto 10px auto;
-    background-color: cornflowerblue;
-    width: 100%;
-    font-size: 0;
-    text-align: center;
-}
-.nav{
-    margin-left: auto;
-    margin-right: auto;
-    display: inline-block;
-}
-.navBar a{
-    display: inline-block;
-    padding: 5px 10px;
-    color: white;
-    font-size: 20px;
-    text-decoration: none;
-}
-.userBar{
-    width: 100%;
-    height: 35px;
-    padding: 5px;
-    position: relative;
-    box-sizing: border-box;
-}
-.bar{
-    position: absolute;
-    right: 5px;
-}
-.themeForm{
-    position: absolute;
-    left: 5px;
-}
-.themeForm select{
-    height: 25px;
-}
-.bar form, .bar a{
-    float: left;
-}
-.bar a{
-    margin: 3px 5px 0 5px;
-}
-.bar span{
-    display: block;
-    margin: 3px 0 0 0;
-    float: left;
-}
-.logout{
-    text-decoration: none;
-    color: white;
-    background-color: firebrick;
-    padding: 5px;
-    border-radius: 5px;
-    border: none;
-}
-.logout:hover{
-    background-color: #d62929;
-    cursor: pointer;
 }

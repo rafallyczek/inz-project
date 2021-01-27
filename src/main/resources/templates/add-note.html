@@ -30,7 +30,7 @@
             <span>| Użytkownik:</span>
             <a sec:authentication="name" th:href="@{/user}"></a>
             <form method="POST" th:action="@{/logout}">
-                <input class="logout" type="submit" value="Wyloguj" onclick="disconnect()">
+                <input class="redInputButton" type="submit" value="Wyloguj" onclick="disconnect()">
             </form>
             <div style="clear: both;"></div>
         </div>
@@ -48,8 +48,8 @@
         </div>
     </div>
 
-    <div class="dayHeader">
-        <p class="date" th:text="${dayNumber}+' '+${calendar.monthName}+' '+${calendar.year}"></p>
+    <div class="contentHeader">
+        <p class="title" th:text="${dayNumber}+' '+${calendar.monthName}+' '+${calendar.year}"></p>
     </div>
 
     <div class="container">
@@ -89,12 +89,12 @@
                 <input th:if="${!isOwner}" id="userId" type="hidden" th:field="*{userId}">
                 <input id="date" type="hidden" th:field="*{date}">
                 <input id="calendarId" type="hidden" th:field="*{calendarId}">
-                <input class="add" type="submit" value="Dodaj">
-                <input class="reset" type="reset" value="Resetuj">
+                <input class="greenInputButton" type="submit" value="Dodaj">
+                <input class="redInputButton" type="reset" value="Resetuj">
                 <div style="clear: both"></div>
             </form>
             <!--Powrót do szczegółów dnia-->
-            <a th:href="@{/calendar/day}">Powrót do dnia</a>
+            <a th:href="@{/calendar/allNotes}">Powrót do dnia</a>
 
         </div>
 

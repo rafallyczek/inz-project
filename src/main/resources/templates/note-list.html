@@ -30,7 +30,7 @@
             <span>| Użytkownik:</span>
             <a sec:authentication="name" th:href="@{/user}"></a>
             <form method="POST" th:action="@{/logout}">
-                <input class="logout" type="submit" value="Wyloguj" onclick="disconnect()">
+                <input class="redInputButton" type="submit" value="Wyloguj" onclick="disconnect()">
             </form>
             <div style="clear: both;"></div>
         </div>
@@ -48,7 +48,7 @@
         </div>
     </div>
 
-    <div class="listHeader">
+    <div class="contentHeader">
         <p class="title">Lista Notek</p>
     </div>
 
@@ -68,7 +68,7 @@
         </div>
         <p th:if="${notes.isEmpty()}" class="noNotes">Brak notek w kalendarzu.</p>
         <div style="clear: both;"></div>
-        <a th:if="${!notes.isEmpty()}" class="pdf" th:href="@{/notes/pdf}">Pobierz pdf</a>
+        <a th:if="${!notes.isEmpty()}" class="greenHyperlinkButton" th:href="@{/notes/pdf}">Pobierz pdf</a>
 
     </div>
 
