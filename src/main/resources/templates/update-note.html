@@ -17,20 +17,20 @@
     <!--Pasek górny-->
     <div class="userBar">
         <form class="themeForm" method="POST" th:action="@{/theme}" name="themeForm" id="themeForm">
-            <span>Preferencje:</span>
+            <span th:text="#{lang.preferences}"></span>
             <select id="theme" name="theme" onchange="submitThemeForm()">
-                <option value="" disabled selected>Wybierz motyw</option>
-                <option value="light">Jasny</option>
-                <option value="dark">Ciemny</option>
+                <option value="" th:text="#{lang.chooseTheme}" disabled selected></option>
+                <option value="light" th:text="#{lang.lightTheme}"></option>
+                <option value="dark" th:text="#{lang.darkTheme}"></option>
             </select>
         </form>
         <div class="bar" sec:authorize="isAuthenticated()">
             <script type="text/javascript">connect()</script>
-            <a th:href="@{/messages}">Wiadomości</a>
-            <span>| Użytkownik:</span>
+            <a th:href="@{/messages}" th:text="#{lang.messages}"></a>
+            <span th:inline="text">| [[#{lang.user}]]:</span>
             <a sec:authentication="name" th:href="@{/user}"></a>
             <form method="POST" th:action="@{/logout}">
-                <input class="redInputButton" type="submit" value="Wyloguj" onclick="disconnect()">
+                <input class="redInputButton" type="submit" th:value="#{lang.logOut}" onclick="disconnect()">
             </form>
             <div style="clear: both;"></div>
         </div>
@@ -42,9 +42,9 @@
 
     <div class="navBar">
         <div class="nav">
-            <a th:href="@{/}">Strona główna</a>
-            <a th:href="@{/calendar/list}">Kalendarze</a>
-            <a th:href="@{/notes/list}">Lista notek</a>
+            <a th:href="@{/}" th:text="#{lang.mainPage}"></a>
+            <a th:href="@{/calendar/list}" th:text="#{lang.calendars}"></a>
+            <a th:href="@{/notes/list}" th:text="#{lang.noteList}"></a>
         </div>
     </div>
 
@@ -57,37 +57,37 @@
         <div class="editNoteForm">
 
             <!--Formularz edytujący notkę-->
-            <p>Edytuj notkę</p>
+            <p th:text="#{lang.editNote}"></p>
             <hr>
             <form method="POST" th:action="@{/notes/update}" th:object="${updateNote}">
                 <input id="idEdit" type="hidden" th:field="*{noteId}">
                 <div class="formInputs">
-                    <label for="titleEdit">Tytuł</label>
+                    <label for="titleEdit" th:text="#{lang.titleText}"></label>
                     <input id="titleEdit" type="text" th:field="*{title}">
                 </div>
                 <div class="formInputs">
-                    <label for="contentEdit">Tekst</label>
+                    <label for="contentEdit" th:text="#{lang.textValue}"></label>
                     <input id="contentEdit" type="text" th:field="*{content}">
                 </div>
                 <div class="formInputs">
-                    <label for="timeEdit">Czas</label>
+                    <label for="timeEdit" th:text="#{lang.timeValue}"></label>
                     <input id="timeEdit" type="time" th:field="*{time}">
                 </div>
                 <div class="formInputs">
-                    <label for="istask">Typ</label>
+                    <label for="istask" th:text="#{lang.typeValue}"></label>
                     <select id="istask" name="istask" th:field="*{isTask}">
-                        <option th:value="false">Zwykła notka</option>
-                        <option th:value="true">Notka-zadanie</option>
+                        <option th:value="false" th:text="#{lang.normalNote}"></option>
+                        <option th:value="true" th:text="#{lang.taskNote}"></option>
                     </select>
                 </div>
                 <div style="clear: both"></div>
                 <input id="dateEdit" type="hidden" th:field="*{date}">
-                <input class="greenInputButton" type="submit" value="Zapisz">
-                <input class="redInputButton" type="reset" value="Resetuj">
+                <input class="greenInputButton" type="submit" th:value="#{lang.save}">
+                <input class="redInputButton" type="reset" th:value="#{lang.reset}">
                 <div style="clear: both"></div>
             </form>
             <!--Powrót do szczegółów dnia-->
-            <a th:href="@{/calendar/allNotes}">Powrót do dnia</a>
+            <a th:href="@{/calendar/allNotes}" th:text="#{lang.dayReturn}"></a>
 
         </div>
 
@@ -101,7 +101,7 @@
     </div>
 
     <div th:if="${#request.getAttribute('noCookieConsent')}" class="cookieConsent">
-        <p>Strona używa plików cookie.</p>
+        <p th:text="#{lang.cookies}"></p>
         <a th:href="@{/setCookie}" class="greenButton">OK</a>
         <div style="clear: both;"></div>
     </div>

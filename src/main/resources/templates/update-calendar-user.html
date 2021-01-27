@@ -17,20 +17,20 @@
     <!--Pasek górny-->
     <div class="userBar">
         <form class="themeForm" method="POST" th:action="@{/theme}" name="themeForm" id="themeForm">
-            <span>Preferencje:</span>
+            <span th:text="#{lang.preferences}"></span>
             <select id="theme" name="theme" onchange="submitThemeForm()">
-                <option value="" disabled selected>Wybierz motyw</option>
-                <option value="light">Jasny</option>
-                <option value="dark">Ciemny</option>
+                <option value="" th:text="#{lang.chooseTheme}" disabled selected></option>
+                <option value="light" th:text="#{lang.lightTheme}"></option>
+                <option value="dark" th:text="#{lang.darkTheme}"></option>
             </select>
         </form>
         <div class="bar" sec:authorize="isAuthenticated()">
             <script type="text/javascript">connect()</script>
-            <a th:href="@{/messages}">Wiadomości</a>
-            <span>| Użytkownik:</span>
+            <a th:href="@{/messages}" th:text="#{lang.messages}"></a>
+            <span th:inline="text">| [[#{lang.user}]]:</span>
             <a sec:authentication="name" th:href="@{/user}"></a>
             <form method="POST" th:action="@{/logout}">
-                <input class="redInputButton" type="submit" value="Wyloguj" onclick="disconnect()">
+                <input class="redInputButton" type="submit" th:value="#{lang.logOut}" onclick="disconnect()">
             </form>
             <div style="clear: both;"></div>
         </div>
@@ -42,52 +42,52 @@
 
     <div class="navBar">
         <div class="nav">
-            <a th:href="@{/}">Strona główna</a>
-            <a th:href="@{/calendar/list}">Kalendarze</a>
-            <a th:href="@{/notes/list}">Lista notek</a>
+            <a th:href="@{/}" th:text="#{lang.mainPage}"></a>
+            <a th:href="@{/calendar/list}" th:text="#{lang.calendars}"></a>
+            <a th:href="@{/notes/list}" th:text="#{lang.noteList}"></a>
         </div>
     </div>
 
     <div class="contentHeader">
-        <p class="title">Edytuj kalendarz</p>
+        <p class="title" th:text="#{lang.editCalendar}"></p>
     </div>
 
     <div class="container">
 
         <!-- Przejście do edycji kalendarza -->
-        <a class="greenHyperlinkButton" th:href="@{/calendar/editCalendar}">Edytuj kalendarz</a>
+        <a class="greenHyperlinkButton" th:href="@{/calendar/editCalendar}" th:text="#{lang.editCalendar}"></a>
 
         <div class="addUserForm">
 
             <!--Lista użytkowników kalendarza-->
             <div class="userGrid">
 
-                <p>Użytkownicy kalendarza</p>
+                <p th:text="#{lang.calendarUsers}"></p>
                 <hr>
                 <div class="user" th:each="calendarUser : ${calendarUsers}" style="float: none;">
                     <p th:text="${calendarUser.username}"></p>
                 </div>
                 <div class="user" th:each="invitedUser : ${invitedUsers}" style="float: none;">
-                    <p th:inline="text">[[${invitedUser.username}]]<span class="invitation"> (Wysłano zaproszenie)</span></p>
+                    <p th:inline="text">[[${invitedUser.username}]]<span class="invitation"> ([[#{lang.invitationSent}]])</span></p>
                 </div>
 
             </div>
             <div class="userGrid" th:if="${isOwner}">
 
                 <!--Wyszukiwanie użytkowników-->
-                <p>Znajdź użytkowników</p>
+                <p th:text="#{lang.findUsers}"></p>
                 <hr>
                 <form method="POST" th:action="@{/calendar/findUsers}">
                     <div class="formInputs">
-                        <label for="username">Nazwa użytkownika</label>
+                        <label for="username" th:text="#{lang.username}"></label>
                         <input id="username" type="text" name="username">
                     </div>
-                    <input class="greenInputButton" type="submit" value="Wyszukaj">
-                    <input class="redInputButton" type="reset" value="Resetuj">
+                    <input class="greenInputButton" type="submit" th:value="#{lang.find}">
+                    <input class="redInputButton" type="reset" th:value="#{lang.reset}">
                     <div style="clear: both"></div>
                 </form>
                 <!--Lista znalezionych użytkowników-->
-                <p th:if="${!#lists.isEmpty(searchedUsers)}">Znalezieni użytkownicy</p>
+                <p th:if="${!#lists.isEmpty(searchedUsers)}" th:text="#{lang.foundUsers}"></p>
                 <hr th:if="${!#lists.isEmpty(searchedUsers)}">
                 <form method="POST" th:each="searchedUser : ${searchedUsers}" th:action="@{/calendar/inviteUser}">
                     <input id="id" type="hidden" th:value="${searchedUser.id}" name="id">
@@ -95,14 +95,14 @@
                         <p th:text="${searchedUser.username}"></p>
                     </div>
                     <div class="userAdd">
-                        <input type="submit" value="Dodaj">
+                        <input type="submit" th:value="#{lang.add}">
                     </div>
                     <div style="clear: both"></div>
                 </form>
             </div>
             <div style="clear: both"></div>
             <!--Powrót do kalendarza-->
-            <a th:href="@{/calendar}">Powrót do kalendarza</a>
+            <a th:href="@{/calendar}" th:text="#{lang.calendarReturn}"></a>
         </div>
 
     </div>
@@ -115,7 +115,7 @@
     </div>
 
     <div th:if="${#request.getAttribute('noCookieConsent')}" class="cookieConsent">
-        <p>Strona używa plików cookie.</p>
+        <p th:text="#{lang.cookies}"></p>
         <a th:href="@{/setCookie}" class="greenButton">OK</a>
         <div style="clear: both;"></div>
     </div>

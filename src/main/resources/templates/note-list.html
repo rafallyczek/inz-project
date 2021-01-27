@@ -17,20 +17,20 @@
     <!--Pasek górny-->
     <div class="userBar">
         <form class="themeForm" method="POST" th:action="@{/theme}" name="themeForm" id="themeForm">
-            <span>Preferencje:</span>
+            <span th:text="#{lang.preferences}"></span>
             <select id="theme" name="theme" onchange="submitThemeForm()">
-                <option value="" disabled selected>Wybierz motyw</option>
-                <option value="light">Jasny</option>
-                <option value="dark">Ciemny</option>
+                <option value="" th:text="#{lang.chooseTheme}" disabled selected></option>
+                <option value="light" th:text="#{lang.lightTheme}"></option>
+                <option value="dark" th:text="#{lang.darkTheme}"></option>
             </select>
         </form>
         <div class="bar" sec:authorize="isAuthenticated()">
             <script type="text/javascript">connect()</script>
-            <a th:href="@{/messages}">Wiadomości</a>
-            <span>| Użytkownik:</span>
+            <a th:href="@{/messages}" th:text="#{lang.messages}"></a>
+            <span th:inline="text">| [[#{lang.user}]]:</span>
             <a sec:authentication="name" th:href="@{/user}"></a>
             <form method="POST" th:action="@{/logout}">
-                <input class="redInputButton" type="submit" value="Wyloguj" onclick="disconnect()">
+                <input class="redInputButton" type="submit" th:value="#{lang.logOut}" onclick="disconnect()">
             </form>
             <div style="clear: both;"></div>
         </div>
@@ -42,22 +42,22 @@
 
     <div class="navBar">
         <div class="nav">
-            <a th:href="@{/}">Strona główna</a>
-            <a th:href="@{/calendar/list}">Kalendarze</a>
-            <a th:href="@{/notes/list}">Lista notek</a>
+            <a th:href="@{/}" th:text="#{lang.mainPage}"></a>
+            <a th:href="@{/calendar/list}" th:text="#{lang.calendars}"></a>
+            <a th:href="@{/notes/list}" th:text="#{lang.noteList}"></a>
         </div>
     </div>
 
     <div class="contentHeader">
-        <p class="title">Lista Notek</p>
+        <p class="title" th:text="#{lang.noteList}"></p>
     </div>
 
     <div class="container">
 
         <form method="POST" th:if="${!calendars.isEmpty()}" th:action="@{/notes/getCalendarNotes}" id="calendarForm">
             <select name="calendarId" form="calendarForm" onchange="submitCalendarForm()">
-                <option value="" disabled selected>Wybierz kalendarz</option>
-                <option value="0">Wszystkie kalendarze</option>
+                <option value="" th:text="#{lang.chooseCalendar}" disabled selected></option>
+                <option value="0" th:text="#{lang.allCalendars}"></option>
                 <option th:each="dbcalendar : ${calendars}" th:text="${dbcalendar.title}" th:value="${dbcalendar.id}"></option>
             </select>
         </form>
@@ -66,9 +66,9 @@
             <div class="noteHeader" th:inline="text">[[${note.title}]] | [[${note.time}]]</div>
             <div class="noteBody" th:text="${note.content}"></div>
         </div>
-        <p th:if="${notes.isEmpty()}" class="noNotes">Brak notek w kalendarzu.</p>
+        <p th:if="${notes.isEmpty()}" class="noNotes" th:text="#{lang.noNotes}"></p>
         <div style="clear: both;"></div>
-        <a th:if="${!notes.isEmpty()}" class="greenHyperlinkButton" th:href="@{/notes/pdf}">Pobierz pdf</a>
+        <a th:if="${!notes.isEmpty()}" class="greenHyperlinkButton" th:href="@{/notes/pdf}" th:text="#{lang.pdf}"></a>
 
     </div>
 
@@ -80,7 +80,7 @@
     </div>
 
     <div th:if="${#request.getAttribute('noCookieConsent')}" class="cookieConsent">
-        <p>Strona używa plików cookie.</p>
+        <p th:text="#{lang.cookies}"></p>
         <a th:href="@{/setCookie}" class="greenButton">OK</a>
         <div style="clear: both;"></div>
     </div>

@@ -17,20 +17,20 @@
     <!--Pasek górny-->
     <div class="userBar">
         <form class="themeForm" method="POST" th:action="@{/theme}" name="themeForm" id="themeForm">
-            <span>Preferencje:</span>
+            <span th:text="#{lang.preferences}"></span>
             <select id="theme" name="theme" onchange="submitThemeForm()">
-                <option value="" disabled selected>Wybierz motyw</option>
-                <option value="light">Jasny</option>
-                <option value="dark">Ciemny</option>
+                <option value="" th:text="#{lang.chooseTheme}" disabled selected></option>
+                <option value="light" th:text="#{lang.lightTheme}"></option>
+                <option value="dark" th:text="#{lang.darkTheme}"></option>
             </select>
         </form>
         <div class="bar" sec:authorize="isAuthenticated()">
             <script type="text/javascript">connect()</script>
-            <a th:href="@{/messages}">Wiadomości</a>
-            <span>| Użytkownik:</span>
+            <a th:href="@{/messages}" th:text="#{lang.messages}"></a>
+            <span th:inline="text">| [[#{lang.user}]]:</span>
             <a sec:authentication="name" th:href="@{/user}"></a>
             <form method="POST" th:action="@{/logout}">
-                <input class="redInputButton" type="submit" value="Wyloguj" onclick="disconnect()">
+                <input class="redInputButton" type="submit" th:value="#{lang.logOut}" onclick="disconnect()">
             </form>
             <div style="clear: both;"></div>
         </div>
@@ -42,21 +42,21 @@
 
     <div class="navBar">
         <div class="nav">
-            <a th:href="@{/}">Strona główna</a>
-            <a th:href="@{/calendar/list}">Kalendarze</a>
-            <a th:href="@{/notes/list}">Lista notek</a>
+            <a th:href="@{/}" th:text="#{lang.mainPage}"></a>
+            <a th:href="@{/calendar/list}" th:text="#{lang.calendars}"></a>
+            <a th:href="@{/notes/list}" th:text="#{lang.noteList}"></a>
         </div>
     </div>
 
     <div class="contentHeader">
-        <p class="title">Szczegóły konta</p>
+        <p class="title" th:text="#{lang.userDetails}"></p>
     </div>
 
     <div class="container">
 
         <div class="userForm">
 
-            <p>Zmień email</p>
+            <p th:text="#{lang.changeEmail}"></p>
             <hr>
             <form method="POST" th:action="@{/user/updateEmail}" th:object="${updateEmail}">
                 <div class="formInputs">
@@ -64,8 +64,8 @@
                     <input id="email" type="email" th:field="*{email}">
                 </div>
                 <input type="hidden" th:field="*{userId}">
-                <input class="greenInputButton" type="submit" value="Zapisz">
-                <input class="redInputButton" type="reset" value="Resetuj">
+                <input class="greenInputButton" type="submit" th:value="#{lang.save}">
+                <input class="redInputButton" type="reset" th:value="#{lang.reset}">
                 <div style="clear: both"></div>
             </form>
 
@@ -73,26 +73,26 @@
             <hr>
             <form method="POST" th:action="@{/user/updatePassword}" th:object="${updatePassword}">
                 <div class="formInputs">
-                    <label for="oldPassword">Stare hasło</label>
+                    <label for="oldPassword" th:text="#{lang.oldPassword}"></label>
                     <input id="oldPassword" type="password" th:field="*{oldPassword}">
                 </div>
                 <div class="formInputs">
-                    <label for="password">Nowe hasło</label>
+                    <label for="password" th:text="#{lang.newPassword}"></label>
                     <input id="password" type="password" th:field="*{password}">
                     <div class="error">
                         <span class="tooltip" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
                     </div>
                 </div>
                 <div class="formInputs">
-                    <label for="matchPassword">Powtórz hasło</label>
+                    <label for="matchPassword" th:text="#{lang.repeatPassword}"></label>
                     <input id="matchPassword" type="password" th:field="*{matchPassword}">
                     <div class="error">
                         <span class="tooltip" th:if="${#fields.hasErrors('matchPassword')}" th:errors="*{matchPassword}"></span>
                     </div>
                 </div>
                 <input type="hidden" th:field="*{userId}">
-                <input class="greenInputButton" type="submit" value="Zapisz">
-                <input class="redInputButton" type="reset" value="Resetuj">
+                <input class="greenInputButton" type="submit" th:value="#{lang.save}">
+                <input class="redInputButton" type="reset" th:value="#{lang.reset}">
                 <div style="clear: both"></div>
             </form>
 
@@ -100,14 +100,14 @@
             <hr>
             <form method="POST" th:action="@{/user/updateTimezone}" th:object="${updateTimezone}">
                 <div class="formInputs">
-                    <label for="timezone">Strefa czasowa</label>
+                    <label for="timezone" th:text="#{lang.timezone}"></label>
                     <select id="timezone" name="timezone" th:field="*{timezone}">
                         <option th:each="zone : ${zones}" th:value="${zone}" th:text="${zone}"></option>
                     </select>
                 </div>
                 <input type="hidden" th:field="*{userId}">
-                <input class="greenInputButton" type="submit" value="Zapisz">
-                <input class="redInputButton" type="reset" value="Resetuj">
+                <input class="greenInputButton" type="submit" th:value="#{lang.save}">
+                <input class="redInputButton" type="reset" th:value="#{lang.reset}">
                 <div style="clear: both"></div>
             </form>
 
@@ -115,18 +115,18 @@
             <hr>
             <form method="POST" th:action="@{/user/updateReminderTime}" th:object="${updateReminderTime}">
                 <div class="formInputs">
-                    <label for="time">Czas przypomnienia</label>
+                    <label for="time" th:text="#{lang.reminderTime}"></label>
                     <select id="time" name="timezone" th:field="*{reminderTime}">
-                        <option th:value="30">30 minut wcześniej</option>
-                        <option th:value="60">1 godzinę wcześniej</option>
-                        <option th:value="360">6 godzin wcześniej</option>
-                        <option th:value="720">12 godzin wcześniej</option>
-                        <option th:value="1440">Dzień wcześniej</option>
+                        <option th:value="30" th:text="#{lang.reminder30}"></option>
+                        <option th:value="60" th:text="#{lang.reminder60}"></option>
+                        <option th:value="360" th:text="#{lang.reminder360}"></option>
+                        <option th:value="720" th:text="#{lang.reminder720}"></option>
+                        <option th:value="1440" th:text="#{lang.reminder1440}"></option>
                     </select>
                 </div>
                 <input type="hidden" th:field="*{userId}">
-                <input class="greenInputButton" type="submit" value="Zapisz">
-                <input class="redInputButton" type="reset" value="Resetuj">
+                <input class="greenInputButton" type="submit" th:value="#{lang.save}">
+                <input class="redInputButton" type="reset" th:value="#{lang.reset}">
                 <div style="clear: both"></div>
             </form>
 
@@ -142,7 +142,7 @@
     </div>
 
     <div th:if="${#request.getAttribute('noCookieConsent')}" class="cookieConsent">
-        <p>Strona używa plików cookie.</p>
+        <p th:text="#{lang.cookies}"></p>
         <a th:href="@{/setCookie}" class="greenButton">OK</a>
         <div style="clear: both;"></div>
     </div>

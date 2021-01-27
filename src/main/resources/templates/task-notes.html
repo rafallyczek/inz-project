@@ -18,20 +18,20 @@
     <!--Pasek górny-->
     <div class="userBar">
         <form class="themeForm" method="POST" th:action="@{/theme}" name="themeForm" id="themeForm">
-            <span>Preferencje:</span>
+            <span th:text="#{lang.preferences}"></span>
             <select id="theme" name="theme" onchange="submitThemeForm()">
-                <option value="" disabled selected>Wybierz motyw</option>
-                <option value="light">Jasny</option>
-                <option value="dark">Ciemny</option>
+                <option value="" th:text="#{lang.chooseTheme}" disabled selected></option>
+                <option value="light" th:text="#{lang.lightTheme}"></option>
+                <option value="dark" th:text="#{lang.darkTheme}"></option>
             </select>
         </form>
         <div class="bar" sec:authorize="isAuthenticated()">
             <script type="text/javascript">connect()</script>
-            <a th:href="@{/messages}">Wiadomości</a>
-            <span>| Użytkownik:</span>
+            <a th:href="@{/messages}" th:text="#{lang.messages}"></a>
+            <span th:inline="text">| [[#{lang.user}]]:</span>
             <a sec:authentication="name" th:href="@{/user}"></a>
             <form method="POST" th:action="@{/logout}">
-                <input class="redInputButton" type="submit" value="Wyloguj" onclick="disconnect()">
+                <input class="redInputButton" type="submit" th:value="#{lang.logOut}" onclick="disconnect()">
             </form>
             <div style="clear: both;"></div>
         </div>
@@ -43,9 +43,9 @@
 
     <div class="navBar">
         <div class="nav">
-            <a th:href="@{/}">Strona główna</a>
-            <a th:href="@{/calendar/list}">Kalendarze</a>
-            <a th:href="@{/notes/list}">Lista notek</a>
+            <a th:href="@{/}" th:text="#{lang.mainPage}"></a>
+            <a th:href="@{/calendar/list}" th:text="#{lang.calendars}"></a>
+            <a th:href="@{/notes/list}" th:text="#{lang.noteList}"></a>
         </div>
     </div>
 
@@ -58,15 +58,15 @@
         <div class="day">
 
             <!-- Przejście do zwykłych notek -->
-            <a class="greyHyperlinkButton" th:href="@{/calendar/allNotes}">Zwykłe notki</a>
+            <a class="greyHyperlinkButton" th:href="@{/calendar/allNotes}" th:text="#{lang.normalNotes}"></a>
             <!-- Przejście do formularza dodania notki -->
-            <a class="greenHyperlinkButton" th:href="@{/calendar/addNote}">Dodaj notkę</a>
+            <a class="greenHyperlinkButton" th:href="@{/calendar/addNote}" th:text="#{lang.addNote}"></a>
             <div style="clear: both"></div>
 
             <div class="taskGridWrapper">
                 <div class="taskGrid">
 
-                    <p>Do zrobienia</p>
+                    <p th:text="#{lang.toDo}"></p>
                     <hr>
                     <div class="note" th:each="note : ${calendar.notes}" th:if="${note.date.isEqual(#temporals.create(calendar.year,calendar.month,dayNumber)) and note.status == 'to-do'}">
 
@@ -75,29 +75,29 @@
 
                             <a th:href="@{/notes/delete/{id}(id=${note.id})}" class="deleteButton">
                                 <i class="icon-cancel">
-                                    <span class="tooltip">Usuń notkę</span>
+                                    <span class="tooltip" th:text="#{lang.deleteNote}"></span>
                                 </i>
                             </a>
                             <!-- Przejście do formularza edycji notki -->
                             <a th:href="@{/calendar/editNote/{id}(id=${note.id})}" class="editButton">
                                 <i class="icon-pencil">
-                                    <span class="tooltip">Edytuj notkę</span>
+                                    <span class="tooltip" th:text="#{lang.editNote}"></span>
                                 </i>
                             </a>
                         </div>
 
                         <div class="noteBody" th:text="${note.content}"></div>
-                        <p class="status">Zmień status</p>
+                        <p class="status" th:text="#{lang.changeStatus}"></p>
                         <hr>
-                        <a th:href="@{/notes/statusInProgress/{id}(id=${note.id})}">W trakcie</a>
-                        <a th:href="@{/notes/statusFinished/{id}(id=${note.id})}">Zakończone</a>
+                        <a th:href="@{/notes/statusInProgress/{id}(id=${note.id})}" th:text="#{lang.inProgress}"></a>
+                        <a th:href="@{/notes/statusFinished/{id}(id=${note.id})}" th:text="#{lang.finished}"></a>
 
                     </div>
 
                 </div>
                 <div class="taskGrid">
 
-                    <p>W trakcie</p>
+                    <p th:text="#{lang.inProgress}"></p>
                     <hr>
                     <div class="note" th:each="note : ${calendar.notes}" th:if="${note.date.isEqual(#temporals.create(calendar.year,calendar.month,dayNumber)) and note.status == 'in-progress'}">
 
@@ -106,29 +106,29 @@
 
                             <a th:href="@{/notes/delete/{id}(id=${note.id})}" class="deleteButton">
                                 <i class="icon-cancel">
-                                    <span class="tooltip">Usuń notkę</span>
+                                    <span class="tooltip" th:text="#{lang.deleteNote}">Usuń notkę</span>
                                 </i>
                             </a>
                             <!-- Przejście do formularza edycji notki -->
                             <a th:href="@{/calendar/editNote/{id}(id=${note.id})}" class="editButton">
                                 <i class="icon-pencil">
-                                    <span class="tooltip">Edytuj notkę</span>
+                                    <span class="tooltip" th:text="#{lang.editNote}"></span>
                                 </i>
                             </a>
                         </div>
 
                         <div class="noteBody" th:text="${note.content}"></div>
-                        <p class="status">Zmień status</p>
+                        <p class="status" th:text="#{lang.changeStatus}"></p>
                         <hr>
-                        <a th:href="@{/notes/statusToDo/{id}(id=${note.id})}">Do zrobienia</a>
-                        <a th:href="@{/notes/statusFinished/{id}(id=${note.id})}">Zakończone</a>
+                        <a th:href="@{/notes/statusToDo/{id}(id=${note.id})}" th:text="#{lang.toDo}"></a>
+                        <a th:href="@{/notes/statusFinished/{id}(id=${note.id})}" th:text="#{lang.finished}"></a>
 
                     </div>
 
                 </div>
                 <div class="taskGrid">
 
-                    <p>Zakończone</p>
+                    <p th:text="#{lang.finished}"></p>
                     <hr>
                     <div class="note" th:each="note : ${calendar.notes}" th:if="${note.date.isEqual(#temporals.create(calendar.year,calendar.month,dayNumber)) and note.status == 'finished'}">
 
@@ -137,22 +137,22 @@
 
                             <a th:href="@{/notes/delete/{id}(id=${note.id})}" class="deleteButton">
                                 <i class="icon-cancel">
-                                    <span class="tooltip">Usuń notkę</span>
+                                    <span class="tooltip" th:text="#{lang.deleteNote}"></span>
                                 </i>
                             </a>
                             <!-- Przejście do formularza edycji notki -->
                             <a th:href="@{/calendar/editNote/{id}(id=${note.id})}" class="editButton">
                                 <i class="icon-pencil">
-                                    <span class="tooltip">Edytuj notkę</span>
+                                    <span class="tooltip" th:text="#{lang.editNote}"></span>
                                 </i>
                             </a>
                         </div>
 
                         <div class="noteBody" th:text="${note.content}"></div>
-                        <p class="status">Zmień status</p>
+                        <p class="status" th:text="#{lang.changeStatus}"></p>
                         <hr>
-                        <a th:href="@{/notes/statusInProgress/{id}(id=${note.id})}">W trakcie</a>
-                        <a th:href="@{/notes/statusToDo/{id}(id=${note.id})}">Do zrobienia</a>
+                        <a th:href="@{/notes/statusInProgress/{id}(id=${note.id})}" th:text="#{lang.inProgress}"></a>
+                        <a th:href="@{/notes/statusToDo/{id}(id=${note.id})}" th:text="#{lang.toDo}"></a>
 
                     </div>
 
@@ -161,7 +161,7 @@
             </div>
 
             <!--Powrót do kalendarza-->
-            <a th:href="@{/calendar}">Powrót do kalendarza</a>
+            <a th:href="@{/calendar}" th:text="#{lang.calendarReturn}"></a>
         </div>
 
     </div>
@@ -174,7 +174,7 @@
     </div>
 
     <div th:if="${#request.getAttribute('noCookieConsent')}" class="cookieConsent">
-        <p>Strona używa plików cookie.</p>
+        <p th:text="#{lang.cookies}"></p>
         <a th:href="@{/setCookie}" class="greenButton">OK</a>
         <div style="clear: both;"></div>
     </div>

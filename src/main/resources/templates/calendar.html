@@ -18,20 +18,20 @@
     <!--Pasek górny-->
     <div class="userBar">
         <form class="themeForm" method="POST" th:action="@{/theme}" name="themeForm" id="themeForm">
-            <span>Preferencje:</span>
+            <span th:text="#{lang.preferences}"></span>
             <select id="theme" name="theme" onchange="submitThemeForm()">
-                <option value="" disabled selected>Wybierz motyw</option>
-                <option value="light">Jasny</option>
-                <option value="dark">Ciemny</option>
+                <option value="" th:text="#{lang.chooseTheme}" disabled selected></option>
+                <option value="light" th:text="#{lang.lightTheme}"></option>
+                <option value="dark" th:text="#{lang.darkTheme}"></option>
             </select>
         </form>
         <div class="bar" sec:authorize="isAuthenticated()">
             <script type="text/javascript">connect()</script>
-            <a th:href="@{/messages}">Wiadomosci</a>
-            <span>| Użytkownik:</span>
+            <a th:href="@{/messages}" th:text="#{lang.messages}"></a>
+            <span th:inline="text">| [[#{lang.user}]]:</span>
             <a sec:authentication="name" th:href="@{/user}"></a>
             <form method="POST" th:action="@{/logout}">
-                <input class="redInputButton" type="submit" value="Wyloguj" onclick="disconnect()">
+                <input class="redInputButton" type="submit" th:value="#{lang.logOut}" onclick="disconnect()">
             </form>
             <div style="clear: both;"></div>
         </div>
@@ -43,9 +43,9 @@
 
     <div class="navBar">
         <div class="nav">
-            <a th:href="@{/}">Strona główna</a>
-            <a th:href="@{/calendar/list}">Kalendarze</a>
-            <a th:href="@{/notes/list}">Lista notek</a>
+            <a th:href="@{/}" th:text="#{lang.mainPage}"></a>
+            <a th:href="@{/calendar/list}" th:text="#{lang.calendars}"></a>
+            <a th:href="@{/notes/list}" th:text="#{lang.noteList}"></a>
         </div>
     </div>
 
@@ -57,17 +57,17 @@
     <div class="container">
 
         <!-- Edytuj kalendarz -->
-        <a class="greenHyperlinkButton" th:href="@{/calendar/editCalendar}">Edytuj kalendarz</a>
+        <a class="greenHyperlinkButton" th:href="@{/calendar/editCalendar}" th:text="#{lang.editCalendar}"></a>
 
         <!--    Nagłówek kalendarza z nazwami dni    -->
         <div class="calendar">
-            <div class="dayName">Poniedziałek</div>
-            <div class="dayName">Wtorek</div>
-            <div class="dayName">Środa</div>
-            <div class="dayName">Czwartek</div>
-            <div class="dayName">Piątek</div>
-            <div class="dayName">Sobota</div>
-            <div class="dayName">Niedziela</div>
+            <div class="dayName" th:text="#{lang.monday}"></div>
+            <div class="dayName" th:text="#{lang.tuesday}"></div>
+            <div class="dayName" th:text="#{lang.wednesday}"></div>
+            <div class="dayName" th:text="#{lang.thursday}"></div>
+            <div class="dayName" th:text="#{lang.friday}"></div>
+            <div class="dayName" th:text="#{lang.saturday}"></div>
+            <div class="dayName" th:text="#{lang.sunday}"></div>
             <div style="clear: both;"></div>
         </div>
 
@@ -104,7 +104,7 @@
     </div>
 
     <div th:if="${#request.getAttribute('noCookieConsent')}" class="cookieConsent">
-        <p>Strona używa plików cookie.</p>
+        <p th:text="#{lang.cookies}"></p>
         <a th:href="@{/setCookie}" class="greenButton">OK</a>
         <div style="clear: both;"></div>
     </div>
