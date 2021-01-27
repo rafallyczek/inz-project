@@ -1,15 +1,14 @@
-package paw.project.calendarapp.model;
+package paw.project.calendarapp.component;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.stereotype.Component;
+import paw.project.calendarapp.model.Note;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Locale;
 
 @Component
 @Data
@@ -25,13 +24,13 @@ public class Calendar {
     private final MessageSource messageSource; //Źródło plików messages
     private MessageSourceAccessor accessor; //Dostęp do plików messages
     private String monthName; // Nazwa aktualnego miesiąca
-    private Locale locale; //Ustawienia języka
+    private LocaleHolder localeHolder; //Komponent przechowujący aktualne Locale aplikacji
 
     //Wstrzykiwanie MessageSource
     @Autowired
-    public Calendar(MessageSource messageSource) {
+    public Calendar(MessageSource messageSource, LocaleHolder localeHolder) {
         this.messageSource = messageSource;
-        this.locale = LocaleContextHolder.getLocale();
+        this.localeHolder = localeHolder;
         this.accessor = new MessageSourceAccessor(messageSource);
         this.monthName = monthName(month);
     }
@@ -62,47 +61,46 @@ public class Calendar {
         String monthName = null;
         switch (month) {
             case 1:
-                monthName = accessor.getMessage("lang.january",locale);
+                monthName = accessor.getMessage("lang.january",localeHolder.getLocale());
                 break;
             case 2:
-                monthName = accessor.getMessage("lang.february",locale);
+                monthName = accessor.getMessage("lang.february",localeHolder.getLocale());
                 break;
             case 3:
-                monthName = accessor.getMessage("lang.march",locale);
+                monthName = accessor.getMessage("lang.march",localeHolder.getLocale());
                 break;
             case 4:
-                monthName = accessor.getMessage("lang.april",locale);
+                monthName = accessor.getMessage("lang.april",localeHolder.getLocale());
                 break;
             case 5:
-                monthName = accessor.getMessage("lang.may",locale);
+                monthName = accessor.getMessage("lang.may",localeHolder.getLocale());
                 break;
             case 6:
-                monthName = accessor.getMessage("lang.june",locale);
+                monthName = accessor.getMessage("lang.june",localeHolder.getLocale());
                 break;
             case 7:
-                monthName = accessor.getMessage("lang.july",locale);
+                monthName = accessor.getMessage("lang.july",localeHolder.getLocale());
                 break;
             case 8:
-                monthName = accessor.getMessage("lang.august",locale);
+                monthName = accessor.getMessage("lang.august",localeHolder.getLocale());
                 break;
             case 9:
-                monthName = accessor.getMessage("lang.september",locale);
+                monthName = accessor.getMessage("lang.september",localeHolder.getLocale());
                 break;
             case 10:
-                monthName = accessor.getMessage("lang.october",locale);
+                monthName = accessor.getMessage("lang.october",localeHolder.getLocale());
                 break;
             case 11:
-                monthName = accessor.getMessage("lang.november",locale);
+                monthName = accessor.getMessage("lang.november",localeHolder.getLocale());
                 break;
             case 12:
-                monthName = accessor.getMessage("lang.december",locale);
+                monthName = accessor.getMessage("lang.december",localeHolder.getLocale());
                 break;
         }
         return monthName;
     }
 
-    public void setLocale(Locale locale){
-        this.locale = locale;
+    public void resetLocale(){
         monthName = monthName(month);
     }
 

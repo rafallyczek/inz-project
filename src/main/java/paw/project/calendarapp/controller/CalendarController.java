@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import paw.project.calendarapp.TO.AddNote;
 import paw.project.calendarapp.TO.UpdateNote;
+import paw.project.calendarapp.component.Calendar;
 import paw.project.calendarapp.model.*;
 import paw.project.calendarapp.service.CalendarService;
 import paw.project.calendarapp.service.InvitationService;
