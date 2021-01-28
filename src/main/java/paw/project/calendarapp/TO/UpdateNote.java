@@ -2,11 +2,15 @@ package paw.project.calendarapp.TO;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+
 @Data
 public class UpdateNote {
 
     private Long noteId;
+    @NotBlank(message = "Tytuł nie może byc pusty.")
     private String title;
+    @NotBlank(message = "Zawartość nie może być pusta.")
     private String content;
     private String date;
     private String time;

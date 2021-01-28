@@ -59,15 +59,21 @@
             <!--Formularz edytujący notkę-->
             <p th:text="#{lang.editNote}"></p>
             <hr>
-            <form method="POST" th:action="@{/notes/update}" th:object="${updateNote}">
+            <form method="POST" th:action="@{/calendar/validateUpdateNote}" th:object="${updateNote}">
                 <input id="idEdit" type="hidden" th:field="*{noteId}">
                 <div class="formInputs">
                     <label for="titleEdit" th:text="#{lang.titleText}"></label>
                     <input id="titleEdit" type="text" th:field="*{title}">
+                    <div class="error">
+                        <span class="tooltip" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+                    </div>
                 </div>
                 <div class="formInputs">
                     <label for="contentEdit" th:text="#{lang.textValue}"></label>
                     <input id="contentEdit" type="text" th:field="*{content}">
+                    <div class="error">
+                        <span class="tooltip" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></span>
+                    </div>
                 </div>
                 <div class="formInputs">
                     <label for="timeEdit" th:text="#{lang.timeValue}"></label>

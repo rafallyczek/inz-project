@@ -59,14 +59,20 @@
             <!--Formularz dodający nową notkę-->
             <p th:text="#{lang.addNote}"></p>
             <hr>
-            <form method="POST" th:action="@{/notes/add}" th:object="${addNote}">
+            <form method="POST" th:action="@{/calendar/validateNote}" th:object="${addNote}">
                 <div class="formInputs">
                     <label for="title" th:text="#{lang.titleText}"></label>
                     <input id="title" type="text" th:field="*{title}">
+                    <div class="error">
+                        <span class="tooltip" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+                    </div>
                 </div>
                 <div class="formInputs">
                     <label for="content" th:text="#{lang.textValue}"></label>
                     <input id="content" type="text" th:field="*{content}">
+                    <div class="error">
+                        <span class="tooltip" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></span>
+                    </div>
                 </div>
                 <div class="formInputs">
                     <label for="time" th:text="#{lang.timeValue}"></label>

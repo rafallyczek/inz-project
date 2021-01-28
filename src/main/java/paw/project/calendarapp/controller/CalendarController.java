@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import paw.project.calendarapp.TO.AddNote;
@@ -16,6 +17,7 @@ import paw.project.calendarapp.service.NoteService;
 import paw.project.calendarapp.service.UserService;
 
 import javax.mail.MessagingException;
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -61,12 +63,35 @@ public class CalendarController {
             addNote.setCalendarId(this.calendarId);
             addNote.setUserId(user.getId().intValue());
             addNote.setDate(this.calendar.getYear()+"-"+month+"-"+day);
+            addNote.setTime("00:00");
 
             model.addAttribute("addNote", addNote);
             model.addAttribute("calendar", this.calendar);
             model.addAttribute("dbCalendar", dbCalendar);
             model.addAttribute("dayNumber", this.dayNumber);
         }
+    }
+
+    //Ustaw numer dnia
+    @PostMapping("/setDayNumber")
+    public String setDayNumber(@RequestParam int dayNumber){
+        this.dayNumber = dayNumber;
+        return "redirect:/calendar/allNotes";
+    }
+
+    //Ustaw id kalendarza
+    @PostMapping("/setCalendarId")
+    public String setCalendarId(@RequestParam int calendarId){
+        this.calendarId = calendarId;
+        return "redirect:/calendar";
+    }
+
+    //Ustaw numer dnia i id kalendarza
+    @GetMapping("/setDayNumberAndCalendarId")
+    public String setDayNumberAndCalendarId(@ModelAttribute("calendarId") Integer calendarId, @ModelAttribute("dayNum") int dayNum){
+        this.calendarId = calendarId;
+        this.dayNumber = dayNum;
+        return "redirect:/calendar/allNotes";
     }
 
     //Wyświetl kalendarz
@@ -77,13 +102,6 @@ public class CalendarController {
         }
         loadNotes(this.calendarId, user.getTimezone());
         return "calendar";
-    }
-
-    //Ustaw id kalendarza i załaduj notki
-    @PostMapping("/setCalendarId")
-    public String setCalendarId(@RequestParam int calendarId){
-        this.calendarId = calendarId;
-        return "redirect:/calendar";
     }
 
     //Wyświetl szczegóły dnia (zwykłe notki)
@@ -106,41 +124,37 @@ public class CalendarController {
         return "task-notes";
     }
 
-    //Ustaw numer dnia
-    @PostMapping("/setDayNumber")
-    public String setDayNumber(@RequestParam int dayNumber){
-        this.dayNumber = dayNumber;
-        return "redirect:/calendar/allNotes";
-    }
-
-    //Ustaw numer dnia i id kalendarza
-    @GetMapping("/setDayNumberAndCalendarId")
-    public String setDayNumberAndCalendarId(@ModelAttribute("calendarId") Integer calendarId, @ModelAttribute("dayNum") int dayNum){
-        this.calendarId = calendarId;
-        this.dayNumber = dayNum;
-        return "redirect:/calendar/allNotes";
-    }
-
     //Wyświetl formularz dodający notkę
     @GetMapping("/addNote")
     public String showAddNoteForm(@AuthenticationPrincipal User user, Model model){
         if(this.dayNumber==-1){
             return "redirect:/calendar";
         }
-        DbCalendar dbCalendar = calendarService.getCalendar((long) this.calendarId);
-        if(dbCalendar.getOwnerId()==user.getId().intValue()){
-            model.addAttribute("isOwner",true);
-        }else{
-            model.addAttribute("isOwner",false);
-        }
-        List<User> calendarUsers = userService.getAllUsersByCalendarId(this.calendarId);
-        model.addAttribute("calendarUsers",calendarUsers);
+        setUpAddNoteViewAttributes(model, user);
         return "add-note";
+    }
+
+    //Walidacja formularza dodawania notki
+    @PostMapping("/validateNote")
+    public String validateAddNote(@Valid @ModelAttribute("addNote") AddNote addNote,
+                                  Errors errors,
+                                  @AuthenticationPrincipal User user,
+                                  Model model,
+                                  RedirectAttributes redirectAttributes){
+        setUpAddNoteViewAttributes(model, user);
+        if(errors.hasErrors()){
+            return "add-note";
+        }
+        redirectAttributes.addFlashAttribute("addNote",addNote);
+        return "forward:/notes/add";
     }
 
     //Wyświetł formularz edytujący notkę
     @GetMapping("/editNote/{id}")
-    public String showEditNoteForm(@PathVariable Long id, Model model, @AuthenticationPrincipal User user, @RequestParam(required = false) boolean fromNoteList){
+    public String showEditNoteForm(@PathVariable Long id,
+                                   Model model,
+                                   @AuthenticationPrincipal User user,
+                                   @RequestParam(required = false) boolean fromNoteList){
         Note note = noteService.getNote(id);
         if(!fromNoteList){
             if(this.dayNumber==-1){
@@ -165,6 +179,18 @@ public class CalendarController {
         return "update-note";
     }
 
+    //Walidacja formularza edycji notki
+    @PostMapping("/validateUpdateNote")
+    public String validateUpdateNote(@Valid @ModelAttribute("updateNote") UpdateNote updateNote,
+                                     Errors errors,
+                                     RedirectAttributes redirectAttributes){
+        if(errors.hasErrors()){
+            return "update-note";
+        }
+        redirectAttributes.addFlashAttribute("updateNote",updateNote);
+        return "forward:/notes/update";
+    }
+
     //Wyświetl formularz dodający kalendarz
     @GetMapping("/addCalendar")
     public String showAddCalendarForm(){
@@ -187,7 +213,7 @@ public class CalendarController {
         return "update-calendar";
     }
 
-    //Wyświetl szczegóły dnia (notki-zadania)
+    //Wyświetl formularz dodający użytkownikow do kalendarza
     @GetMapping("/editCalendarUser")
     public String showAddUserForm(Model model, @AuthenticationPrincipal User user){
         if(this.calendarId==-1){
@@ -250,7 +276,7 @@ public class CalendarController {
     @GetMapping("/next")
     public String nextMonth(Model model){
         this.calendar.incrementMonth();
-        model.addAttribute("calendar", this.calendar);
+        //model.addAttribute("calendar", this.calendar);
         return "redirect:/calendar";
     }
 
@@ -258,7 +284,7 @@ public class CalendarController {
     @GetMapping("/previous")
     public String previousMonth(Model model){
         this.calendar.decrementMonth();
-        model.addAttribute("calendar", this.calendar);
+        //model.addAttribute("calendar", this.calendar);
         return "redirect:/calendar";
     }
 
@@ -279,6 +305,18 @@ public class CalendarController {
     public void loadCalendars(Model model, User user){
         List<DbCalendar> dbCalendars = calendarService.getCalendarsByUserId(user.getId().intValue());
         model.addAttribute("calendars", dbCalendars);
+    }
+
+    //Ustaw atrybuty isOwner i listę użytkowników kalendarza
+    public void setUpAddNoteViewAttributes(Model model, User user){
+        DbCalendar dbCalendar = calendarService.getCalendar((long) this.calendarId);
+        if(dbCalendar.getOwnerId()==user.getId().intValue()){
+            model.addAttribute("isOwner",true);
+        }else{
+            model.addAttribute("isOwner",false);
+        }
+        List<User> calendarUsers = userService.getAllUsersByCalendarId(this.calendarId);
+        model.addAttribute("calendarUsers",calendarUsers);
     }
 
 }
