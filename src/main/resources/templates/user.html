@@ -58,10 +58,13 @@
 
             <p th:text="#{lang.changeEmail}"></p>
             <hr>
-            <form method="POST" th:action="@{/user/updateEmail}" th:object="${updateEmail}">
+            <form method="POST" th:action="@{/user/updateEmail}" th:object="${updateEmail}" novalidate>
                 <div class="formInputs">
                     <label for="email">Email</label>
                     <input id="email" type="email" th:field="*{email}">
+                    <div class="error">
+                        <span class="tooltip" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                    </div>
                 </div>
                 <input type="hidden" th:field="*{userId}">
                 <input class="greenInputButton" type="submit" th:value="#{lang.save}">

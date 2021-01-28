@@ -60,7 +60,7 @@
 
         <div class="registerForm">
 
-            <form method="POST" th:action="@{/user/add}" th:object="${register}">
+            <form method="POST" th:action="@{/user/add}" th:object="${register}" novalidate>
                 <div class="formInputs">
                     <label for="username" th:text="#{lang.username}"></label>
                     <input id="username" type="text" th:field="*{username}">
@@ -85,6 +85,9 @@
                 <div class="formInputs">
                     <label for="email">Email</label>
                     <input id="email" type="email" th:field="*{email}">
+                    <div class="error">
+                        <span class="tooltip" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                    </div>
                 </div>
                 <div class="formInputs">
                     <label for="timezone" th:text="#{lang.timezone}"></label>
