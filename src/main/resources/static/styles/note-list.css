@@ -2,10 +2,13 @@
     margin: 5px;
     padding: 5px;
     background-color: lightblue;
-    border-radius: 5px;
+    border-radius: 4px;
     float: left;
-    min-width: 100px;
     min-height: 100px;
+    width: 230px;
+}
+.task{
+    color: red;
 }
 .noteHeader{
     font-weight: bold;
@@ -16,14 +19,73 @@
 .noteBody{
     padding: 5px;
 }
+.deleteButton{
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #2e2ed1;
+}
+.deleteButton:hover{
+    color: #2525a7;
+}
+.editButton{
+    position: absolute;
+    top: 0;
+    right: 25px;
+    color: #2e2ed1;
+}
+.editButton:hover{
+    color: #2525a7;
+}
+.tooltip{
+    visibility: hidden;
+    position: absolute;
+    bottom: 120%;
+    right: -30px;
+    background-color: grey;
+    color: white;
+    text-align: center;
+    width: 80px;
+    padding: 5px;
+    border-radius: 5px;
+}
+.icon-cancel .tooltip::after{
+    content: "";
+    position: absolute;
+    top: 100%;
+    right: 40px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: grey transparent transparent transparent;
+}
+.icon-cancel:hover .tooltip{
+    visibility: visible;
+}
+.icon-pencil .tooltip::after{
+    content: "";
+    position: absolute;
+    top: 100%;
+    right: 40px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: grey transparent transparent transparent;
+}
+.icon-pencil:hover .tooltip{
+    visibility: visible;
+}
 .greenHyperlinkButton{
-    width: 70px;
-    margin-left: 5px;
-    margin-top: 5px;
+    margin: 5px 10px 2px 5px;
+    float: left;
 }
 .noNotes{
     text-align: center;
 }
 #calendarForm{
-    margin: 5px 0 5px 0;
+    margin: 8px 0 15px 0;
+}
+.container > hr{
+    margin-top: 8px;
+    border: none;
+    height: 1px;
+    background-color: grey;
 }

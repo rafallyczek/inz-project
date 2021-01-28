@@ -83,7 +83,7 @@ public class ReminderService {
         ZonedDateTime localDateTime = ownerDateTime.withZoneSameInstant(ZoneId.of(user.getTimezone()));
         ZonedDateTime now = ZonedDateTime.now(ZoneId.of(user.getTimezone()));
         Duration duration = Duration.between(now, localDateTime);
-        if (duration.isNegative() && reminder.isReminded()) {
+        if (duration.isNegative() || reminder.isReminded()) {
             reminderRepository.deleteById(reminder.getId());
         }else if(duration.toMinutes()<reminder.getReminderTime()){
                 emailService.sendEmail(user.getEmail(),"Wydarzenie","<p>Przypomnienie o nadchodzącym wydarzeniu.</p><p>Wydarzenie: <b>" +

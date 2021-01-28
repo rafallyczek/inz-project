@@ -1,8 +1,13 @@
+.container{
+    min-height: 500px;
+}
 .note{
     padding: 5px;
     background-color: lightblue;
-    border-radius: 5px;
+    border-radius: 4px;
     margin-bottom: 5px;
+    width: 230px;
+    min-height: 100px;
 }
 .noteHeader{
     font-weight: bold;
@@ -17,14 +22,9 @@
     padding: 5px 10px;
 }
 .taskGridWrapper{
-    margin-left: auto;
-    margin-right: auto;
-    width: 730px;
-}
-.taskGrid{
-    float: left;
-    margin: 5px;
-    width: 230px;
+    margin: 13px auto 15px auto;
+    width: 100%;
+    min-height: 400px;
 }
 .taskGrid p{
     text-align: center;
@@ -106,4 +106,30 @@
     margin-bottom: 5px;
     margin-right: 5px;
     float: left;
+}
+.day > hr{
+    margin-top: 8px;
+    border: none;
+    height: 1px;
+    background-color: grey;
+}
+@media only screen and (min-width: 1550px){
+    .taskGrid{
+        float: left;
+        margin: 5px;
+        width: 32.5%;
+    }
+}
+@media only screen and (max-width: 1550px) and (min-width: 970px){
+    .taskGrid{
+        float: left;
+        margin: 5px;
+        width: 32%;
+    }
+}
+@media only screen and (max-width: 970px){
+    .taskGrid{
+        margin: 5px auto 5px auto;
+        width: 100%;
+    }
 }

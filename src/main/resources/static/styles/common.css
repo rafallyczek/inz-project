@@ -1,7 +1,7 @@
 /* Wspólne */
 
 body{
-    margin: 0;
+    margin: 0 0 50px 0;
 }
 .userBar{
     width: 100%;
@@ -62,7 +62,7 @@ body{
     background-color: firebrick;
     padding: 5px;
     border-radius: 5px;
-    display: block;
+    display: inline-block;
     font: 400 13.3333px Arial;
 }
 .redHyperlinkButton:hover{
@@ -75,7 +75,7 @@ body{
     background-color: seagreen;
     padding: 5px;
     border-radius: 5px;
-    display: block;
+    display: inline-block;
     font: 400 13.3333px Arial;
 }
 .greenHyperlinkButton:hover{
@@ -88,7 +88,7 @@ body{
     background-color: #707070;
     padding: 5px;
     border-radius: 5px;
-    display: block;
+    display: inline-block;
     font: 400 13.3333px Arial;
 }
 .greyHyperlinkButton:hover{
@@ -134,7 +134,7 @@ h1{
     width: 60%;
     background-color: darkgray;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 4px;
     -webkit-box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
     -moz-box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
     box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
@@ -151,7 +151,7 @@ h1{
     width: 80%;
     background-color: darkgray;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 4px;
     -webkit-box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
     -moz-box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);
     box-shadow: 0 0 3px 1px rgba(0,0,0,0.7);

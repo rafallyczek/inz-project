@@ -4,11 +4,14 @@
 .calendar{
     margin-left: auto;
     margin-right: auto;
-    margin-top: 10px;
+    margin-top: 13px;
     width: 730px;
 }
 .calendar ~ .calendar{
     margin-top: 0;
+}
+.calendar:last-of-type{
+    margin-bottom: 20px;
 }
 .dayName{
     padding: 5px;
@@ -38,7 +41,7 @@
     margin: 5px;
     padding: 5px;
     background-color: lightblue;
-    border-radius: 5px;
+    border-radius: 4px;
     max-width: 80px;
     max-height: 20px;
     text-overflow: ellipsis;
@@ -53,21 +56,41 @@
     height: 95px;
     margin: -1px 0 0 -1px;
 }
-.next{
-    position: fixed;
-    top: 50%;
-    right: 50px;
-    color: grey;
-}
-.previous{
-    position: fixed;
-    top: 50%;
-    left: 50px;
-    color: grey;
-}
 .greenHyperlinkButton{
     margin-bottom: 5px;
     margin-right: 5px;
-    display: block;
-    width: 100px;
+}
+.container hr{
+    margin-top: 8px;
+    border: none;
+    height: 1px;
+    background-color: grey;
+}
+@media only screen and (min-width: 1400px){
+    .next{
+        position: absolute;
+        top: 50%;
+        right: -100px;
+        color: grey;
+    }
+    .previous{
+        position: absolute;
+        top: 50%;
+        left: -100px;
+        color: grey;
+    }
+}
+@media only screen and (max-width: 1400px){
+    .next{
+        position: absolute;
+        top: 50%;
+        right: -80px;
+        color: grey;
+    }
+    .previous{
+        position: absolute;
+        top: 50%;
+        left: -80px;
+        color: grey;
+    }
 }

@@ -140,11 +140,17 @@ public class CalendarController {
 
     //Wyświetł formularz edytujący notkę
     @GetMapping("/editNote/{id}")
-    public String showEditNoteForm(@PathVariable Long id, Model model, @AuthenticationPrincipal User user){
-        if(this.dayNumber==-1){
-            return "redirect:/calendar";
-        }
+    public String showEditNoteForm(@PathVariable Long id, Model model, @AuthenticationPrincipal User user, @RequestParam(required = false) boolean fromNoteList){
         Note note = noteService.getNote(id);
+        if(!fromNoteList){
+            if(this.dayNumber==-1){
+                return "redirect:/calendar";
+            }
+        }else{
+            this.calendarId = note.getCalendarId();
+            this.dayNumber = note.getDateTime().getDayOfMonth();
+            model.addAttribute("dayNumber", this.dayNumber);
+        }
         User owner = userService.getUser((long) note.getUserId());
         note.setNoteDate(user.getTimezone(), owner.getTimezone());
         note.setNoteTime(user.getTimezone(), owner.getTimezone());

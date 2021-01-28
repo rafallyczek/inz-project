@@ -1,15 +1,19 @@
 .notesWrapper{
-    margin-left: auto;
-    margin-right: auto;
-    width: 730px;
+    margin: 0 auto 15px auto;
+    width: 100%;
+    min-height: 400px;
+}
+.container{
+    min-height: 500px;
 }
 .note{
     padding: 5px;
     background-color: lightblue;
-    border-radius: 5px;
-    margin-bottom: 5px;
+    border-radius: 4px;
+    margin-top: 5px;
     margin-right: 5px;
     width: 230px;
+    min-height: 100px;
     float: left;
 }
 .task{
@@ -82,13 +86,17 @@
     visibility: visible;
 }
 .greenHyperlinkButton{
-    width: 72px;
     margin-bottom: 5px;
     float: left;
 }
 .greyHyperlinkButton{
-    width: 82px;
     margin-bottom: 5px;
     margin-right: 5px;
     float: left;
+}
+.day hr{
+    margin-top: 8px;
+    border: none;
+    height: 1px;
+    background-color: grey;
 }

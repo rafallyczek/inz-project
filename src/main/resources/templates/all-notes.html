@@ -63,6 +63,8 @@
             <a class="greenHyperlinkButton" th:href="@{/calendar/addNote}" th:text="#{lang.addNote}"></a>
             <div style="clear: both"></div>
 
+            <hr>
+
             <div class="notesWrapper">
                 <div class="note" th:each="note : ${calendar.notes}" th:if="${note.date.isEqual(#temporals.create(calendar.year,calendar.month,dayNumber))}">
 
