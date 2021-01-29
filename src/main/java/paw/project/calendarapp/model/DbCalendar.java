@@ -3,6 +3,7 @@ package paw.project.calendarapp.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Data
@@ -13,6 +14,7 @@ public class DbCalendar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "Tytuł nie może być pusty.")
     private String title;
     private Integer ownerId;
 

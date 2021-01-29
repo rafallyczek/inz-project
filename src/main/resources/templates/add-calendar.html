@@ -63,8 +63,12 @@
                 <div class="formInputs">
                     <label for="title" th:text="#{lang.calendarName}"></label>
                     <input id="title" type="text" th:field="*{title}">
+                    <div class="error">
+                        <span class="tooltip" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+                    </div>
                 </div>
                 <div style="clear: both"></div>
+                <input id="ownerId" type="hidden" th:field="*{ownerId}">
                 <input class="greenInputButton" type="submit" th:value="#{lang.add}">
                 <input class="redInputButton" type="reset" th:value="#{lang.reset}">
                 <div style="clear: both"></div>

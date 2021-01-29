@@ -55,11 +55,11 @@
     <div class="container">
 
         <!--Dodaj nowy kalendarz-->
-        <form method="GET" th:action="@{/calendar/addCalendar}" onclick="this.submit()">
+        <a th:href="@{/calendar/addCalendar}">
             <div class="calendar">
                 <p th:text="#{lang.newCalendar}"></p>
             </div>
-        </form>
+        </a>
 
         <!--Wyświetl kalendarze użytkownika-->
         <a th:each="dbcalendar : ${calendars}" th:href="@{/calendar/{id}(id=${dbcalendar.id})}">

@@ -59,14 +59,17 @@ public class CalendarController {
 
     //Wyświetl listę kalendarzy
     @GetMapping("/list")
-    public String showCalendarList(Model model, @AuthenticationPrincipal User user){
+    public String showCalendarList(Model model,
+                                   @AuthenticationPrincipal User user){
         setUpCalendarListViewAttributes(model, user);
         return "calendar-list";
     }
 
     //Wyświetl kalendarz o danym id
     @GetMapping("/{id}")
-    public String showCalendarNEW(@PathVariable int id, @AuthenticationPrincipal User user, Model model){
+    public String showCalendarNEW(@PathVariable int id,
+                                  @AuthenticationPrincipal User user,
+                                  Model model){
         loadNotes(id, user.getTimezone());
         model.addAttribute("calendarId",id);
         return "calendar";
@@ -74,7 +77,10 @@ public class CalendarController {
 
     //Wyświetl podgląd dnia
     @GetMapping("/{calendarId}/day/{day}")
-    public String showDay(@PathVariable int calendarId, @PathVariable int day, @AuthenticationPrincipal User user, Model model){
+    public String showDay(@PathVariable int calendarId,
+                          @PathVariable int day,
+                          @AuthenticationPrincipal User user,
+                          Model model){
         loadNotes(calendarId, user.getTimezone());
         model.addAttribute("calendarId",calendarId);
         model.addAttribute("dayNumber",day);
@@ -83,7 +89,10 @@ public class CalendarController {
 
     //Wyświetl podgląd zadań dnia
     @GetMapping("/{calendarId}/day/{day}/tasks")
-    public String showDayTasks(@PathVariable int calendarId, @PathVariable int day, @AuthenticationPrincipal User user, Model model){
+    public String showDayTasks(@PathVariable int calendarId,
+                               @PathVariable int day,
+                               @AuthenticationPrincipal User user,
+                               Model model){
         loadNotes(calendarId, user.getTimezone());
         model.addAttribute("calendarId",calendarId);
         model.addAttribute("dayNumber",day);
@@ -92,7 +101,10 @@ public class CalendarController {
 
     //Wyświetl formularz dodający notkę
     @GetMapping("/{calendarId}/day/{day}/addNote")
-    public String showAddNoteFormNEW(@PathVariable int calendarId, @PathVariable int day, @AuthenticationPrincipal User user, Model model){
+    public String showAddNoteFormNEW(@PathVariable int calendarId,
+                                     @PathVariable int day,
+                                     @AuthenticationPrincipal User user,
+                                     Model model){
         setUpAddNoteViewAttributes(model, user, (long) calendarId, day);
         setUpIsOwnerAndCalendarUsers(model, user, (long) calendarId);
         model.addAttribute("calendarId",calendarId);
@@ -102,7 +114,11 @@ public class CalendarController {
 
     //Wyświetl formularz edutujący notkę
     @GetMapping("/{calendarId}/day/{day}/updateNote/{noteId}")
-    public String showUpdateNoteForm(@PathVariable int calendarId, @PathVariable int day, @PathVariable int noteId, @AuthenticationPrincipal User user, Model model){
+    public String showUpdateNoteForm(@PathVariable int calendarId,
+                                     @PathVariable int day,
+                                     @PathVariable int noteId,
+                                     @AuthenticationPrincipal User user,
+                                     Model model){
         setUpUpdateNoteViewAttributes(model, user, (long) noteId);
         setUpIsOwnerAndCalendarUsers(model, user, (long) calendarId);
         model.addAttribute("calendarId",calendarId);
@@ -146,6 +162,27 @@ public class CalendarController {
         return "forward:/notes/update";
     }
 
+    //Wyświetl formularz dodający kalendarz
+    @GetMapping("/addCalendar")
+    public String showAddCalendarForm(@AuthenticationPrincipal User user,
+                                      Model model){
+        DbCalendar dbCalendar = new DbCalendar();
+        dbCalendar.setOwnerId(user.getId().intValue());
+        model.addAttribute("dbCalendar", dbCalendar);
+        return "add-calendar";
+    }
+
+    //Dodaj kalendarz
+    @PostMapping("/add")
+    public String addCalendar(@Valid @ModelAttribute("dbCalendar") DbCalendar dbCalendar,
+                              Errors errors){
+        if(errors.hasErrors()){
+            return "add-calendar";
+        }
+        calendarService.addCalendar(dbCalendar);
+        return "redirect:/calendar/list";
+    }
+
     //Nastepny miesiąc
     @GetMapping("/{id}/next")
     public String nextMonth(@PathVariable int id){
@@ -170,16 +207,6 @@ public class CalendarController {
         this.calendarId = calendarId;
         this.dayNumber = dayNum;
         return "redirect:/calendar/allNotes";
-    }
-
-    //DO ZMIANY
-    //Wyświetl formularz dodający kalendarz
-    @GetMapping("/addCalendar")
-    public String showAddCalendarForm(@AuthenticationPrincipal User user, Model model){
-        DbCalendar dbCalendar = new DbCalendar();
-        dbCalendar.setOwnerId(user.getId().intValue());
-        model.addAttribute("dbCalendar", dbCalendar);
-        return "add-calendar";
     }
 
     //DO ZMIANY
@@ -254,14 +281,6 @@ public class CalendarController {
     public String updateCalendar(@ModelAttribute("updateCalendar") DbCalendar dbCalendar){
         calendarService.updateCalendar(dbCalendar);
         return "redirect:/calendar/editCalendar";
-    }
-
-    //DO ZMIANY
-    //Dodaj kalendarz
-    @PostMapping("/add")
-    public String addCalendar(@ModelAttribute("dbCalendar") DbCalendar dbCalendar){
-        calendarService.addCalendar(dbCalendar);
-        return "redirect:/calendar/list";
     }
 
     //------------------------------------------------------------------------------------
