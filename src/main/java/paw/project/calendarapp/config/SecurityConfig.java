@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import paw.project.calendarapp.security.WebSecurity;
 
 @Configuration
 @EnableWebSecurity
@@ -21,10 +22,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    //Metoda zwracająca bean szyfrujący hasła
+    //Bean szyfrujący hasła
     @Bean
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    //Bean sprawdzający dostęp do kalendarza
+    @Bean
+    public WebSecurity webSecurity(){
+        return new WebSecurity();
     }
 
     //Konfiguracja sposobu wyszukiwania użytkowników podczas uwierzytelniania
@@ -39,6 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception{
         http.authorizeRequests()
                 .antMatchers("/user/register","/user/add").permitAll()
+                .antMatchers("/calendar/{id}/**").access("@webSecurity.checkCalendarId(authentication,#id)")
                 .antMatchers("/calendar","/notes","/user","/calendar/**","/notes/**","/user/**","/messages","/messages/**")
                     .hasRole("USER")
                 .antMatchers("/","/**").permitAll()
@@ -49,7 +57,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .failureUrl("/login?error=true")
                 .and()
                     .logout()
-                        .logoutSuccessUrl("/");
+                        .logoutSuccessUrl("/")
+                .and()
+                    .exceptionHandling()
+                        .accessDeniedPage("/");
     }
 
 }

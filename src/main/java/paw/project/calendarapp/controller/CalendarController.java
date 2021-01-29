@@ -72,6 +72,7 @@ public class CalendarController {
         }
     }
 
+    //DEPRECATED
     //Ustaw numer dnia
     @PostMapping("/setDayNumber")
     public String setDayNumber(@RequestParam int dayNumber){
@@ -79,6 +80,7 @@ public class CalendarController {
         return "redirect:/calendar/allNotes";
     }
 
+    //DEPRECATED
     //Ustaw id kalendarza
     @PostMapping("/setCalendarId")
     public String setCalendarId(@RequestParam int calendarId){
@@ -94,6 +96,7 @@ public class CalendarController {
         return "redirect:/calendar/allNotes";
     }
 
+    //DEPRECATED
     //Wyświetl kalendarz
     @GetMapping
     public String showCalendar(@AuthenticationPrincipal User user){
@@ -103,6 +106,42 @@ public class CalendarController {
         loadNotes(this.calendarId, user.getTimezone());
         return "calendar";
     }
+
+    //Wyświetl listę kalendarzy
+    @GetMapping("/list")
+    public String showCalendarList(){
+        return "calendar-list";
+    }
+
+    //TEST_____________________________________________________________________________________________________
+
+    //Wyświetl kalendarz o danym id
+    @GetMapping("/{id}")
+    public String showCalendarTEST(@PathVariable int id, @AuthenticationPrincipal User user, Model model){
+        loadNotes(id, user.getTimezone());
+        model.addAttribute("calendarId",id);
+        return "calendar";
+    }
+
+    //Wyświetl podgląd dnia
+    @GetMapping("/{calendarId}/day/{day}")
+    public String showDay(@PathVariable int calendarId, @PathVariable int day, @AuthenticationPrincipal User user, Model model){
+        loadNotes(calendarId, user.getTimezone());
+        model.addAttribute("calendarId",calendarId);
+        model.addAttribute("dayNumber",day);
+        return "all-notes";
+    }
+
+    //Wyświetl podgląd zadań dnia
+    @GetMapping("/{calendarId}/day/{day}/tasks")
+    public String showDayTasks(@PathVariable int calendarId, @PathVariable int day, @AuthenticationPrincipal User user, Model model){
+        loadNotes(calendarId, user.getTimezone());
+        model.addAttribute("calendarId",calendarId);
+        model.addAttribute("dayNumber",day);
+        return "task-notes";
+    }
+
+    //TEST_____________________________________________________________________________________________________
 
     //Wyświetl szczegóły dnia (zwykłe notki)
     @GetMapping("/allNotes")
@@ -264,12 +303,6 @@ public class CalendarController {
     public String updateCalendar(@ModelAttribute("updateCalendar") DbCalendar dbCalendar){
         calendarService.updateCalendar(dbCalendar);
         return "redirect:/calendar/editCalendar";
-    }
-
-    //Wyświetl listę kalendarzy
-    @GetMapping("/list")
-    public String showCalendarList(){
-        return "calendar-list";
     }
 
     //Nastepny miesiąc

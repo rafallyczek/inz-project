@@ -80,15 +80,15 @@
             <div class="blankDay" th:if="${calendar.dayOfWeek>1}" th:each="i : ${#numbers.sequence(1,(calendar.dayOfWeek)-1)}"></div>
 
             <!--Generowanie pól z dniami-->
-            <form method="POST" th:each="i : ${#numbers.sequence(1,calendar.daysInMonth)}" th:action="@{/calendar/setDayNumber}" onclick="this.submit()">
-                <input id="dayNumber" type="hidden" th:value="${i}" name="dayNumber">
+            <a th:each="i : ${#numbers.sequence(1,calendar.daysInMonth)}" th:href="@{/calendar/{calendarId}/day/{day}(calendarId=${calendarId}, day=${i})}">
                 <div class="day" th:inline="text">
                     [[${i}]]
                     <!--Wyświetlanie notek w polu dnia-->
                     <div class="miniNote" th:each="note : ${calendar.notes}" th:if="${note.date.isEqual(#temporals.create(calendar.year,calendar.month,i))}" th:text="${note.title}"></div>
                 </div>
-            </form>
+            </a>
             <div style="clear: both;"></div>
+
         </div>
 
         <!--Przejście do następnego miesiąca-->

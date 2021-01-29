@@ -7,6 +7,9 @@
     margin-top: 13px;
     width: 730px;
 }
+.calendar a{
+    color: black;
+}
 .calendar ~ .calendar{
     margin-top: 0;
 }

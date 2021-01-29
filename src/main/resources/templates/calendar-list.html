@@ -62,12 +62,11 @@
         </form>
 
         <!--Wyświetl kalendarze użytkownika-->
-        <form method="POST" th:each="dbcalendar : ${calendars}" th:action="@{/calendar/setCalendarId}" onclick="this.submit()">
-            <input id="calendarId" type="hidden" th:value="${dbcalendar.id}" name="calendarId">
+        <a th:each="dbcalendar : ${calendars}" th:href="@{/calendar/{id}(id=${dbcalendar.id})}">
             <div class="calendar">
                 <p th:text="${dbcalendar.title}"></p>
             </div>
-        </form>
+        </a>
         <div style="clear: both;"></div>
 
     </div>

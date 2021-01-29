@@ -58,7 +58,7 @@
         <div class="day">
 
             <!-- Przejście do zwykłych notek -->
-            <a class="greyHyperlinkButton" th:href="@{/calendar/allNotes}" th:text="#{lang.normalNotes}"></a>
+            <a class="greyHyperlinkButton" th:href="@{/calendar/{calendarId}/day/{day}(calendarId=${calendarId}, day=${dayNumber})}" th:text="#{lang.normalNotes}"></a>
             <!-- Przejście do formularza dodania notki -->
             <a class="greenHyperlinkButton" th:href="@{/calendar/addNote}" th:text="#{lang.addNote}"></a>
             <div style="clear: both"></div>
@@ -162,7 +162,7 @@
                 <div style="clear: both"></div>
             </div>
             <!--Powrót do kalendarza-->
-            <a th:href="@{/calendar}" th:text="#{lang.calendarReturn}"></a>
+            <a th:href="@{/calendar/{id}(id=${calendarId})}" th:text="#{lang.calendarReturn}"></a>
         </div>
 
     </div>
