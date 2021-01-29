@@ -62,7 +62,7 @@
         </a>
 
         <!--Wyświetl kalendarze użytkownika-->
-        <a th:each="dbcalendar : ${calendars}" th:href="@{/calendar/{id}(id=${dbcalendar.id})}">
+        <a th:each="dbcalendar : ${calendars}" th:href="@{/calendar/id/{id}(id=${dbcalendar.id})}">
             <div class="calendar">
                 <p th:text="${dbcalendar.title}"></p>
             </div>

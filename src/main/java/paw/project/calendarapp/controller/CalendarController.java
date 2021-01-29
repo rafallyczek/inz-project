@@ -66,7 +66,7 @@ public class CalendarController {
     }
 
     //Wyświetl kalendarz o danym id
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public String showCalendarNEW(@PathVariable int id,
                                   @AuthenticationPrincipal User user,
                                   Model model){
@@ -76,7 +76,7 @@ public class CalendarController {
     }
 
     //Wyświetl podgląd dnia
-    @GetMapping("/{calendarId}/day/{day}")
+    @GetMapping("/id/{calendarId}/day/{day}")
     public String showDay(@PathVariable int calendarId,
                           @PathVariable int day,
                           @AuthenticationPrincipal User user,
@@ -88,7 +88,7 @@ public class CalendarController {
     }
 
     //Wyświetl podgląd zadań dnia
-    @GetMapping("/{calendarId}/day/{day}/tasks")
+    @GetMapping("/id/{calendarId}/day/{day}/tasks")
     public String showDayTasks(@PathVariable int calendarId,
                                @PathVariable int day,
                                @AuthenticationPrincipal User user,
@@ -100,7 +100,7 @@ public class CalendarController {
     }
 
     //Wyświetl formularz dodający notkę
-    @GetMapping("/{calendarId}/day/{day}/addNote")
+    @GetMapping("/id/{calendarId}/day/{day}/addNote")
     public String showAddNoteFormNEW(@PathVariable int calendarId,
                                      @PathVariable int day,
                                      @AuthenticationPrincipal User user,
@@ -113,7 +113,7 @@ public class CalendarController {
     }
 
     //Wyświetl formularz edutujący notkę
-    @GetMapping("/{calendarId}/day/{day}/updateNote/{noteId}")
+    @GetMapping("/id/{calendarId}/day/{day}/updateNote/{noteId}")
     public String showUpdateNoteForm(@PathVariable int calendarId,
                                      @PathVariable int day,
                                      @PathVariable int noteId,
@@ -127,7 +127,7 @@ public class CalendarController {
     }
 
     //Walidacja formularza dodawania notki
-    @PostMapping("/{calendarId}/day/{day}/addNote/validate")
+    @PostMapping("/id/{calendarId}/day/{day}/addNote/validate")
     public String validateAddNote(@Valid @ModelAttribute("addNote") AddNote addNote,
                                   Errors errors,
                                   @PathVariable int calendarId,
@@ -145,7 +145,7 @@ public class CalendarController {
     }
 
     //Walidacja formularza edycji notki
-    @PostMapping("/{calendarId}/day/{day}/updateNote/validate")
+    @PostMapping("/id/{calendarId}/day/{day}/updateNote/validate")
     public String validateUpdateNote(@Valid @ModelAttribute("updateNote") UpdateNote updateNote,
                                      Errors errors,
                                      @PathVariable int calendarId,
@@ -184,14 +184,14 @@ public class CalendarController {
     }
 
     //Nastepny miesiąc
-    @GetMapping("/{id}/next")
+    @GetMapping("/id/{id}/next")
     public String nextMonth(@PathVariable int id){
         this.calendar.incrementMonth();
         return "redirect:/calendar/"+id;
     }
 
     //Poprzedni miesiąc
-    @GetMapping("/{id}/previous")
+    @GetMapping("/id/{id}/previous")
     public String previousMonth(@PathVariable int id){
         this.calendar.decrementMonth();
         return "redirect:/calendar/"+id;

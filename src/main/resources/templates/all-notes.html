@@ -58,9 +58,9 @@
         <div class="day">
 
             <!-- Przejście do notek-zadań -->
-            <a class="greyHyperlinkButton" th:href="@{/calendar/{calendarId}/day/{day}/tasks(calendarId=${calendarId}, day=${dayNumber})}" th:text="#{lang.taskNotes}"></a>
+            <a class="greyHyperlinkButton" th:href="@{/calendar/id/{calendarId}/day/{day}/tasks(calendarId=${calendarId}, day=${dayNumber})}" th:text="#{lang.taskNotes}"></a>
             <!-- Przejście do formularza dodania notki -->
-            <a class="greenHyperlinkButton" th:href="@{/calendar/{calendarId}/day/{day}/addNote(calendarId=${calendarId}, day=${dayNumber})}" th:text="#{lang.addNote}"></a>
+            <a class="greenHyperlinkButton" th:href="@{/calendar/id/{calendarId}/day/{day}/addNote(calendarId=${calendarId}, day=${dayNumber})}" th:text="#{lang.addNote}"></a>
             <div style="clear: both"></div>
 
             <hr>
@@ -77,7 +77,7 @@
                             </i>
                         </a>
                         <!-- Przejście do formularza edycji notki -->
-                        <a th:href="@{/calendar/{calendarId}/day/{day}/updateNote/{noteId}(calendarId=${calendarId}, day=${dayNumber}, noteId=${note.id})}" class="editButton">
+                        <a th:href="@{/calendar/id/{calendarId}/day/{day}/updateNote/{noteId}(calendarId=${calendarId}, day=${dayNumber}, noteId=${note.id})}" class="editButton">
                             <i class="icon-pencil">
                                 <span class="tooltip" th:text="#{lang.editNote}"></span>
                             </i>
@@ -90,7 +90,7 @@
                 <div style="clear: both"></div>
             </div>
             <!--Powrót do kalendarza-->
-            <a th:href="@{/calendar/{id}(id=${calendarId})}" th:text="#{lang.calendarReturn}"></a>
+            <a th:href="@{/calendar/id/{id}(id=${calendarId})}" th:text="#{lang.calendarReturn}"></a>
         </div>
 
     </div>

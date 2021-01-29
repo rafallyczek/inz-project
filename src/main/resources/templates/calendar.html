@@ -80,7 +80,7 @@
             <div class="blankDay" th:if="${calendar.dayOfWeek>1}" th:each="i : ${#numbers.sequence(1,(calendar.dayOfWeek)-1)}"></div>
 
             <!--Generowanie pól z dniami-->
-            <a th:each="i : ${#numbers.sequence(1,calendar.daysInMonth)}" th:href="@{/calendar/{calendarId}/day/{day}(calendarId=${calendarId}, day=${i})}">
+            <a th:each="i : ${#numbers.sequence(1,calendar.daysInMonth)}" th:href="@{/calendar/id/{calendarId}/day/{day}(calendarId=${calendarId}, day=${i})}">
                 <div class="day" th:inline="text">
                     [[${i}]]
                     <!--Wyświetlanie notek w polu dnia-->
@@ -92,9 +92,9 @@
         </div>
 
         <!--Przejście do następnego miesiąca-->
-        <a class="next" th:href="@{/calendar/{id}/next(id=${calendarId})}"><i class="icon-right-open"></i></a>
+        <a class="next" th:href="@{/calendar/id/{id}/next(id=${calendarId})}"><i class="icon-right-open"></i></a>
         <!--Przejście do poprzedniego miesiąca-->
-        <a class="previous" th:href="@{/calendar/{id}/previous(id=${calendarId})}"><i class="icon-left-open"></i></a>
+        <a class="previous" th:href="@{/calendar/id/{id}/previous(id=${calendarId})}"><i class="icon-left-open"></i></a>
 
     </div>
 
