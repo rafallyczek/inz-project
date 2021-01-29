@@ -92,9 +92,9 @@
         </div>
 
         <!--Przejście do następnego miesiąca-->
-        <a class="next" href="/calendar/next"><i class="icon-right-open"></i></a>
+        <a class="next" th:href="@{/calendar/{id}/next(id=${calendarId})}"><i class="icon-right-open"></i></a>
         <!--Przejście do poprzedniego miesiąca-->
-        <a class="previous" href="/calendar/previous"><i class="icon-left-open"></i></a>
+        <a class="previous" th:href="@{/calendar/{id}/previous(id=${calendarId})}"><i class="icon-left-open"></i></a>
 
     </div>
 

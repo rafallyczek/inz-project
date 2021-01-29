@@ -52,20 +52,20 @@ public class CalendarController {
     @ModelAttribute
     public void setModelAttributes(Model model, @AuthenticationPrincipal User user){
         if(user!=null){
-            loadCalendars(model, user);
+//            loadCalendars(model, user);
 
             DbCalendar dbCalendar = new DbCalendar();
-            AddNote addNote = new AddNote();
-            String day = dayNumber<10 ? "0"+dayNumber : String.valueOf(dayNumber);
-            String month = this.calendar.getMonth()<10 ? "0"+this.calendar.getMonth() : String.valueOf(this.calendar.getMonth());
+//            AddNote addNote = new AddNote();
+//            String day = dayNumber<10 ? "0"+dayNumber : String.valueOf(dayNumber);
+//            String month = this.calendar.getMonth()<10 ? "0"+this.calendar.getMonth() : String.valueOf(this.calendar.getMonth());
 
             dbCalendar.setOwnerId(user.getId().intValue());
-            addNote.setCalendarId(this.calendarId);
-            addNote.setUserId(user.getId().intValue());
-            addNote.setDate(this.calendar.getYear()+"-"+month+"-"+day);
-            addNote.setTime("00:00");
-
-            model.addAttribute("addNote", addNote);
+//            addNote.setCalendarId(this.calendarId);
+//            addNote.setUserId(user.getId().intValue());
+//            addNote.setDate(this.calendar.getYear()+"-"+month+"-"+day);
+//            addNote.setTime("00:00");
+//
+//            model.addAttribute("addNote", addNote);
             model.addAttribute("calendar", this.calendar);
             model.addAttribute("dbCalendar", dbCalendar);
             model.addAttribute("dayNumber", this.dayNumber);
@@ -109,7 +109,8 @@ public class CalendarController {
 
     //Wyświetl listę kalendarzy
     @GetMapping("/list")
-    public String showCalendarList(){
+    public String showCalendarList(Model model, @AuthenticationPrincipal User user){
+        setUpCalendarListViewAttributes(model, user);
         return "calendar-list";
     }
 
@@ -141,8 +142,27 @@ public class CalendarController {
         return "task-notes";
     }
 
+    //Wyświetl formularz dodający notkę
+    @GetMapping("/{calendarId}/day/{day}/addNote")
+    public String showAddNoteFormTEST(@PathVariable int calendarId, @PathVariable int day, @AuthenticationPrincipal User user, Model model){
+        setUpAddNoteViewAttributes(model, user, (long) calendarId, day);
+        model.addAttribute("calendarId",calendarId);
+        model.addAttribute("dayNumber",day);
+        return "add-note";
+    }
+
+    //Wyświetl formularz dodający notkę
+    @GetMapping("/{calendarId}/day/{day}/updateNote/{noteId}")
+    public String showUpdateNoteForm(@PathVariable int calendarId, @PathVariable int day, @PathVariable int noteId, @AuthenticationPrincipal User user, Model model){
+        setUpUpdateNoteViewAttributes(model, user, (long) noteId);
+        model.addAttribute("calendarId",calendarId);
+        model.addAttribute("dayNumber",day);
+        return "update-note";
+    }
+
     //TEST_____________________________________________________________________________________________________
 
+    //DEPRECATED
     //Wyświetl szczegóły dnia (zwykłe notki)
     @GetMapping("/allNotes")
     public String showNormalNotes(@AuthenticationPrincipal User user){
@@ -153,6 +173,7 @@ public class CalendarController {
         return "all-notes";
     }
 
+    //DEPRECATED
     //Wyświetl szczegóły dnia (notki-zadania)
     @GetMapping("/taskNotes")
     public String showTaskNotes(@AuthenticationPrincipal User user){
@@ -163,13 +184,14 @@ public class CalendarController {
         return "task-notes";
     }
 
+    //DEPRECATED
     //Wyświetl formularz dodający notkę
     @GetMapping("/addNote")
     public String showAddNoteForm(@AuthenticationPrincipal User user, Model model){
         if(this.dayNumber==-1){
             return "redirect:/calendar";
         }
-        setUpAddNoteViewAttributes(model, user);
+        //setUpAddNoteViewAttributes(model, user);
         return "add-note";
     }
 
@@ -180,7 +202,7 @@ public class CalendarController {
                                   @AuthenticationPrincipal User user,
                                   Model model,
                                   RedirectAttributes redirectAttributes){
-        setUpAddNoteViewAttributes(model, user);
+        //setUpAddNoteViewAttributes(model, user);
         if(errors.hasErrors()){
             return "add-note";
         }
@@ -188,6 +210,7 @@ public class CalendarController {
         return "forward:/notes/add";
     }
 
+    //DEPRECATED
     //Wyświetł formularz edytujący notkę
     @GetMapping("/editNote/{id}")
     public String showEditNoteForm(@PathVariable Long id,
@@ -306,19 +329,17 @@ public class CalendarController {
     }
 
     //Nastepny miesiąc
-    @GetMapping("/next")
-    public String nextMonth(Model model){
+    @GetMapping("/{id}/next")
+    public String nextMonth(@PathVariable int id){
         this.calendar.incrementMonth();
-        //model.addAttribute("calendar", this.calendar);
-        return "redirect:/calendar";
+        return "redirect:/calendar/"+id;
     }
 
     //Poprzedni miesiąc
-    @GetMapping("/previous")
-    public String previousMonth(Model model){
+    @GetMapping("/{id}/previous")
+    public String previousMonth(@PathVariable int id){
         this.calendar.decrementMonth();
-        //model.addAttribute("calendar", this.calendar);
-        return "redirect:/calendar";
+        return "redirect:/calendar/"+id;
     }
 
     //Dodaj kalendarz
@@ -334,22 +355,46 @@ public class CalendarController {
         this.calendar.setNotes(notes);
     }
 
-    //Wczytaj kalendarze użytkownika i zapisz jako atrybut modelu
-    public void loadCalendars(Model model, User user){
+    //Ustaw atrybuty modelu używane przez widok calendar-list
+    public void setUpCalendarListViewAttributes(Model model, User user){
         List<DbCalendar> dbCalendars = calendarService.getCalendarsByUserId(user.getId().intValue());
         model.addAttribute("calendars", dbCalendars);
     }
 
-    //Ustaw atrybuty isOwner i listę użytkowników kalendarza
-    public void setUpAddNoteViewAttributes(Model model, User user){
-        DbCalendar dbCalendar = calendarService.getCalendar((long) this.calendarId);
+    //Ustaw atrybuty modelu używane przez widok add-note
+    public void setUpAddNoteViewAttributes(Model model, User user, Long calendarId, int dayNumber){
+        AddNote addNote = new AddNote();
+        String day = dayNumber<10 ? "0"+dayNumber : String.valueOf(dayNumber);
+        String month = this.calendar.getMonth()<10 ? "0"+this.calendar.getMonth() : String.valueOf(this.calendar.getMonth());
+        addNote.setCalendarId(calendarId.intValue());
+        addNote.setUserId(user.getId().intValue());
+        addNote.setDate(this.calendar.getYear()+"-"+month+"-"+day);
+        addNote.setTime("00:00");
+        model.addAttribute("addNote", addNote);
+        DbCalendar dbCalendar = calendarService.getCalendar(calendarId);
         if(dbCalendar.getOwnerId()==user.getId().intValue()){
             model.addAttribute("isOwner",true);
         }else{
             model.addAttribute("isOwner",false);
         }
-        List<User> calendarUsers = userService.getAllUsersByCalendarId(this.calendarId);
+        List<User> calendarUsers = userService.getAllUsersByCalendarId(calendarId.intValue());
         model.addAttribute("calendarUsers",calendarUsers);
+    }
+
+    //Ustaw atrybuty modelu używane przez widok update-note
+    public void setUpUpdateNoteViewAttributes(Model model, User user, Long noteId){
+        Note note = noteService.getNote(noteId);
+        User owner = userService.getUser((long) note.getUserId());
+        note.setNoteDate(user.getTimezone(), owner.getTimezone());
+        note.setNoteTime(user.getTimezone(), owner.getTimezone());
+        UpdateNote updateNote = new UpdateNote();
+        updateNote.setNoteId(note.getId());
+        updateNote.setTitle(note.getTitle());
+        updateNote.setContent(note.getContent());
+        updateNote.setDate(note.getDate().toString());
+        updateNote.setTime(note.getTime());
+        updateNote.setIsTask(note.isTask());
+        model.addAttribute("updateNote", updateNote);
     }
 
 }

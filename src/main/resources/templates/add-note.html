@@ -100,7 +100,7 @@
                 <div style="clear: both"></div>
             </form>
             <!--Powrót do szczegółów dnia-->
-            <a th:href="@{/calendar/allNotes}" th:text="#{lang.dayReturn}"></a>
+            <a th:href="@{/calendar/{calendarId}/day/{day}(calendarId=${calendarId}, day=${dayNumber})}" th:text="#{lang.dayReturn}"></a>
 
         </div>
 

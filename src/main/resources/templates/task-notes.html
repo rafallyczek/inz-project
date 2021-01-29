@@ -60,7 +60,7 @@
             <!-- Przejście do zwykłych notek -->
             <a class="greyHyperlinkButton" th:href="@{/calendar/{calendarId}/day/{day}(calendarId=${calendarId}, day=${dayNumber})}" th:text="#{lang.normalNotes}"></a>
             <!-- Przejście do formularza dodania notki -->
-            <a class="greenHyperlinkButton" th:href="@{/calendar/addNote}" th:text="#{lang.addNote}"></a>
+            <a class="greenHyperlinkButton" th:href="@{/calendar/{calendarId}/day/{day}/addNote(calendarId=${calendarId}, day=${dayNumber})}" th:text="#{lang.addNote}"></a>
             <div style="clear: both"></div>
 
             <hr>
@@ -81,7 +81,7 @@
                                 </i>
                             </a>
                             <!-- Przejście do formularza edycji notki -->
-                            <a th:href="@{/calendar/editNote/{id}(id=${note.id})}" class="editButton">
+                            <a th:href="@{/calendar/{calendarId}/day/{day}/updateNote/{noteId}(calendarId=${calendarId}, day=${dayNumber}, noteId=${note.id})}" class="editButton">
                                 <i class="icon-pencil">
                                     <span class="tooltip" th:text="#{lang.editNote}"></span>
                                 </i>
