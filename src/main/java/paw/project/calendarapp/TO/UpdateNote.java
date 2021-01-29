@@ -12,6 +12,7 @@ public class UpdateNote {
     private String title;
     @NotBlank(message = "Zawartość nie może być pusta.")
     private String content;
+    private Integer userId;
     private String date;
     private String time;
     private boolean isTask;

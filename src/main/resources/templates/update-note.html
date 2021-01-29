@@ -59,7 +59,7 @@
             <!--Formularz edytujący notkę-->
             <p th:text="#{lang.editNote}"></p>
             <hr>
-            <form method="POST" th:action="@{/calendar/validateUpdateNote}" th:object="${updateNote}">
+            <form method="POST" th:action="@{/calendar/{calendarId}/day/{day}/updateNote/validate(calendarId=${calendarId}, day=${dayNumber})}" th:object="${updateNote}">
                 <input id="idEdit" type="hidden" th:field="*{noteId}">
                 <div class="formInputs">
                     <label for="titleEdit" th:text="#{lang.titleText}"></label>
@@ -79,9 +79,15 @@
                     <label for="timeEdit" th:text="#{lang.timeValue}"></label>
                     <input id="timeEdit" type="time" th:field="*{time}">
                 </div>
+                <div id="userIdInputs" class="formInputs" th:if="${isOwner}">
+                    <label for="id" th:text="#{lang.user}"></label>
+                    <select id="id" name="id" th:field="*{userId}">
+                        <option th:each="user : ${calendarUsers}" th:text="${user.username}" th:value="${user.id}"></option>
+                    </select>
+                </div>
                 <div class="formInputs">
                     <label for="istask" th:text="#{lang.typeValue}"></label>
-                    <select id="istask" name="istask" th:field="*{isTask}">
+                    <select id="istask" name="istask" th:field="*{isTask}" onchange="changeDisplay()">
                         <option th:value="false" th:text="#{lang.normalNote}"></option>
                         <option th:value="true" th:text="#{lang.taskNote}"></option>
                     </select>

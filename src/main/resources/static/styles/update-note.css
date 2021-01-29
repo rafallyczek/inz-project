@@ -14,6 +14,9 @@
     height: 1px;
     background-color: black;
 }
+#userIdInputs{
+    display: none;
+}
 .editNoteForm form{
     margin-bottom: 5px;
 }

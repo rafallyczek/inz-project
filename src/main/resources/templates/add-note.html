@@ -59,7 +59,7 @@
             <!--Formularz dodający nową notkę-->
             <p th:text="#{lang.addNote}"></p>
             <hr>
-            <form method="POST" th:action="@{/calendar/validateNote}" th:object="${addNote}">
+            <form method="POST" th:action="@{/calendar/{calendarId}/day/{day}/addNote/validate(calendarId=${calendarId}, day=${dayNumber})}" th:object="${addNote}">
                 <div class="formInputs">
                     <label for="title" th:text="#{lang.titleText}"></label>
                     <input id="title" type="text" th:field="*{title}">
