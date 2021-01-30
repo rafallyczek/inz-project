@@ -66,11 +66,13 @@
             <hr>
 
             <div class="taskGridWrapper">
-                <div class="taskGrid">
+                <div class="taskGrid" id="grid1" ondrop="drop(event)" ondragover="allow(event)">
 
-                    <p th:text="#{lang.toDo}"></p>
-                    <hr>
-                    <div class="note" th:each="note : ${calendar.notes}" th:if="${note.date.isEqual(#temporals.create(calendar.year,calendar.month,dayNumber)) and note.status == 'to-do'}">
+                    <p th:text="#{lang.toDo}" class="noDrop"></p>
+                    <hr class="noDrop">
+                    <div class="note" th:each="note : ${calendar.notes}"
+                         th:if="${note.date.isEqual(#temporals.create(calendar.year,calendar.month,dayNumber)) and note.status == 'to-do'}"
+                         draggable="true" ondragstart="drag(event)" th:id="'note'+${note.id}">
 
                         <div class="noteHeader" th:inline="text">
                             [[${note.title}]] | [[${note.time}]]
@@ -90,18 +92,20 @@
 
                         <div class="noteBody" th:text="${note.content}"></div>
                         <p class="status" th:text="#{lang.changeStatus}"></p>
-                        <hr>
-                        <a th:href="@{/notes/statusInProgress/{id}(id=${note.id})}" th:text="#{lang.inProgress}"></a>
-                        <a th:href="@{/notes/statusFinished/{id}(id=${note.id})}" th:text="#{lang.finished}"></a>
+                        <hr class="noDrop">
+                        <a th:href="@{/notes/statusInProgress/{id}(id=${note.id})}" th:text="#{lang.inProgress}" class="noDrop"></a>
+                        <a th:href="@{/notes/statusFinished/{id}(id=${note.id})}" th:text="#{lang.finished}" class="noDrop"></a>
 
                     </div>
-
+                    <div style="clear: both;"></div>
                 </div>
-                <div class="taskGrid">
+                <div class="taskGrid" id="grid2" ondrop="drop(event)" ondragover="allow(event)">
 
-                    <p th:text="#{lang.inProgress}"></p>
-                    <hr>
-                    <div class="note" th:each="note : ${calendar.notes}" th:if="${note.date.isEqual(#temporals.create(calendar.year,calendar.month,dayNumber)) and note.status == 'in-progress'}">
+                    <p th:text="#{lang.inProgress}" class="noDrop"></p>
+                    <hr class="noDrop">
+                    <div class="note" th:each="note : ${calendar.notes}"
+                         th:if="${note.date.isEqual(#temporals.create(calendar.year,calendar.month,dayNumber)) and note.status == 'in-progress'}"
+                         draggable="true" ondragstart="drag(event)" th:id="'note'+${note.id}">
 
                         <div class="noteHeader" th:inline="text">
                             [[${note.title}]] | [[${note.time}]]
@@ -121,18 +125,20 @@
 
                         <div class="noteBody" th:text="${note.content}"></div>
                         <p class="status" th:text="#{lang.changeStatus}"></p>
-                        <hr>
-                        <a th:href="@{/notes/statusToDo/{id}(id=${note.id})}" th:text="#{lang.toDo}"></a>
-                        <a th:href="@{/notes/statusFinished/{id}(id=${note.id})}" th:text="#{lang.finished}"></a>
+                        <hr class="noDrop">
+                        <a th:href="@{/notes/statusToDo/{id}(id=${note.id})}" th:text="#{lang.toDo}" class="noDrop"></a>
+                        <a th:href="@{/notes/statusFinished/{id}(id=${note.id})}" th:text="#{lang.finished}" class="noDrop"></a>
 
                     </div>
-
+                    <div style="clear: both;"></div>
                 </div>
-                <div class="taskGrid">
+                <div class="taskGrid" id="grid3" ondrop="drop(event)" ondragover="allow(event)">
 
-                    <p th:text="#{lang.finished}"></p>
-                    <hr>
-                    <div class="note" th:each="note : ${calendar.notes}" th:if="${note.date.isEqual(#temporals.create(calendar.year,calendar.month,dayNumber)) and note.status == 'finished'}">
+                    <p th:text="#{lang.finished}" class="noDrop"></p>
+                    <hr class="noDrop">
+                    <div class="note" th:each="note : ${calendar.notes}"
+                         th:if="${note.date.isEqual(#temporals.create(calendar.year,calendar.month,dayNumber)) and note.status == 'finished'}"
+                         draggable="true" ondragstart="drag(event)" th:id="'note'+${note.id}">
 
                         <div class="noteHeader" th:inline="text">
                             [[${note.title}]] | [[${note.time}]]
@@ -152,14 +158,14 @@
 
                         <div class="noteBody" th:text="${note.content}"></div>
                         <p class="status" th:text="#{lang.changeStatus}"></p>
-                        <hr>
-                        <a th:href="@{/notes/statusInProgress/{id}(id=${note.id})}" th:text="#{lang.inProgress}"></a>
-                        <a th:href="@{/notes/statusToDo/{id}(id=${note.id})}" th:text="#{lang.toDo}"></a>
+                        <hr class="noDrop">
+                        <a th:href="@{/notes/statusInProgress/{id}(id=${note.id})}" th:text="#{lang.inProgress}" class="noDrop"></a>
+                        <a th:href="@{/notes/statusToDo/{id}(id=${note.id})}" th:text="#{lang.toDo}" class="noDrop"></a>
 
                     </div>
-
+                    <div style="clear: both;"></div>
                 </div>
-                <div style="clear: both"></div>
+                <div style="clear: both;"></div>
             </div>
             <!--Powrót do kalendarza-->
             <a th:href="@{/calendar/id/{id}(id=${calendarId})}" th:text="#{lang.calendarReturn}"></a>

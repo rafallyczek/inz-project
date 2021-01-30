@@ -1,5 +1,6 @@
-
 //Websocket
+//-----------------------------------------------------------------------------------------
+
 //Zmienne
 var stompClient = null;
 var isDisplayed = false;
@@ -81,18 +82,24 @@ function goTo(){
 }
 
 //Theme
+//-----------------------------------------------------------------------------------------
+
 //Zmień motyw
 function submitThemeForm() {
     document.getElementById("themeForm").submit();
 }
 
 //Lista notek
+//-----------------------------------------------------------------------------------------
+
 //Wybierz kalendarz
 function submitCalendarForm() {
     document.getElementById("calendarForm").submit();
 }
 
 //Dodawanie notek
+//-----------------------------------------------------------------------------------------
+
 //Pokaż lub schowaj pole z userId
 function changeDisplay(){
     var div = document.getElementById("userIdInputs");
@@ -104,4 +111,29 @@ function changeDisplay(){
             div.style.display = "none";
         }
     }
+}
+
+//Drag and Drop
+//-----------------------------------------------------------------------------------------
+
+//Zezwól na upuszczenie
+function allow(event) {
+    event.preventDefault();
+}
+//Podnieś
+function drag(event) {
+    event.dataTransfer.setData("text", event.target.id);
+}
+//Upuść
+function drop(event) {
+    event.preventDefault();
+    var el = event.target;
+    var className = el.className;
+    while(className!=="taskGrid"){
+        el = el.parentElement;
+        className = el.className;
+    }
+    var id = el.id;
+    var data = event.dataTransfer.getData("text");
+    document.getElementById(id).insertBefore(document.getElementById(data),document.getElementById(id).lastElementChild);
 }
