@@ -63,18 +63,21 @@
             <p th:if="${!isOwner}" class="noPrivileges" th:text="#{lang.noCalendarPrivileges}"></p>
             <p th:if="${isOwner}" th:text="#{lang.editCalendar}"></p>
             <hr th:if="${isOwner}">
-            <form method="POST" th:action="@{/calendar/update}" th:object="${updateCalendar}" th:if="${isOwner}">
+            <form method="POST" th:action="@{/calendar/id/{id}/update(id=${calendarId})}" th:object="${updateCalendar}" th:if="${isOwner}">
                 <input id="idEdit" type="hidden" th:field="*{id}">
                 <div class="formInputs">
                     <label for="titleEdit" th:text="#{lang.titleText}"></label>
                     <input id="titleEdit" type="text" th:field="*{title}">
+                    <div class="error">
+                        <span class="tooltip" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+                    </div>
                 </div>
                 <input class="greenInputButton" type="submit" th:value="#{lang.save}">
                 <input class="redInputButton" type="reset" th:value="#{lang.reset}">
                 <div style="clear: both"></div>
             </form>
-            <!--Powrót do szczegółów dnia-->
-            <a th:href="@{/calendar}" th:text="#{lang.calendarReturn}"></a>
+            <!--Powrót do listy kalendarzy-->
+            <a th:href="@{/calendar/list}" th:text="#{lang.calendarsReturn}"></a>
 
         </div>
 

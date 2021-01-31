@@ -32,6 +32,29 @@
     top: 10px;
     left: 10px;
 }
+.error{
+    position: relative;
+}
+.tooltip{
+    color: firebrick;
+    position: absolute;
+    bottom: -3px;
+    left: 190px;
+    background-color: grey;
+    text-align: center;
+    width: 400px;
+    padding: 5px;
+    border-radius: 5px;
+}
+.error .tooltip::after{
+    content: "";
+    position: absolute;
+    right: 100%;
+    top: 35%;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent grey transparent transparent;
+}
 .noPrivileges{
     margin-bottom: 10px !important;
 }

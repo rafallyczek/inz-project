@@ -57,7 +57,7 @@
     <div class="container">
 
         <!-- Edytuj kalendarz -->
-        <a class="greenHyperlinkButton" th:href="@{/calendar/editCalendar}" th:text="#{lang.editCalendar}"></a>
+        <a class="greenHyperlinkButton" th:href="@{/calendar/id/{id}/updateCalendar(id=${calendarId})}" th:text="#{lang.editCalendar}"></a>
 
         <hr>
 
