@@ -90,7 +90,7 @@ public class NoteService {
     }
 
     //Aktualizuj notkę
-    public void updateNote(UpdateNote updateNote){
+    public Note updateNote(UpdateNote updateNote){
         Note note = noteRepository.findById(updateNote.getNoteId()).get();
         note.setDateTime(toLocalDateTime(updateNote.getDate(),updateNote.getTime()));
         note.setTitle(updateNote.getTitle());
@@ -104,6 +104,7 @@ public class NoteService {
             note.setStatus("-");
         }
         noteRepository.save(note);
+        return note;
     }
 
     //Usuń notkę
@@ -118,10 +119,11 @@ public class NoteService {
     }
 
     //Zmień status notki
-    public void changeStatus(Long id, String status){
+    public Note changeStatus(Long id, String status){
         Note note = noteRepository.findById(id).get();
         note.setStatus(status);
         noteRepository.save(note);
+        return note;
     }
 
     //Konwersja daty i czasu na LocalDateTime

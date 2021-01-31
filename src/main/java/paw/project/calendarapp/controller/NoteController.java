@@ -83,14 +83,17 @@ public class NoteController {
             addNote.setUserId(user.getId().intValue());
         }
         noteService.addNote(addNote);
-        return "redirect:/calendar";
+        return "redirect:/calendar/id/"+addNote.getCalendarId()+"/day/"+addNote.getDay();
     }
 
     //Aktualizuj notkę
     @PostMapping("/update")
-    public String updateNote(@ModelAttribute("updateNote") UpdateNote updateNote){
-        noteService.updateNote(updateNote);
-        return "redirect:/calendar";
+    public String updateNote(@ModelAttribute("updateNote") UpdateNote updateNote, @AuthenticationPrincipal User user){
+        if(!updateNote.getIsTask()){
+            updateNote.setUserId(user.getId().intValue());
+        }
+        Note note = noteService.updateNote(updateNote);
+        return "redirect:/calendar/id/"+note.getCalendarId()+"/day/"+updateNote.getDay();
     }
 
     //Usuń notkę
@@ -103,22 +106,22 @@ public class NoteController {
     //Zmień status na do zrobienia
     @GetMapping("/statusToDo/{id}")
     public String statusToDo(@PathVariable Long id){
-        noteService.changeStatus(id, "to-do");
-        return "redirect:/calendar/taskNotes";
+        Note note = noteService.changeStatus(id, "to-do");
+        return "redirect:/calendar/id/"+note.getCalendarId()+"/day/"+note.getDay()+"/tasks";
     }
 
     //Zmień status na w trakcie
     @GetMapping("/statusInProgress/{id}")
     public String statusInProgress(@PathVariable Long id){
-        noteService.changeStatus(id, "in-progress");
-        return "redirect:/calendar/taskNotes";
+        Note note = noteService.changeStatus(id, "in-progress");
+        return "redirect:/calendar/id/"+note.getCalendarId()+"/day/"+note.getDay()+"/tasks";
     }
 
     //Zmień status na zakończone
     @GetMapping("/statusFinished/{id}")
     public String statusFinished(@PathVariable Long id){
-        noteService.changeStatus(id, "finished");
-        return "redirect:/calendar/taskNotes";
+        Note note = noteService.changeStatus(id, "finished");
+        return "redirect:/calendar/id/"+note.getCalendarId()+"/day/"+note.getDay()+"/tasks";
     }
 
     //Wczytaj notki danego kalendarza

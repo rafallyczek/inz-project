@@ -25,4 +25,10 @@ public class UpdateNote {
         return this.isTask;
     }
 
+    //Zwróć dzień
+    public String getDay(){
+        String day = date.substring(date.length()-2);
+        return day.startsWith("0") ? date.substring(date.length()-1) : day;
+    }
+
 }

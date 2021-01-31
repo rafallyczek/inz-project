@@ -46,4 +46,11 @@ public class Note {
         this.time = localDateTime.toLocalTime().toString();
     }
 
+    //Zwróć dzień
+    public String getDay(){
+        String date = dateTime.toLocalDate().toString();
+        String day = date.substring(date.length()-2);
+        return day.startsWith("0") ? date.substring(date.length()-1) : day;
+    }
+
 }
