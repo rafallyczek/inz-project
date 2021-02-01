@@ -46,53 +46,33 @@ public class UserController {
         Collections.sort(zones);
     }
 
-    //Dodaj do modelu obiekt User
-    @ModelAttribute
-    public void calendar(Model model, @AuthenticationPrincipal User user){
-        if(user!=null) {
-            User loggedUser = userRepository.findByUsername(user.getUsername());
-
-            UpdateEmail updateEmail = new UpdateEmail();
-            updateEmail.setEmail(loggedUser.getEmail());
-            updateEmail.setUserId(loggedUser.getId());
-
-            UpdatePassword updatePassword = new UpdatePassword();
-            updatePassword.setUserId(loggedUser.getId());
-
-            UpdateTimezone updateTimezone = new UpdateTimezone();
-            updateTimezone.setUserId(loggedUser.getId());
-            updateTimezone.setTimezone(loggedUser.getTimezone());
-
-            UpdateReminderTime updateReminderTime = new UpdateReminderTime();
-            updateReminderTime.setUserId(loggedUser.getId());
-            updateReminderTime.setReminderTime(loggedUser.getReminderTime());
-
-            model.addAttribute("updateEmail", updateEmail);
-            model.addAttribute("updatePassword", updatePassword);
-            model.addAttribute("updateTimezone", updateTimezone);
-            model.addAttribute("updateReminderTime", updateReminderTime);
-        }
-        model.addAttribute("register", new Register());
-        model.addAttribute("zones", zones);
-    }
-
     //Wyświetlanie widoku ze szczegółami konta
     @GetMapping
-    public String user(){
+    public String showUser(Model model,
+                       @AuthenticationPrincipal User user){
+        model.addAttribute("zones", zones);
+        setUpUpdateEmail(model, user);
+        setUpUpdatePassword(model, user);
+        setUpUpdateTimezone(model, user);
+        setUpUpdateReminderTime(model, user);
         return "user";
     }
 
     //Wyświetlanie formularza rejestracyjnego
     @GetMapping("/register")
-    public String register(){
+    public String showRegister(Model model){
+        model.addAttribute("register", new Register());
+        model.addAttribute("zones", zones);
         return "register";
     }
 
     //Dodaj użytkownika
     @PostMapping("/add")
     public String addUser(@Valid @ModelAttribute("register") Register register,
-                          Errors errors){
+                          Errors errors,
+                          Model model){
         if(errors.hasErrors()){
+            model.addAttribute("zones", zones);
             return "register";
         }
         User newUser = new User(register.getUsername(),passwordEncoder.encode(register.getPassword()),register.getEmail(),register.getTimezone(),30);
@@ -103,8 +83,14 @@ public class UserController {
     //Aktualizuj email użytkownika
     @PostMapping("/updateEmail")
     public String updateEmail(@Valid @ModelAttribute("updateEmail") UpdateEmail updateEmail,
-                              Errors errors){
+                              Errors errors,
+                              Model model,
+                              @AuthenticationPrincipal User user){
         if(errors.hasErrors()){
+            model.addAttribute("zones", zones);
+            setUpUpdatePassword(model, user);
+            setUpUpdateTimezone(model, user);
+            setUpUpdateReminderTime(model, user);
             return "user";
         }
         User updateUser = userRepository.findById(updateEmail.getUserId()).get();
@@ -116,12 +102,21 @@ public class UserController {
     //Aktualizuj hasło użytkownika
     @PostMapping("/updatePassword")
     public String updatePassword(@Valid @ModelAttribute("updatePassword") UpdatePassword updatePassword,
-                                 Errors errors){
+                                 Errors errors,
+                                 Model model,
+                                 @AuthenticationPrincipal User user){
         if(errors.hasErrors()){
+            model.addAttribute("zones", zones);
+            setUpUpdateEmail(model, user);
+            setUpUpdateTimezone(model, user);
+            setUpUpdateReminderTime(model, user);
             return "user";
         }
         User updateUser = userRepository.findById(updatePassword.getUserId()).get();
         if(!userService.checkOldPassword(updateUser, updatePassword.getOldPassword())){
+            setUpUpdateEmail(model, user);
+            setUpUpdateTimezone(model, user);
+            setUpUpdateReminderTime(model, user);
             return "user";
         }
         updateUser.setPassword(passwordEncoder.encode(updatePassword.getPassword()));
@@ -150,6 +145,40 @@ public class UserController {
             reminderService.updateReminder(reminder);
         }
         return "redirect:/user";
+    }
+
+    //------------------------------------------------------------------------------------
+    //Metody ustawiające atrybuty modelu
+
+    //Ustaw atrybut updateEmail
+    public void setUpUpdateEmail(Model model, User user){
+        UpdateEmail updateEmail = new UpdateEmail();
+        updateEmail.setEmail(user.getEmail());
+        updateEmail.setUserId(user.getId());
+        model.addAttribute("updateEmail", updateEmail);
+    }
+
+    //Ustaw atrybut updatePassword
+    public void setUpUpdatePassword(Model model, User user){
+        UpdatePassword updatePassword = new UpdatePassword();
+        updatePassword.setUserId(user.getId());
+        model.addAttribute("updatePassword", updatePassword);
+    }
+
+    //Ustaw atrybut updateTimezone
+    public void setUpUpdateTimezone(Model model, User user){
+        UpdateTimezone updateTimezone = new UpdateTimezone();
+        updateTimezone.setUserId(user.getId());
+        updateTimezone.setTimezone(user.getTimezone());
+        model.addAttribute("updateTimezone", updateTimezone);
+    }
+
+    //Ustaw atrybut updateReminderTime
+    public void setUpUpdateReminderTime(Model model, User user){
+        UpdateReminderTime updateReminderTime = new UpdateReminderTime();
+        updateReminderTime.setUserId(user.getId());
+        updateReminderTime.setReminderTime(user.getReminderTime());
+        model.addAttribute("updateReminderTime", updateReminderTime);
     }
 
 }
