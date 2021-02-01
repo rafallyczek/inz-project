@@ -37,17 +37,20 @@
     text-align: center;
     margin-bottom: 2px;
     min-width: 340px;
+    position: relative;
 }
 .user p{
     margin: 0;
 }
+.user .userAdd{
+    position: absolute;
+    width: 70px;
+    height: 28px;
+    top: 0;
+    right: -70px;
+}
 .invitation{
     color: limegreen;
-}
-.userAdd{
-    float: left;
-    margin-left: 5px;
-    margin-top: 3px;
 }
 .greenHyperlinkButton{
     width: 60px;
@@ -56,4 +59,16 @@
     position: absolute;
     top: 10px;
     left: 10px;
+}
+.user input{
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    display: none;
+}
+.user:hover .greenInputButton{
+    display: block;
+}
+.userAdd:hover .greenInputButton{
+    display: block;
 }

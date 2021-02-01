@@ -55,7 +55,7 @@
     <div class="container">
 
         <!-- Przejście do dodawania użytkowników do kalendarza -->
-        <a class="greenHyperlinkButton" th:href="@{/calendar/editCalendarUser}" th:text="#{lang.users}"></a>
+        <a class="greenHyperlinkButton" th:href="@{/calendar/id/{id}/calendarUsers(id=${calendarId})}" th:text="#{lang.users}"></a>
 
         <div class="editCalendarForm">
 

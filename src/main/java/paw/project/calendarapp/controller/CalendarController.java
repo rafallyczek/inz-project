@@ -18,6 +18,7 @@ import paw.project.calendarapp.service.UserService;
 
 import javax.mail.MessagingException;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -98,7 +99,7 @@ public class CalendarController {
         loadNotes(calendarId, user.getTimezone());
         model.addAttribute("calendarId",calendarId);
         model.addAttribute("dayNumber",day);
-        return "all-notes";
+        return "day";
     }
 
     //Wyświetl podgląd zadań dnia
@@ -110,7 +111,7 @@ public class CalendarController {
         loadNotes(calendarId, user.getTimezone());
         model.addAttribute("calendarId",calendarId);
         model.addAttribute("dayNumber",day);
-        return "task-notes";
+        return "day-tasks";
     }
 
     //Wyświetl formularz dodający notkę
@@ -233,57 +234,46 @@ public class CalendarController {
         return "redirect:/calendar/id/"+id;
     }
 
-    //------------------------------------------------------------------------------------
-    //Metody Do zmiany
-
-    //DO ZMIANY
-    //Wyświetl formularz dodający użytkownikow do kalendarza
-    @GetMapping("/editCalendarUser")
-    public String showAddUserForm(Model model, @AuthenticationPrincipal User user){
-        if(this.calendarId==-1){
-            return "redirect:/calendar";
-        }
-        List<User> calendarUsers = userService.getAllUsersByCalendarId(this.calendarId);
-        List<User> invitedUsers = invitationService.getInvitedUsers(this.calendarId);
-        List<User> searchResult = (List<User>) model.getAttribute("searchResult");
+    //Wyświetl widok użytkowników kalendarza
+    @GetMapping("/id/{id}/calendarUsers")
+    public String showCalendarUsersForm(@PathVariable int id,
+                                        @AuthenticationPrincipal User user,
+                                        Model model,
+                                        @ModelAttribute("searchResult") ArrayList<User> searchResult){
         if(searchResult!=null){
             model.addAttribute("searchedUsers", searchResult);
         }
-        model.addAttribute("calendarUsers", calendarUsers);
-        model.addAttribute("invitedUsers", invitedUsers);
-        DbCalendar dbCalendar = calendarService.getCalendar((long) this.calendarId);
-        if(dbCalendar.getOwnerId()==user.getId().intValue()){
-            model.addAttribute("isOwner",true);
-        }else{
-            model.addAttribute("isOwner",false);
-        }
-        return "update-calendar-user";
+        model.addAttribute("calendarId",id);
+        setUpCalendarUsersViewAttributes(model, (long) id);
+        setUpIsOwner(model, user, (long) id);
+        return "calendar-users";
     }
 
-    //DO ZMIANY
     //Znajdź użytkowników, których nazwa użytkownika zawiera podaną frazę
-    @PostMapping("/findUsers")
-    public String findUsers(@RequestParam String username, RedirectAttributes redirectAttributes){
+    @PostMapping("/id/{id}/calendarUsers/findUsers")
+    public String findUsersNEW(@PathVariable int id, @RequestParam String username, RedirectAttributes redirectAttributes){
         List<User> searchedUsers = userService.getAllUsersContainingUsername(username);
-        List<User> calendarUsers = userService.getAllUsersByCalendarId(this.calendarId);
-        List<User> invitedUsers = invitationService.getInvitedUsers(this.calendarId);
+        List<User> calendarUsers = userService.getAllUsersByCalendarId(id);
+        List<User> invitedUsers = invitationService.getInvitedUsers(id);
         searchedUsers.removeIf(invitedUsers::contains);
         searchedUsers.removeIf(calendarUsers::contains);
         redirectAttributes.addFlashAttribute("searchResult", searchedUsers);
-        return "redirect:/calendar/editCalendarUser";
+        return "redirect:/calendar/id/"+id+"/calendarUsers";
     }
 
-    //DO ZMIANY
     //Zaproś użytkownika do kalendarza
-    @PostMapping("/inviteUser")
-    public String inviteUser(@RequestParam int id, @AuthenticationPrincipal User user) throws MessagingException {
+    @PostMapping("/id/{id}/calendarUsers/inviteUser")
+    public String inviteUser(@PathVariable int id, @RequestParam int userId, @AuthenticationPrincipal User user) throws MessagingException {
         Invitation invitation = new Invitation();
-        invitation.setCalendarId(this.calendarId);
-        invitation.setReceiverId(id);
+        invitation.setCalendarId(id);
+        invitation.setReceiverId(userId);
         invitation.setSenderId(user.getId().intValue());
         invitationService.addInvitation(invitation);
-        return "redirect:/calendar/editCalendarUser";
+        return "redirect:/calendar/id/"+id+"/calendarUsers";
     }
+
+    //------------------------------------------------------------------------------------
+    //Metody Do zmiany
 
     //DO ZMIANY
     //Ustaw numer dnia i id kalendarza
@@ -348,6 +338,14 @@ public class CalendarController {
         }
     }
 
+    //Ustaw atrybuty modelu używane przez widok calendar-users
+    public void setUpCalendarUsersViewAttributes(Model model, Long calendarId){
+        List<User> calendarUsers = userService.getAllUsersByCalendarId(calendarId.intValue());
+        List<User> invitedUsers = invitationService.getInvitedUsers(calendarId.intValue());
+        model.addAttribute("calendarUsers", calendarUsers);
+        model.addAttribute("invitedUsers", invitedUsers);
+    }
+
     //------------------------------------------------------------------------------------
     //Metody nieużywane
 
@@ -386,7 +384,7 @@ public class CalendarController {
             return "redirect:/calendar";
         }
         loadNotes(this.calendarId, user.getTimezone());
-        return "all-notes";
+        return "day";
     }
 
     //DEPRECATED
@@ -397,7 +395,7 @@ public class CalendarController {
             return "redirect:/calendar";
         }
         loadNotes(this.calendarId, user.getTimezone());
-        return "task-notes";
+        return "day-tasks";
     }
 
     //DEPRECATED
@@ -465,6 +463,43 @@ public class CalendarController {
     public String updateCalendar(@ModelAttribute("updateCalendar") DbCalendar dbCalendar){
         calendarService.updateCalendar(dbCalendar);
         return "redirect:/calendar/editCalendar";
+    }
+
+    //DEPRECATED
+    //Wyświetl formularz dodający użytkownikow do kalendarza
+    @GetMapping("/editCalendarUser")
+    public String showAddUserForm(Model model, @AuthenticationPrincipal User user){
+        if(this.calendarId==-1){
+            return "redirect:/calendar";
+        }
+        List<User> calendarUsers = userService.getAllUsersByCalendarId(this.calendarId);
+        List<User> invitedUsers = invitationService.getInvitedUsers(this.calendarId);
+        List<User> searchResult = (List<User>) model.getAttribute("searchResult");
+        if(searchResult!=null){
+            model.addAttribute("searchedUsers", searchResult);
+        }
+        model.addAttribute("calendarUsers", calendarUsers);
+        model.addAttribute("invitedUsers", invitedUsers);
+        DbCalendar dbCalendar = calendarService.getCalendar((long) this.calendarId);
+        if(dbCalendar.getOwnerId()==user.getId().intValue()){
+            model.addAttribute("isOwner",true);
+        }else{
+            model.addAttribute("isOwner",false);
+        }
+        return "calendar-users";
+    }
+
+    //DEPRECATED
+    //Znajdź użytkowników, których nazwa użytkownika zawiera podaną frazę
+    @PostMapping("/findUsers")
+    public String findUsers(@RequestParam String username, RedirectAttributes redirectAttributes){
+        List<User> searchedUsers = userService.getAllUsersContainingUsername(username);
+        List<User> calendarUsers = userService.getAllUsersByCalendarId(this.calendarId);
+        List<User> invitedUsers = invitationService.getInvitedUsers(this.calendarId);
+        searchedUsers.removeIf(invitedUsers::contains);
+        searchedUsers.removeIf(calendarUsers::contains);
+        redirectAttributes.addFlashAttribute("searchResult", searchedUsers);
+        return "redirect:/calendar/editCalendarUser";
     }
 
 }
