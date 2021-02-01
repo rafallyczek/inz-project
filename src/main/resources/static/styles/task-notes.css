@@ -35,7 +35,6 @@
 .taskGrid p{
     text-align: center;
     margin-top: 0;
-    margin-bottom: 1px;
 }
 .taskGrid hr{
     margin-top: 0;
@@ -103,15 +102,31 @@
     visibility: visible;
 }
 .greenHyperlinkButton{
-    width: 72px;
     margin-bottom: 5px;
-    float: left;
+}
+.note .greenHyperlinkButton{
+    margin-bottom: 0;
 }
 .greyHyperlinkButton{
-    width: 74px;
     margin-bottom: 5px;
-    margin-right: 5px;
-    float: left;
+}
+.redParagraph{
+    background-color: firebrick;
+    color: white;
+    padding: 4px;
+    margin: 0;
+}
+.yellowParagraph{
+    background-color: darkgoldenrod;
+    color: white;
+    padding: 4px;
+    margin: 0;
+}
+.greenParagraph{
+    background-color: seagreen;
+    color: white;
+    padding: 4px;
+    margin: 0;
 }
 .day > hr{
     margin-top: 8px;

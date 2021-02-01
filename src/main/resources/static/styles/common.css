@@ -82,6 +82,19 @@ body{
     background-color: #39ac6b;
     cursor: pointer;
 }
+.yellowHyperlinkButton{
+    text-decoration: none;
+    color: white;
+    background-color: darkgoldenrod;
+    padding: 5px;
+    border-radius: 5px;
+    display: inline-block;
+    font: 400 13.3333px Arial;
+}
+.yellowHyperlinkButton:hover{
+    background-color: #d99f0d;
+    cursor: pointer;
+}
 .greyHyperlinkButton{
     text-decoration: none;
     color: white;
