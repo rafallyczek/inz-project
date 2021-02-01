@@ -90,7 +90,8 @@ public class UserController {
 
     //Dodaj użytkownika
     @PostMapping("/add")
-    public String addUser(@Valid @ModelAttribute("register") Register register, Errors errors){
+    public String addUser(@Valid @ModelAttribute("register") Register register,
+                          Errors errors){
         if(errors.hasErrors()){
             return "register";
         }
@@ -101,7 +102,8 @@ public class UserController {
 
     //Aktualizuj email użytkownika
     @PostMapping("/updateEmail")
-    public String updateEmail(@Valid @ModelAttribute("updateEmail") UpdateEmail updateEmail, Errors errors){
+    public String updateEmail(@Valid @ModelAttribute("updateEmail") UpdateEmail updateEmail,
+                              Errors errors){
         if(errors.hasErrors()){
             return "user";
         }
@@ -113,7 +115,8 @@ public class UserController {
 
     //Aktualizuj hasło użytkownika
     @PostMapping("/updatePassword")
-    public String updatePassword(@Valid @ModelAttribute("updatePassword") UpdatePassword updatePassword, Errors errors){
+    public String updatePassword(@Valid @ModelAttribute("updatePassword") UpdatePassword updatePassword,
+                                 Errors errors){
         if(errors.hasErrors()){
             return "user";
         }

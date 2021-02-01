@@ -38,7 +38,9 @@ public class MessageController {
 
     //Wyświetl wiadomości
     @GetMapping
-    public String messages(Model model, @AuthenticationPrincipal User user, @ModelAttribute("invitationId") Long invitationId){
+    public String messages(Model model,
+                           @AuthenticationPrincipal User user,
+                           @ModelAttribute("invitationId") Long invitationId){
         if(invitationId!=null){
             model.addAttribute("invitationId",invitationId);
         }
@@ -71,7 +73,8 @@ public class MessageController {
 
     //Przejdź do notki z przypomnienia
     @PostMapping("/goTo/note/{id}")
-    public String goToNote(@PathVariable Long id, RedirectAttributes redirectAttributes){
+    public String goToNote(@PathVariable Long id,
+                           RedirectAttributes redirectAttributes){
         Reminder reminder = reminderService.getReminderById(id);
         reminder.setReminded(true);
         reminderService.updateReminder(reminder);
@@ -82,7 +85,8 @@ public class MessageController {
 
     //Przejdź do wiadomości z przypomnienia
     @PostMapping("/goTo/messages/{id}")
-    public String goToMessages(@PathVariable Long id, RedirectAttributes redirectAttributes){
+    public String goToMessages(@PathVariable Long id,
+                               RedirectAttributes redirectAttributes){
         Reminder reminder = reminderService.getReminderById(id);
         reminder.setReminded(true);
         reminderService.updateReminder(reminder);

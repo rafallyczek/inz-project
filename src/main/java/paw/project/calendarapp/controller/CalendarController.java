@@ -248,7 +248,9 @@ public class CalendarController {
 
     //Znajdź użytkowników, których nazwa użytkownika zawiera podaną frazę
     @PostMapping("/id/{id}/calendarUsers/findUsers")
-    public String findUsers(@PathVariable int id, @RequestParam String username, RedirectAttributes redirectAttributes){
+    public String findUsers(@PathVariable int id,
+                            @RequestParam String username,
+                            RedirectAttributes redirectAttributes){
         List<User> searchedUsers = userService.getAllUsersContainingUsername(username);
         List<User> calendarUsers = userService.getAllUsersByCalendarId(id);
         List<User> invitedUsers = invitationService.getInvitedUsers(id);
@@ -260,7 +262,9 @@ public class CalendarController {
 
     //Zaproś użytkownika do kalendarza
     @PostMapping("/id/{id}/calendarUsers/inviteUser")
-    public String inviteUser(@PathVariable int id, @RequestParam int userId, @AuthenticationPrincipal User user) throws MessagingException {
+    public String inviteUser(@PathVariable int id,
+                             @RequestParam int userId,
+                             @AuthenticationPrincipal User user) throws MessagingException {
         Invitation invitation = new Invitation();
         invitation.setCalendarId(id);
         invitation.setReceiverId(userId);

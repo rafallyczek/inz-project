@@ -48,7 +48,8 @@ public class NoteController {
 
     //Ustaw atrybuty modelu
     @ModelAttribute
-    public void notes(Model model, @AuthenticationPrincipal User user){
+    public void notes(Model model,
+                      @AuthenticationPrincipal User user){
         if(user!=null){
             loadCalendars(model, user);
             if(notes.isEmpty()){
@@ -60,7 +61,8 @@ public class NoteController {
 
     //Wyświetl listę notek
     @GetMapping("/list")
-    public String showNoteList(Model model, @AuthenticationPrincipal User user){
+    public String showNoteList(Model model,
+                               @AuthenticationPrincipal User user){
         notes = getAllNotes(user);
         model.addAttribute("notes", notes);
         return "note-list";
@@ -78,7 +80,8 @@ public class NoteController {
 
     //Dodaj notkę
     @PostMapping("/add")
-    public String addNote(@ModelAttribute("addNote") AddNote addNote, @AuthenticationPrincipal User user){
+    public String addNote(@ModelAttribute("addNote") AddNote addNote,
+                          @AuthenticationPrincipal User user){
         if(!addNote.getIsTask()){
             addNote.setUserId(user.getId().intValue());
         }
@@ -88,7 +91,8 @@ public class NoteController {
 
     //Aktualizuj notkę
     @PostMapping("/update")
-    public String updateNote(@ModelAttribute("updateNote") UpdateNote updateNote, @AuthenticationPrincipal User user){
+    public String updateNote(@ModelAttribute("updateNote") UpdateNote updateNote,
+                             @AuthenticationPrincipal User user){
         if(!updateNote.getIsTask()){
             updateNote.setUserId(user.getId().intValue());
         }
@@ -126,7 +130,8 @@ public class NoteController {
 
     //Wczytaj notki danego kalendarza
     @PostMapping("/getCalendarNotes")
-    public String getCalendarNotes(@RequestParam int calendarId, @AuthenticationPrincipal User user){
+    public String getCalendarNotes(@RequestParam int calendarId,
+                                   @AuthenticationPrincipal User user){
         if(calendarId==0){
             notes = getAllNotes(user);
         }else{
