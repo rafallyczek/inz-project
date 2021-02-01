@@ -58,7 +58,7 @@
 
             <p th:text="#{lang.messages}"></p>
             <hr>
-            <div class="message" th:each="invitation : ${invitations}">
+            <div class="message" th:each="invitation : ${invitations}" th:style="${invitationId==invitation.id ? 'animation: blink 1s infinite;' : 'animation: none;'}">
                 <p th:inline="text">[[#{lang.invitationArrived}]] <b>[[${invitation.calendarTitle}]]</b></p>
                 <p th:inline="text">[[#{lang.invitationFrom}]] <b>[[${invitation.senderName}]]</b></p>
                 <a class="greenHyperlinkButton" th:href="@{/messages/accept/{id}(id=${invitation.id})}" th:text="#{lang.accept}"></a>

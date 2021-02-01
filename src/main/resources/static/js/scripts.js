@@ -75,7 +75,7 @@ function remindLater(id){
     document.getElementById("wsMessage").style.display = "none";
     isDisplayed = false;
 }
-//Pokaż notkę
+//Przejdź do zasobu
 function goTo(){
     document.getElementById("wsMessageForm").submit();
     isDisplayed = false;

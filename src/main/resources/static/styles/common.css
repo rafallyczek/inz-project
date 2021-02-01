@@ -215,6 +215,7 @@ input, label{
 #wsMessage{
     display: none;
     position: fixed;
+    padding: 5px;
     bottom: -160px;
     right: 10px;
     width: 220px;
@@ -240,6 +241,7 @@ input, label{
 }
 #wsMessageContent{
     text-align: center;
+    margin-left: 10px;
 }
 #wsMessageLinkText{
     font-weight: bold;

@@ -36,17 +36,13 @@ public class MessageController {
         this.userService = userService;
     }
 
-    //Ustaw atrybuty modelu
-    @ModelAttribute
-    public void setModelAttributes(Model model, @AuthenticationPrincipal User user){
-        if(user!=null){
-            loadInvitations(model, user);
-        }
-    }
-
     //Wyświetl wiadomości
     @GetMapping
-    public String messages(){
+    public String messages(Model model, @AuthenticationPrincipal User user, @ModelAttribute("invitationId") Long invitationId){
+        if(invitationId!=null){
+            model.addAttribute("invitationId",invitationId);
+        }
+        loadInvitations(model, user);
         return "messages";
     }
 
@@ -75,24 +71,23 @@ public class MessageController {
 
     //Przejdź do notki z przypomnienia
     @PostMapping("/goTo/note/{id}")
-    public String goToNote(@PathVariable Long id, RedirectAttributes redirectAttributes, @AuthenticationPrincipal User user){
+    public String goToNote(@PathVariable Long id, RedirectAttributes redirectAttributes){
         Reminder reminder = reminderService.getReminderById(id);
         reminder.setReminded(true);
         reminderService.updateReminder(reminder);
         Note note = noteService.getNote((long) reminder.getObjectId());
-        User owner = userService.getUser((long) note.getUserId());
-        note.setNoteDate(user.getTimezone(),owner.getTimezone());
-        redirectAttributes.addFlashAttribute("calendarId",note.getCalendarId());
-        redirectAttributes.addFlashAttribute("dayNum",note.getDate().getDayOfMonth());
-        return "redirect:/calendar/setDayNumberAndCalendarId";
+        redirectAttributes.addFlashAttribute("noteId",note.getId());
+        return "redirect:/calendar/id/"+note.getCalendarId()+"/day/"+note.getDay();
     }
 
     //Przejdź do wiadomości z przypomnienia
     @PostMapping("/goTo/messages/{id}")
-    public String goToMessages(@PathVariable Long id){
+    public String goToMessages(@PathVariable Long id, RedirectAttributes redirectAttributes){
         Reminder reminder = reminderService.getReminderById(id);
         reminder.setReminded(true);
         reminderService.updateReminder(reminder);
+        Invitation invitation = invitationService.getInvitation((long) reminder.getObjectId());
+        redirectAttributes.addFlashAttribute("invitationId",invitation.getId());
         return "redirect:/messages";
     }
 
