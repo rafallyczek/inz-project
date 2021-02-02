@@ -88,11 +88,7 @@ public class CalendarController {
     public String showDay(@PathVariable int calendarId,
                           @PathVariable int day,
                           @AuthenticationPrincipal User user,
-                          Model model,
-                          @ModelAttribute("noteId") Long noteId){
-        if(noteId!=null){
-            model.addAttribute("noteId",noteId);
-        }
+                          Model model){
         loadNotes(calendarId, user.getTimezone());
         model.addAttribute("calendarId",calendarId);
         model.addAttribute("dayNumber",day);

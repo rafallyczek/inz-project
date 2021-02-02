@@ -39,11 +39,7 @@ public class MessageController {
     //Wyświetl wiadomości
     @GetMapping
     public String messages(Model model,
-                           @AuthenticationPrincipal User user,
-                           @ModelAttribute("invitationId") Long invitationId){
-        if(invitationId!=null){
-            model.addAttribute("invitationId",invitationId);
-        }
+                           @AuthenticationPrincipal User user){
         loadInvitations(model, user);
         return "messages";
     }
@@ -79,7 +75,7 @@ public class MessageController {
         reminder.setReminded(true);
         reminderService.updateReminder(reminder);
         Note note = noteService.getNote((long) reminder.getObjectId());
-        redirectAttributes.addFlashAttribute("noteId",note.getId());
+        redirectAttributes.addFlashAttribute("noteId",note.getId().intValue());
         return "redirect:/calendar/id/"+note.getCalendarId()+"/day/"+note.getDay();
     }
 
@@ -91,7 +87,7 @@ public class MessageController {
         reminder.setReminded(true);
         reminderService.updateReminder(reminder);
         Invitation invitation = invitationService.getInvitation((long) reminder.getObjectId());
-        redirectAttributes.addFlashAttribute("invitationId",invitation.getId());
+        redirectAttributes.addFlashAttribute("invitationId",invitation.getId().intValue());
         return "redirect:/messages";
     }
 

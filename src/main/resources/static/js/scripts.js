@@ -115,7 +115,7 @@ function changeDisplay(){
 
 //Drag and Drop
 //-----------------------------------------------------------------------------------------
-
+var dragGridId = "";
 //Zezwól na upuszczenie
 function allow(event) {
     event.preventDefault();
@@ -123,6 +123,13 @@ function allow(event) {
 //Podnieś
 function drag(event) {
     event.dataTransfer.setData("text", event.target.id);
+    var el = event.target;
+    var className = el.className;
+    while(className!=="taskGrid"){
+        el = el.parentElement;
+        className = el.className;
+    }
+    dragGridId = el.id;
 }
 //Upuść
 function drop(event) {
@@ -135,5 +142,13 @@ function drop(event) {
     }
     var id = el.id;
     var data = event.dataTransfer.getData("text");
+    var noteId = data.replace("note","");
     document.getElementById(id).insertBefore(document.getElementById(data),document.getElementById(id).lastElementChild);
+    if(id==="grid1" && dragGridId!=="grid1"){
+        document.getElementById("toDo"+noteId).click();
+    }else if(id==="grid2" && dragGridId!=="grid2"){
+        document.getElementById("inProgress"+noteId).click();
+    }else if(id==="grid3" && dragGridId!=="grid3"){
+        document.getElementById("finished"+noteId).click();
+    }
 }

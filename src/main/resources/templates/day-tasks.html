@@ -93,8 +93,8 @@
                         <div class="noteBody" th:text="${note.content}"></div>
                         <p class="status" th:text="#{lang.changeStatus}"></p>
                         <hr class="noDrop">
-                        <a th:href="@{/notes/statusInProgress/{id}(id=${note.id})}" th:text="#{lang.inProgress}" class="yellowHyperlinkButton"></a>
-                        <a th:href="@{/notes/statusFinished/{id}(id=${note.id})}" th:text="#{lang.finished}" class="greenHyperlinkButton"></a>
+                        <a th:href="@{/notes/statusInProgress/{id}(id=${note.id})}" th:text="#{lang.inProgress}" class="yellowHyperlinkButton" th:id="'inProgress'+${note.id}"></a>
+                        <a th:href="@{/notes/statusFinished/{id}(id=${note.id})}" th:text="#{lang.finished}" class="greenHyperlinkButton" th:id="'finished'+${note.id}"></a>
 
                     </div>
                     <div style="clear: both;"></div>
@@ -126,8 +126,8 @@
                         <div class="noteBody" th:text="${note.content}"></div>
                         <p class="status" th:text="#{lang.changeStatus}"></p>
                         <hr class="noDrop">
-                        <a th:href="@{/notes/statusToDo/{id}(id=${note.id})}" th:text="#{lang.toDo}" class="redHyperlinkButton"></a>
-                        <a th:href="@{/notes/statusFinished/{id}(id=${note.id})}" th:text="#{lang.finished}" class="greenHyperlinkButton"></a>
+                        <a th:href="@{/notes/statusToDo/{id}(id=${note.id})}" th:text="#{lang.toDo}" class="redHyperlinkButton" th:id="'toDo'+${note.id}"></a>
+                        <a th:href="@{/notes/statusFinished/{id}(id=${note.id})}" th:text="#{lang.finished}" class="greenHyperlinkButton" th:id="'finished'+${note.id}"></a>
 
                     </div>
                     <div style="clear: both;"></div>
@@ -159,8 +159,8 @@
                         <div class="noteBody" th:text="${note.content}"></div>
                         <p class="status" th:text="#{lang.changeStatus}"></p>
                         <hr class="noDrop">
-                        <a th:href="@{/notes/statusInProgress/{id}(id=${note.id})}" th:text="#{lang.inProgress}" class="yellowHyperlinkButton"></a>
-                        <a th:href="@{/notes/statusToDo/{id}(id=${note.id})}" th:text="#{lang.toDo}" class="redHyperlinkButton"></a>
+                        <a th:href="@{/notes/statusInProgress/{id}(id=${note.id})}" th:text="#{lang.inProgress}" class="yellowHyperlinkButton" th:id="'inProgress'+${note.id}"></a>
+                        <a th:href="@{/notes/statusToDo/{id}(id=${note.id})}" th:text="#{lang.toDo}" class="redHyperlinkButton" th:id="'toDo'+${note.id}"></a>
 
                     </div>
                     <div style="clear: both;"></div>
