@@ -10,6 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import paw.project.calendarapp.TO.AddNote;
 import paw.project.calendarapp.TO.UpdateNote;
 import paw.project.calendarapp.model.DbCalendar;
@@ -108,23 +109,29 @@ public class NoteController {
     }
 
     //Zmień status na do zrobienia
-    @GetMapping("/statusToDo/{id}")
-    public String statusToDo(@PathVariable Long id){
+    @PostMapping("/statusToDo/{id}")
+    public String statusToDo(@PathVariable Long id,
+                             RedirectAttributes redirectAttributes){
         Note note = noteService.changeStatus(id, "to-do");
+        redirectAttributes.addFlashAttribute("ajax",true);
         return "redirect:/calendar/id/"+note.getCalendarId()+"/day/"+note.getDay()+"/tasks";
     }
 
     //Zmień status na w trakcie
-    @GetMapping("/statusInProgress/{id}")
-    public String statusInProgress(@PathVariable Long id){
+    @PostMapping("/statusInProgress/{id}")
+    public String statusInProgress(@PathVariable Long id,
+                                   RedirectAttributes redirectAttributes){
         Note note = noteService.changeStatus(id, "in-progress");
+        redirectAttributes.addFlashAttribute("ajax",true);
         return "redirect:/calendar/id/"+note.getCalendarId()+"/day/"+note.getDay()+"/tasks";
     }
 
     //Zmień status na zakończone
-    @GetMapping("/statusFinished/{id}")
-    public String statusFinished(@PathVariable Long id){
+    @PostMapping("/statusFinished/{id}")
+    public String statusFinished(@PathVariable Long id,
+                                 RedirectAttributes redirectAttributes){
         Note note = noteService.changeStatus(id, "finished");
+        redirectAttributes.addFlashAttribute("ajax",true);
         return "redirect:/calendar/id/"+note.getCalendarId()+"/day/"+note.getDay()+"/tasks";
     }
 

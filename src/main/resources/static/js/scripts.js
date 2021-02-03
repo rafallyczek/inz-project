@@ -145,10 +145,51 @@ function drop(event) {
     var noteId = data.replace("note","");
     document.getElementById(id).insertBefore(document.getElementById(data),document.getElementById(id).lastElementChild);
     if(id==="grid1" && dragGridId!=="grid1"){
-        document.getElementById("toDo"+noteId).click();
+        statusToDo(noteId);
     }else if(id==="grid2" && dragGridId!=="grid2"){
-        document.getElementById("inProgress"+noteId).click();
+        statusInProgress(noteId);
     }else if(id==="grid3" && dragGridId!=="grid3"){
-        document.getElementById("finished"+noteId).click();
+        statusFinished(noteId);
     }
+}
+//Zmień status na do zrobienia
+function statusToDo(noteId){
+    setUpAJAX();
+    $.ajax({
+        url: "/notes/statusToDo/"+noteId,
+        type: "POST",
+        success: function(data){
+            $(".taskGridWrapper").html(data);
+        }
+    });
+}
+//Zmień status na w trakcie
+function statusInProgress(noteId){
+    setUpAJAX();
+    $.ajax({
+        url: "/notes/statusInProgress/"+noteId,
+        type: "POST",
+        success: function(data){
+            $(".taskGridWrapper").html(data);
+        }
+    });
+}
+//Zmień status na zakończone
+function statusFinished(noteId){
+    setUpAJAX();
+    $.ajax({
+        url: "/notes/statusFinished/"+noteId,
+        type: "POST",
+        success: function(data){
+            $(".taskGridWrapper").html(data);
+        }
+    });
+}
+//AJAX - ogólne
+//-----------------------------------------------------------------------------------------
+function setUpAJAX(){
+    var token = $("meta[name='_csrf']").attr("content");
+    $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+        jqXHR.setRequestHeader('X-CSRF-Token', token);
+    });
 }

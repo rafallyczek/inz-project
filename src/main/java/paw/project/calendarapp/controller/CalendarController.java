@@ -104,6 +104,9 @@ public class CalendarController {
         loadNotes(calendarId, user.getTimezone());
         model.addAttribute("calendarId",calendarId);
         model.addAttribute("dayNumber",day);
+        if(model.containsAttribute("ajax")){
+            return "day-tasks :: tasks";
+        }
         return "day-tasks";
     }
 

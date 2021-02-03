@@ -65,7 +65,7 @@
 
             <hr>
 
-            <div class="taskGridWrapper">
+            <div class="taskGridWrapper" th:fragment="tasks">
                 <div class="taskGrid" id="grid1" ondrop="drop(event)" ondragover="allow(event)">
 
                     <p th:text="#{lang.toDo}" class="redParagraph"></p>
@@ -93,8 +93,8 @@
                         <div class="noteBody" th:text="${note.content}"></div>
                         <p class="status" th:text="#{lang.changeStatus}"></p>
                         <hr class="noDrop">
-                        <a th:href="@{/notes/statusInProgress/{id}(id=${note.id})}" th:text="#{lang.inProgress}" class="yellowHyperlinkButton" th:id="'inProgress'+${note.id}"></a>
-                        <a th:href="@{/notes/statusFinished/{id}(id=${note.id})}" th:text="#{lang.finished}" class="greenHyperlinkButton" th:id="'finished'+${note.id}"></a>
+                        <button th:text="#{lang.inProgress}" class="yellowInputButton" th:onclick="'statusInProgress('+${note.id}+')'"></button>
+                        <button th:text="#{lang.finished}" class="greenInputButton" th:onclick="'statusFinished('+${note.id}+')'"></button>
 
                     </div>
                     <div style="clear: both;"></div>
@@ -126,8 +126,8 @@
                         <div class="noteBody" th:text="${note.content}"></div>
                         <p class="status" th:text="#{lang.changeStatus}"></p>
                         <hr class="noDrop">
-                        <a th:href="@{/notes/statusToDo/{id}(id=${note.id})}" th:text="#{lang.toDo}" class="redHyperlinkButton" th:id="'toDo'+${note.id}"></a>
-                        <a th:href="@{/notes/statusFinished/{id}(id=${note.id})}" th:text="#{lang.finished}" class="greenHyperlinkButton" th:id="'finished'+${note.id}"></a>
+                        <button th:text="#{lang.toDo}" class="redInputButton" th:onclick="'statusToDo('+${note.id}+')'"></button>
+                        <button th:text="#{lang.finished}" class="greenInputButton" th:onclick="'statusFinished('+${note.id}+')'"></button>
 
                     </div>
                     <div style="clear: both;"></div>
@@ -159,8 +159,8 @@
                         <div class="noteBody" th:text="${note.content}"></div>
                         <p class="status" th:text="#{lang.changeStatus}"></p>
                         <hr class="noDrop">
-                        <a th:href="@{/notes/statusInProgress/{id}(id=${note.id})}" th:text="#{lang.inProgress}" class="yellowHyperlinkButton" th:id="'inProgress'+${note.id}"></a>
-                        <a th:href="@{/notes/statusToDo/{id}(id=${note.id})}" th:text="#{lang.toDo}" class="redHyperlinkButton" th:id="'toDo'+${note.id}"></a>
+                        <button th:text="#{lang.inProgress}" class="yellowInputButton" th:onclick="'statusInProgress('+${note.id}+')'"></button>
+                        <button th:text="#{lang.toDo}" class="redInputButton" th:onclick="'statusToDo('+${note.id}+')'"></button>
 
                     </div>
                     <div style="clear: both;"></div>

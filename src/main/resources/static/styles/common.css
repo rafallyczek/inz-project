@@ -56,6 +56,18 @@ body{
     background-color: #39ac6b;
     cursor: pointer;
 }
+.yellowInputButton{
+    text-decoration: none;
+    color: white;
+    background-color: darkgoldenrod;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+}
+.yellowInputButton:hover{
+    background-color: #d99f0d;
+    cursor: pointer;
+}
 .redHyperlinkButton{
     text-decoration: none;
     color: white;
