@@ -16,7 +16,8 @@ import paw.project.calendarapp.TO.UpdateNote;
 import paw.project.calendarapp.model.DbCalendar;
 import paw.project.calendarapp.model.Note;
 import paw.project.calendarapp.model.User;
-import paw.project.calendarapp.pdf.Pdf;
+import paw.project.calendarapp.files.Csv;
+import paw.project.calendarapp.files.Pdf;
 import paw.project.calendarapp.service.CalendarService;
 import paw.project.calendarapp.service.NoteService;
 import paw.project.calendarapp.service.RequestService;
@@ -24,7 +25,6 @@ import paw.project.calendarapp.service.RequestService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -44,7 +44,6 @@ public class NoteController {
         this.noteService = noteService;
         this.calendarService = calendarService;
         this.requestService = requestService;
-        this.notes = new ArrayList<>();
     }
 
     //Ustaw atrybuty modelu
@@ -53,10 +52,9 @@ public class NoteController {
                       @AuthenticationPrincipal User user){
         if(user!=null){
             loadCalendars(model, user);
-            if(notes.isEmpty()){
+            if(notes==null){
                 notes = getAllNotes(user);
             }
-            model.addAttribute("notes", notes);
         }
     }
 
@@ -64,7 +62,6 @@ public class NoteController {
     @GetMapping("/list")
     public String showNoteList(Model model,
                                @AuthenticationPrincipal User user){
-        notes = getAllNotes(user);
         model.addAttribute("notes", notes);
         return "note-list";
     }
@@ -77,6 +74,16 @@ public class NoteController {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition","attachment; filename=notes.pdf");
         return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(in));
+    }
+
+    //Pobierz csv
+    @GetMapping("/csv")
+    public ResponseEntity<InputStreamResource> csv() throws IOException {
+        Csv scv = new Csv(notes);
+        ByteArrayInputStream in = scv.buildCsv();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition","attachment; filename=notes.csv");
+        return ResponseEntity.ok().headers(headers).contentType(MediaType.parseMediaType("text/csv")).body(new InputStreamResource(in));
     }
 
     //Dodaj notkę

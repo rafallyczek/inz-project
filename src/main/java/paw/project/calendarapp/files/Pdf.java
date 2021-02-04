@@ -1,4 +1,4 @@
-package paw.project.calendarapp.pdf;
+package paw.project.calendarapp.files;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.Font;

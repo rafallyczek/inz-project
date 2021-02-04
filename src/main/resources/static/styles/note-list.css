@@ -74,8 +74,11 @@
     visibility: visible;
 }
 .greenHyperlinkButton{
-    margin: 5px 10px 2px 5px;
+    margin: 5px 5px 2px 0;
     float: left;
+}
+.greenHyperlinkButton:first-child{
+    margin-left: 5px;
 }
 .noNotes{
     text-align: center;
