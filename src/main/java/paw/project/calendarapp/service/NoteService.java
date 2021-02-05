@@ -10,6 +10,7 @@ import paw.project.calendarapp.repository.NoteRepository;
 import paw.project.calendarapp.repository.ReminderRepository;
 import paw.project.calendarapp.repository.UserRepository;
 
+import javax.mail.MessagingException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -22,16 +23,19 @@ public class NoteService {
     private UserRepository userRepository;
     private CalendarUserRepository calendarUserRepository;
     private ReminderRepository reminderRepository;
+    private EmailService emailService;
 
     @Autowired
     public NoteService(NoteRepository noteRepository,
                        UserRepository userRepository,
                        CalendarUserRepository calendarUserRepository,
-                       ReminderRepository reminderRepository){
+                       ReminderRepository reminderRepository,
+                       EmailService emailService){
         this.noteRepository = noteRepository;
         this.userRepository = userRepository;
         this.calendarUserRepository = calendarUserRepository;
         this.reminderRepository = reminderRepository;
+        this.emailService = emailService;
     }
 
     //Zwróć notki po id użytkownika
@@ -119,9 +123,20 @@ public class NoteService {
     }
 
     //Zmień status notki
-    public Note changeStatus(Long id, String status){
+    public Note changeStatus(Long id, String status) throws MessagingException {
         Note note = noteRepository.findById(id).get();
         note.setStatus(status);
+        if(status.equals("to-do")){
+            status = "Do zrobienia";
+        }else if(status.equals("in-progress")){
+            status = "W trakcie";
+        }else if(status.equals("finished")){
+            status = "Zakończone";
+        }
+        User user = userRepository.findById((long) note.getUserId()).get();
+        emailService.sendEmail(user.getEmail(),"Aktualizacja zadania",
+                "<p>Zmieniono status zadania: <b>"+note.getTitle()+"</b></p>" +
+                "<p>Na: <b>"+status+"</b></p>");
         noteRepository.save(note);
         return note;
     }

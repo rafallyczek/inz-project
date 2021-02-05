@@ -23,6 +23,7 @@ import paw.project.calendarapp.service.NoteService;
 import paw.project.calendarapp.service.RequestService;
 
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.util.List;
@@ -118,7 +119,7 @@ public class NoteController {
     //Zmień status na do zrobienia
     @PostMapping("/statusToDo/{id}")
     public String statusToDo(@PathVariable Long id,
-                             RedirectAttributes redirectAttributes){
+                             RedirectAttributes redirectAttributes) throws MessagingException {
         Note note = noteService.changeStatus(id, "to-do");
         redirectAttributes.addFlashAttribute("ajax",true);
         return "redirect:/calendar/id/"+note.getCalendarId()+"/day/"+note.getDay()+"/tasks";
@@ -127,7 +128,7 @@ public class NoteController {
     //Zmień status na w trakcie
     @PostMapping("/statusInProgress/{id}")
     public String statusInProgress(@PathVariable Long id,
-                                   RedirectAttributes redirectAttributes){
+                                   RedirectAttributes redirectAttributes) throws MessagingException {
         Note note = noteService.changeStatus(id, "in-progress");
         redirectAttributes.addFlashAttribute("ajax",true);
         return "redirect:/calendar/id/"+note.getCalendarId()+"/day/"+note.getDay()+"/tasks";
@@ -136,7 +137,7 @@ public class NoteController {
     //Zmień status na zakończone
     @PostMapping("/statusFinished/{id}")
     public String statusFinished(@PathVariable Long id,
-                                 RedirectAttributes redirectAttributes){
+                                 RedirectAttributes redirectAttributes) throws MessagingException {
         Note note = noteService.changeStatus(id, "finished");
         redirectAttributes.addFlashAttribute("ajax",true);
         return "redirect:/calendar/id/"+note.getCalendarId()+"/day/"+note.getDay()+"/tasks";
