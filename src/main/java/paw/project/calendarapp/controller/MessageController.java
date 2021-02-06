@@ -79,6 +79,18 @@ public class MessageController {
         return "redirect:/calendar/id/"+note.getCalendarId()+"/day/"+note.getDay();
     }
 
+    //Przejdź do zadania z przypomnienia
+    @PostMapping("/goTo/task/{id}")
+    public String goToTask(@PathVariable Long id,
+                           RedirectAttributes redirectAttributes){
+        Reminder reminder = reminderService.getReminderById(id);
+        reminder.setReminded(true);
+        reminderService.updateReminder(reminder);
+        Note note = noteService.getNote((long) reminder.getObjectId());
+        redirectAttributes.addFlashAttribute("noteId",note.getId().intValue());
+        return "redirect:/calendar/id/"+note.getCalendarId()+"/day/"+note.getDay()+"/tasks";
+    }
+
     //Przejdź do wiadomości z przypomnienia
     @PostMapping("/goTo/messages/{id}")
     public String goToMessages(@PathVariable Long id,

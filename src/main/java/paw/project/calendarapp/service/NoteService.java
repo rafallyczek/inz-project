@@ -133,10 +133,24 @@ public class NoteService {
         }else if(status.equals("finished")){
             status = "Zakończone";
         }
-        User user = userRepository.findById((long) note.getUserId()).get();
-        emailService.sendEmail(user.getEmail(),"Aktualizacja zadania",
-                "<p>Zmieniono status zadania: <b>"+note.getTitle()+"</b></p>" +
-                "<p>Na: <b>"+status+"</b></p>");
+        List<CalendarUser> calendarUsers = calendarUserRepository.findAllByCalendarId(note.getCalendarId());
+        List<Reminder> reminders = reminderRepository.findAllByObjectId(note.getId().intValue());
+        reminders.removeIf(reminder -> !reminder.getType().equals("status-change"));
+        for(CalendarUser calendarUser : calendarUsers){
+            User user = userRepository.findById((long) calendarUser.getUserId()).get();
+            Reminder reminder = new Reminder();
+            reminder.setObjectId(note.getId().intValue());
+            reminder.setUserId(user.getId().intValue());
+            reminder.setReminderTime(user.getReminderTime());
+            reminder.setReminded(false);
+            reminder.setType("status-change");
+            if(!reminders.contains(reminder)){
+                reminderRepository.save(reminder);
+            }
+            emailService.sendEmail(user.getEmail(),"Aktualizacja zadania",
+                    "<p>Zmieniono status zadania: <b>"+note.getTitle()+"</b></p>" +
+                            "<p>Na: <b>"+status+"</b></p>");
+        }
         noteRepository.save(note);
         return note;
     }

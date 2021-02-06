@@ -45,6 +45,8 @@ function showMessage(message){
                 document.getElementById("wsMessageForm").action = "/messages/goTo/note/"+data["id"];
             }else if(data[key]==="invitation"){
                 document.getElementById("wsMessageForm").action = "/messages/goTo/messages/"+data["id"];
+            }else if(data[key]==="status-change"){
+                document.getElementById("wsMessageForm").action = "/messages/goTo/task/"+data["id"];
             }
         }
     }
@@ -66,10 +68,7 @@ function showMessage(message){
 //Przypomnij później
 function remindLater(id){
     var remindLaterURL = "/messages/remindLater/" + id;
-    var token = $("meta[name='_csrf']").attr("content");
-    $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
-        jqXHR.setRequestHeader('X-CSRF-Token', token);
-    });
+    setUpAJAX();
     $.post(remindLaterURL);
     document.getElementById("wsMessage").style.bottom = "-160px";
     document.getElementById("wsMessage").style.display = "none";

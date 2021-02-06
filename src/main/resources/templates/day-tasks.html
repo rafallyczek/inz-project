@@ -72,7 +72,8 @@
                     <hr class="noDrop">
                     <div class="note" th:each="note : ${calendar.notes}"
                          th:if="${note.date.isEqual(#temporals.create(calendar.year,calendar.month,dayNumber)) and note.status == 'to-do'}"
-                         draggable="true" ondragstart="drag(event)" th:id="'note'+${note.id}">
+                         draggable="true" ondragstart="drag(event)" th:id="'note'+${note.id}"
+                         th:style="${noteId==note.id ? 'animation: blink 1s infinite;' : 'animation: none;'}">
 
                         <div class="noteHeader" th:inline="text">
                             [[${note.title}]] | [[${note.time}]]

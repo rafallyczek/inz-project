@@ -61,15 +61,21 @@ public class ReminderService {
     }
 
     //Wyślij przypomnienia; 30*60*1000 = 1800000 (wywołaj co 30 minut); 60*1000 = 60000 (pierwsze wywołanie po 1 minucie)
-    @Scheduled(fixedRate = 1800000, initialDelay = 60000)
+    @Scheduled(fixedRate = 15000, initialDelay = 15000)
     public void sendReminders() throws MessagingException {
         List<Reminder> reminders = new ArrayList<>();
         reminderRepository.findAll().forEach(reminders::add);
         for(Reminder reminder : reminders) {
-            if(reminder.getType().equals("note")){
-                noteReminder(reminder);
-            }else if(reminder.getType().equals("invitation")){
-                invitationReminder(reminder);
+            switch (reminder.getType()) {
+                case "note":
+                    noteReminder(reminder);
+                    break;
+                case "invitation":
+                    invitationReminder(reminder);
+                    break;
+                case "status-change":
+                    statusChangeReminder(reminder);
+                    break;
             }
         }
     }
@@ -121,6 +127,27 @@ public class ReminderService {
             message.setData(data);
             template.convertAndSendToUser(user.getUsername(),"/queue/message", message);
         }
+    }
+
+    //Przypomnienie dotyczące zmiany statusu zadania
+    public void statusChangeReminder(Reminder reminder){
+        Note note = noteRepository.findById((long) reminder.getObjectId()).get();
+        User user = userService.getUser((long)note.getUserId());
+        Message message = new Message();
+        message.setTitle("Aktualizacja zadania");
+        message.setContent("Zmieniono status zadania: <span id='wsMessageLinkText' onclick='goTo()'>"+note.getTitle()+"</span>");
+        HashMap<String, String> data = new HashMap<>();
+        if(note.getStatus().equals("to-do")){
+            data.put("Na: ","Do zrobienia");
+        }else if(note.getStatus().equals("in-progress")){
+            data.put("Na: ","W trakcie");
+        }else if(note.getStatus().equals("finished")){
+            data.put("Na: ","Zakończone");
+        }
+        data.put("type","status-change");
+        data.put("id",reminder.getId().toString());
+        message.setData(data);
+        template.convertAndSendToUser(user.getUsername(),"/queue/message", message);
     }
 
 }
