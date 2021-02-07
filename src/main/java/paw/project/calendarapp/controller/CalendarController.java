@@ -87,7 +87,7 @@ public class CalendarController {
 
     //Wyświetl podgląd dnia
     @GetMapping("/id/{id}/date/{year}/{month}/{day}")
-    public String showDayTEST(@PathVariable int id,
+    public String showDay(@PathVariable int id,
                               @PathVariable int year,
                               @PathVariable int month,
                               @PathVariable int day,
@@ -105,7 +105,7 @@ public class CalendarController {
 
     //Wyświetl podgląd zadań dnia
     @GetMapping("/id/{id}/date/{year}/{month}/{day}/tasks")
-    public String showDayTasksTEST(@PathVariable int id,
+    public String showDayTasks(@PathVariable int id,
                               @PathVariable int year,
                               @PathVariable int month,
                               @PathVariable int day,
@@ -126,7 +126,7 @@ public class CalendarController {
 
     //Wyświetl formularz dodający notkę
     @GetMapping("/id/{calendarId}/date/{year}/{month}/{day}/addNote")
-    public String showAddNoteFormTEST(@PathVariable int calendarId,
+    public String showAddNoteForm(@PathVariable int calendarId,
                                       @PathVariable int year,
                                       @PathVariable int month,
                                       @PathVariable int day,
@@ -145,7 +145,7 @@ public class CalendarController {
 
     //Walidacja formularza dodawania notki
     @PostMapping("/id/{calendarId}/date/{year}/{month}/{day}/addNote/validate")
-    public String validateAddNoteTEST(@Valid @ModelAttribute("addNote") AddNote addNote,
+    public String validateAddNote(@Valid @ModelAttribute("addNote") AddNote addNote,
                                       Errors errors,
                                       @PathVariable int calendarId,
                                       @PathVariable int year,
@@ -169,7 +169,7 @@ public class CalendarController {
 
     //Wyświetl formularz edutujący notkę
     @GetMapping("/id/{calendarId}/date/{year}/{month}/{day}/updateNote/{noteId}")
-    public String showUpdateNoteFormTEST(@PathVariable int calendarId,
+    public String showUpdateNoteForm(@PathVariable int calendarId,
                                          @PathVariable int year,
                                          @PathVariable int month,
                                          @PathVariable int day,
@@ -189,7 +189,7 @@ public class CalendarController {
 
     //Walidacja formularza edycji notki
     @PostMapping("/id/{calendarId}/date/{year}/{month}/{day}/updateNote/validate")
-    public String validateUpdateNoteTEST(@Valid @ModelAttribute("updateNote") UpdateNote updateNote,
+    public String validateUpdateNote(@Valid @ModelAttribute("updateNote") UpdateNote updateNote,
                                          Errors errors,
                                          @PathVariable int calendarId,
                                          @PathVariable int year,
