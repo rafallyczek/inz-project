@@ -59,7 +59,7 @@
             <!--Formularz edytujący notkę-->
             <p th:text="#{lang.editNote}"></p>
             <hr>
-            <form method="POST" th:action="@{/calendar/id/{calendarId}/day/{day}/updateNote/validate(calendarId=${calendarId}, day=${dayNumber})}" th:object="${updateNote}">
+            <form method="POST" th:action="@{/calendar/id/{calendarId}/date/{year}/{month}/{day}/updateNote/validate(calendarId=${calendarId}, year=${year}, month=${month}, day=${dayNumber})}" th:object="${updateNote}">
                 <input id="idEdit" type="hidden" th:field="*{noteId}">
                 <div class="formInputs">
                     <label for="titleEdit" th:text="#{lang.titleText}"></label>
@@ -99,7 +99,7 @@
                 <div style="clear: both"></div>
             </form>
             <!--Powrót do szczegółów dnia-->
-            <a th:href="@{/calendar/id/{calendarId}/day/{day}(calendarId=${calendarId}, day=${dayNumber})}" th:text="#{lang.dayReturn}"></a>
+            <a th:href="@{/calendar/id/{calendarId}/date/{year}/{month}/{day}(calendarId=${calendarId}, year=${year}, month=${month}, day=${dayNumber})}" th:text="#{lang.dayReturn}"></a>
 
         </div>
 

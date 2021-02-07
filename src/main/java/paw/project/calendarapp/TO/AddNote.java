@@ -31,4 +31,15 @@ public class AddNote {
         return day.startsWith("0") ? date.substring(date.length()-1) : day;
     }
 
+    //Zwróć miesiąc
+    public String getMonth(){
+        String month = date.substring(date.length()-5,date.length()-3);
+        return month.startsWith("0") ? month.substring(month.length()-1) : month;
+    }
+
+    //Zwróć rok
+    public String getYear(){
+        return date.substring(0,4);
+    }
+
 }

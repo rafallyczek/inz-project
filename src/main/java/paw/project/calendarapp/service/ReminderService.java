@@ -61,7 +61,7 @@ public class ReminderService {
     }
 
     //Wyślij przypomnienia; 30*60*1000 = 1800000 (wywołaj co 30 minut); 60*1000 = 60000 (pierwsze wywołanie po 1 minucie)
-    @Scheduled(fixedRate = 15000, initialDelay = 15000)
+    @Scheduled(fixedRate = 1800000, initialDelay = 60000)
     public void sendReminders() throws MessagingException {
         List<Reminder> reminders = new ArrayList<>();
         reminderRepository.findAll().forEach(reminders::add);

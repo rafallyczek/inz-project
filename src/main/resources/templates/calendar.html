@@ -80,7 +80,7 @@
             <div class="blankDay" th:if="${calendar.dayOfWeek>1}" th:each="i : ${#numbers.sequence(1,(calendar.dayOfWeek)-1)}"></div>
 
             <!--Generowanie pól z dniami-->
-            <a th:each="i : ${#numbers.sequence(1,calendar.daysInMonth)}" th:href="@{/calendar/id/{calendarId}/day/{day}(calendarId=${calendarId}, day=${i})}">
+            <a th:each="i : ${#numbers.sequence(1,calendar.daysInMonth)}" th:href="@{/calendar/id/{calendarId}/date/{year}/{month}/{day}(calendarId=${calendarId}, year=${year}, month=${month}, day=${i})}">
                 <div class="day" th:inline="text">
                     [[${i}]]
                     <!--Wyświetlanie notek w polu dnia-->

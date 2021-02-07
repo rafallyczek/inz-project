@@ -66,6 +66,8 @@ public class CalendarController {
                                   Model model){
         loadNotes(id, user.getTimezone());
         model.addAttribute("calendarId",id);
+        model.addAttribute("month",calendar.getCurrentDate().getMonthValue());
+        model.addAttribute("year",calendar.getCurrentDate().getYear());
         return "calendar";
     }
 
@@ -84,38 +86,38 @@ public class CalendarController {
     }
 
     //Wyświetl podgląd dnia
-    @GetMapping("/id/{calendarId}/day/{day}")
-    public String showDay(@PathVariable int calendarId,
-                          @PathVariable int day,
-                          @AuthenticationPrincipal User user,
-                          Model model){
-        if(model.containsAttribute("month")){
-            this.calendar.setMonth((int) model.getAttribute("month"));
-        }
-        if(model.containsAttribute("year")){
-            this.calendar.setYear((int) model.getAttribute("year"));
-        }
-        loadNotes(calendarId, user.getTimezone());
-        model.addAttribute("calendarId",calendarId);
+    @GetMapping("/id/{id}/date/{year}/{month}/{day}")
+    public String showDayTEST(@PathVariable int id,
+                              @PathVariable int year,
+                              @PathVariable int month,
+                              @PathVariable int day,
+                              @AuthenticationPrincipal User user,
+                              Model model){
+        loadNotes(id, user.getTimezone());
+        this.calendar.setMonth(month);
+        this.calendar.setYear(year);
+        model.addAttribute("calendarId",id);
         model.addAttribute("dayNumber",day);
+        model.addAttribute("month",month);
+        model.addAttribute("year",year);
         return "day";
     }
 
     //Wyświetl podgląd zadań dnia
-    @GetMapping("/id/{calendarId}/day/{day}/tasks")
-    public String showDayTasks(@PathVariable int calendarId,
-                               @PathVariable int day,
-                               @AuthenticationPrincipal User user,
-                               Model model){
-        if(model.containsAttribute("month")){
-            this.calendar.setMonth((int) model.getAttribute("month"));
-        }
-        if(model.containsAttribute("year")){
-            this.calendar.setYear((int) model.getAttribute("year"));
-        }
-        loadNotes(calendarId, user.getTimezone());
-        model.addAttribute("calendarId",calendarId);
+    @GetMapping("/id/{id}/date/{year}/{month}/{day}/tasks")
+    public String showDayTasksTEST(@PathVariable int id,
+                              @PathVariable int year,
+                              @PathVariable int month,
+                              @PathVariable int day,
+                              @AuthenticationPrincipal User user,
+                              Model model){
+        loadNotes(id, user.getTimezone());
+        this.calendar.setMonth(month);
+        this.calendar.setYear(year);
+        model.addAttribute("calendarId",id);
         model.addAttribute("dayNumber",day);
+        model.addAttribute("month",month);
+        model.addAttribute("year",year);
         if(model.containsAttribute("ajax")){
             return "day-tasks :: tasks";
         }
@@ -123,31 +125,39 @@ public class CalendarController {
     }
 
     //Wyświetl formularz dodający notkę
-    @GetMapping("/id/{calendarId}/day/{day}/addNote")
-    public String showAddNoteForm(@PathVariable int calendarId,
-                                     @PathVariable int day,
-                                     @AuthenticationPrincipal User user,
-                                     Model model){
+    @GetMapping("/id/{calendarId}/date/{year}/{month}/{day}/addNote")
+    public String showAddNoteFormTEST(@PathVariable int calendarId,
+                                      @PathVariable int year,
+                                      @PathVariable int month,
+                                      @PathVariable int day,
+                                      @AuthenticationPrincipal User user,
+                                      Model model){
         setUpAddNoteViewAttributes(model, user, (long) calendarId, day);
         setUpIsOwner(model, user, (long) calendarId);
         List<User> calendarUsers = userService.getAllUsersByCalendarId(calendarId);
         model.addAttribute("calendarUsers",calendarUsers);
         model.addAttribute("calendarId",calendarId);
         model.addAttribute("dayNumber",day);
+        model.addAttribute("month",month);
+        model.addAttribute("year",year);
         return "add-note";
     }
 
     //Walidacja formularza dodawania notki
-    @PostMapping("/id/{calendarId}/day/{day}/addNote/validate")
-    public String validateAddNote(@Valid @ModelAttribute("addNote") AddNote addNote,
-                                  Errors errors,
-                                  @PathVariable int calendarId,
-                                  @PathVariable int day,
-                                  @AuthenticationPrincipal User user,
-                                  Model model,
-                                  RedirectAttributes redirectAttributes){
+    @PostMapping("/id/{calendarId}/date/{year}/{month}/{day}/addNote/validate")
+    public String validateAddNoteTEST(@Valid @ModelAttribute("addNote") AddNote addNote,
+                                      Errors errors,
+                                      @PathVariable int calendarId,
+                                      @PathVariable int year,
+                                      @PathVariable int month,
+                                      @PathVariable int day,
+                                      @AuthenticationPrincipal User user,
+                                      Model model,
+                                      RedirectAttributes redirectAttributes){
         if(errors.hasErrors()){
             model.addAttribute("dayNumber",day);
+            model.addAttribute("month",month);
+            model.addAttribute("year",year);
             setUpIsOwner(model, user, (long) calendarId);
             List<User> calendarUsers = userService.getAllUsersByCalendarId(calendarId);
             model.addAttribute("calendarUsers",calendarUsers);
@@ -158,32 +168,40 @@ public class CalendarController {
     }
 
     //Wyświetl formularz edutujący notkę
-    @GetMapping("/id/{calendarId}/day/{day}/updateNote/{noteId}")
-    public String showUpdateNoteForm(@PathVariable int calendarId,
-                                     @PathVariable int day,
-                                     @PathVariable int noteId,
-                                     @AuthenticationPrincipal User user,
-                                     Model model){
+    @GetMapping("/id/{calendarId}/date/{year}/{month}/{day}/updateNote/{noteId}")
+    public String showUpdateNoteFormTEST(@PathVariable int calendarId,
+                                         @PathVariable int year,
+                                         @PathVariable int month,
+                                         @PathVariable int day,
+                                         @PathVariable int noteId,
+                                         @AuthenticationPrincipal User user,
+                                         Model model){
         setUpUpdateNoteViewAttributes(model, user, (long) noteId);
         setUpIsOwner(model, user, (long) calendarId);
         List<User> calendarUsers = userService.getAllUsersByCalendarId(calendarId);
         model.addAttribute("calendarUsers",calendarUsers);
         model.addAttribute("calendarId",calendarId);
         model.addAttribute("dayNumber",day);
+        model.addAttribute("month",month);
+        model.addAttribute("year",year);
         return "update-note";
     }
 
     //Walidacja formularza edycji notki
-    @PostMapping("/id/{calendarId}/day/{day}/updateNote/validate")
-    public String validateUpdateNote(@Valid @ModelAttribute("updateNote") UpdateNote updateNote,
-                                     Errors errors,
-                                     @PathVariable int calendarId,
-                                     @PathVariable int day,
-                                     @AuthenticationPrincipal User user,
-                                     Model model,
-                                     RedirectAttributes redirectAttributes){
+    @PostMapping("/id/{calendarId}/date/{year}/{month}/{day}/updateNote/validate")
+    public String validateUpdateNoteTEST(@Valid @ModelAttribute("updateNote") UpdateNote updateNote,
+                                         Errors errors,
+                                         @PathVariable int calendarId,
+                                         @PathVariable int year,
+                                         @PathVariable int month,
+                                         @PathVariable int day,
+                                         @AuthenticationPrincipal User user,
+                                         Model model,
+                                         RedirectAttributes redirectAttributes){
         if(errors.hasErrors()){
             model.addAttribute("dayNumber",day);
+            model.addAttribute("month",month);
+            model.addAttribute("year",year);
             setUpIsOwner(model, user, (long) calendarId);
             List<User> calendarUsers = userService.getAllUsersByCalendarId(calendarId);
             model.addAttribute("calendarUsers",calendarUsers);

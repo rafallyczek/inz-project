@@ -58,9 +58,9 @@
         <div class="day">
 
             <!-- Przejście do zwykłych notek -->
-            <a class="greyHyperlinkButton" th:href="@{/calendar/id/{calendarId}/day/{day}(calendarId=${calendarId}, day=${dayNumber})}" th:text="#{lang.normalNotes}"></a>
+            <a class="greyHyperlinkButton" th:href="@{/calendar/id/{calendarId}/date/{year}/{month}/{day}(calendarId=${calendarId}, year=${year}, month=${month}, day=${dayNumber})}" th:text="#{lang.normalNotes}"></a>
             <!-- Przejście do formularza dodania notki -->
-            <a class="greenHyperlinkButton" th:href="@{/calendar/id/{calendarId}/day/{day}/addNote(calendarId=${calendarId}, day=${dayNumber})}" th:text="#{lang.addNote}"></a>
+            <a class="greenHyperlinkButton" th:href="@{/calendar/id/{calendarId}/date/{year}/{month}/{day}/addNote(calendarId=${calendarId}, year=${year}, month=${month}, day=${dayNumber})}" th:text="#{lang.addNote}"></a>
             <div style="clear: both"></div>
 
             <hr>
@@ -84,7 +84,7 @@
                                 </i>
                             </a>
                             <!-- Przejście do formularza edycji notki -->
-                            <a th:href="@{/calendar/id/{calendarId}/day/{day}/updateNote/{noteId}(calendarId=${calendarId}, day=${dayNumber}, noteId=${note.id})}" class="editButton">
+                            <a th:href="@{/calendar/id/{calendarId}/date/{year}/{month}/{day}/updateNote/{noteId}(calendarId=${calendarId}, year=${year}, month=${month}, day=${dayNumber}, noteId=${note.id})}" class="editButton">
                                 <i class="icon-pencil">
                                     <span class="tooltip" th:text="#{lang.editNote}"></span>
                                 </i>
@@ -117,7 +117,7 @@
                                 </i>
                             </a>
                             <!-- Przejście do formularza edycji notki -->
-                            <a th:href="@{/calendar/id/{calendarId}/day/{day}/updateNote/{noteId}(calendarId=${calendarId}, day=${dayNumber}, noteId=${note.id})}" class="editButton">
+                            <a th:href="@{/calendar/id/{calendarId}/date/{year}/{month}/{day}/updateNote/{noteId}(calendarId=${calendarId}, year=${year}, month=${month}, day=${dayNumber}, noteId=${note.id})}" class="editButton">
                                 <i class="icon-pencil">
                                     <span class="tooltip" th:text="#{lang.editNote}"></span>
                                 </i>
@@ -150,7 +150,7 @@
                                 </i>
                             </a>
                             <!-- Przejście do formularza edycji notki -->
-                            <a th:href="@{/calendar/id/{calendarId}/day/{day}/updateNote/{noteId}(calendarId=${calendarId}, day=${dayNumber}, noteId=${note.id})}" class="editButton">
+                            <a th:href="@{/calendar/id/{calendarId}/date/{year}/{month}/{day}/updateNote/{noteId}(calendarId=${calendarId}, year=${year}, month=${month}, day=${dayNumber}, noteId=${note.id})}" class="editButton">
                                 <i class="icon-pencil">
                                     <span class="tooltip" th:text="#{lang.editNote}"></span>
                                 </i>

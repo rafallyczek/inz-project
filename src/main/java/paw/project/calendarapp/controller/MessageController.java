@@ -76,9 +76,7 @@ public class MessageController {
         reminderService.updateReminder(reminder);
         Note note = noteService.getNote((long) reminder.getObjectId());
         redirectAttributes.addFlashAttribute("noteId",note.getId().intValue());
-        redirectAttributes.addFlashAttribute("month",note.getDateTime().getMonthValue());
-        redirectAttributes.addFlashAttribute("year",note.getDateTime().getYear());
-        return "redirect:/calendar/id/"+note.getCalendarId()+"/day/"+note.getDay();
+        return "redirect:/calendar/id/"+note.getCalendarId()+"/date/"+note.getYear()+"/"+note.getMonth()+"/"+note.getDay();
     }
 
     //Przejdź do zadania z przypomnienia
@@ -90,9 +88,7 @@ public class MessageController {
         reminderService.updateReminder(reminder);
         Note note = noteService.getNote((long) reminder.getObjectId());
         redirectAttributes.addFlashAttribute("noteId",note.getId().intValue());
-        redirectAttributes.addFlashAttribute("month",note.getDateTime().getMonthValue());
-        redirectAttributes.addFlashAttribute("year",note.getDateTime().getYear());
-        return "redirect:/calendar/id/"+note.getCalendarId()+"/day/"+note.getDay()+"/tasks";
+        return "redirect:/calendar/id/"+note.getCalendarId()+"/date/"+note.getYear()+"/"+note.getMonth()+"/"+note.getDay()+"/tasks";
     }
 
     //Przejdź do wiadomości z przypomnienia

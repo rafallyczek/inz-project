@@ -95,7 +95,7 @@ public class NoteController {
             addNote.setUserId(user.getId().intValue());
         }
         noteService.addNote(addNote);
-        return "redirect:/calendar/id/"+addNote.getCalendarId()+"/day/"+addNote.getDay();
+        return "redirect:/calendar/id/"+addNote.getCalendarId()+"/date/"+addNote.getYear()+"/"+addNote.getMonth()+"/"+addNote.getDay();
     }
 
     //Aktualizuj notkę
@@ -106,7 +106,7 @@ public class NoteController {
             updateNote.setUserId(user.getId().intValue());
         }
         Note note = noteService.updateNote(updateNote);
-        return "redirect:/calendar/id/"+note.getCalendarId()+"/day/"+updateNote.getDay();
+        return "redirect:/calendar/id/"+note.getCalendarId()+"/date/"+updateNote.getYear()+"/"+updateNote.getMonth()+"/"+updateNote.getDay();
     }
 
     //Usuń notkę
@@ -122,7 +122,7 @@ public class NoteController {
                              RedirectAttributes redirectAttributes) throws MessagingException {
         Note note = noteService.changeStatus(id, "to-do");
         redirectAttributes.addFlashAttribute("ajax",true);
-        return "redirect:/calendar/id/"+note.getCalendarId()+"/day/"+note.getDay()+"/tasks";
+        return "redirect:/calendar/id/"+note.getCalendarId()+"/date/"+note.getYear()+"/"+note.getMonth()+"/"+note.getDay()+"/tasks";
     }
 
     //Zmień status na w trakcie
@@ -131,7 +131,7 @@ public class NoteController {
                                    RedirectAttributes redirectAttributes) throws MessagingException {
         Note note = noteService.changeStatus(id, "in-progress");
         redirectAttributes.addFlashAttribute("ajax",true);
-        return "redirect:/calendar/id/"+note.getCalendarId()+"/day/"+note.getDay()+"/tasks";
+        return "redirect:/calendar/id/"+note.getCalendarId()+"/date/"+note.getYear()+"/"+note.getMonth()+"/"+note.getDay()+"/tasks";
     }
 
     //Zmień status na zakończone
@@ -140,7 +140,7 @@ public class NoteController {
                                  RedirectAttributes redirectAttributes) throws MessagingException {
         Note note = noteService.changeStatus(id, "finished");
         redirectAttributes.addFlashAttribute("ajax",true);
-        return "redirect:/calendar/id/"+note.getCalendarId()+"/day/"+note.getDay()+"/tasks";
+        return "redirect:/calendar/id/"+note.getCalendarId()+"/date/"+note.getYear()+"/"+note.getMonth()+"/"+note.getDay()+"/tasks";
     }
 
     //Wczytaj notki danego kalendarza
