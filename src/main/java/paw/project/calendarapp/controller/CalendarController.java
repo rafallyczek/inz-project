@@ -89,6 +89,12 @@ public class CalendarController {
                           @PathVariable int day,
                           @AuthenticationPrincipal User user,
                           Model model){
+        if(model.containsAttribute("month")){
+            this.calendar.setMonth((int) model.getAttribute("month"));
+        }
+        if(model.containsAttribute("year")){
+            this.calendar.setYear((int) model.getAttribute("year"));
+        }
         loadNotes(calendarId, user.getTimezone());
         model.addAttribute("calendarId",calendarId);
         model.addAttribute("dayNumber",day);
@@ -101,6 +107,12 @@ public class CalendarController {
                                @PathVariable int day,
                                @AuthenticationPrincipal User user,
                                Model model){
+        if(model.containsAttribute("month")){
+            this.calendar.setMonth((int) model.getAttribute("month"));
+        }
+        if(model.containsAttribute("year")){
+            this.calendar.setYear((int) model.getAttribute("year"));
+        }
         loadNotes(calendarId, user.getTimezone());
         model.addAttribute("calendarId",calendarId);
         model.addAttribute("dayNumber",day);

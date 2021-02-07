@@ -56,6 +56,36 @@ public class Calendar {
         dayOfWeek = currentDate.getDayOfWeek().getValue();
     }
 
+    //Ustaw miesiąc
+    public void setMonth(int month){
+        currentDate = currentDate.withMonth(month);
+        daysInMonth = currentDate.lengthOfMonth();
+        year = currentDate.getYear();
+        this.month = currentDate.getMonthValue();
+        monthName = monthName(this.month);
+        dayOfWeek = currentDate.getDayOfWeek().getValue();
+    }
+
+    //Ustaw rok
+    public void setYear(int year){
+        currentDate = currentDate.withYear(year);
+        daysInMonth = currentDate.lengthOfMonth();
+        this.year = currentDate.getYear();
+        month = currentDate.getMonthValue();
+        monthName = monthName(month);
+        dayOfWeek = currentDate.getDayOfWeek().getValue();
+    }
+
+    //Resetuj datę
+    public void resetDate(){
+        currentDate = LocalDate.now().withDayOfMonth(1);
+        daysInMonth = currentDate.lengthOfMonth();
+        year = currentDate.getYear();
+        month = currentDate.getMonthValue();
+        monthName = monthName(month);
+        dayOfWeek = currentDate.getDayOfWeek().getValue();
+    }
+
     //Ustal nazwę miesiąca
     public String monthName(int month){
         String monthName = null;

@@ -76,6 +76,8 @@ public class MessageController {
         reminderService.updateReminder(reminder);
         Note note = noteService.getNote((long) reminder.getObjectId());
         redirectAttributes.addFlashAttribute("noteId",note.getId().intValue());
+        redirectAttributes.addFlashAttribute("month",note.getDateTime().getMonthValue());
+        redirectAttributes.addFlashAttribute("year",note.getDateTime().getYear());
         return "redirect:/calendar/id/"+note.getCalendarId()+"/day/"+note.getDay();
     }
 
@@ -88,6 +90,8 @@ public class MessageController {
         reminderService.updateReminder(reminder);
         Note note = noteService.getNote((long) reminder.getObjectId());
         redirectAttributes.addFlashAttribute("noteId",note.getId().intValue());
+        redirectAttributes.addFlashAttribute("month",note.getDateTime().getMonthValue());
+        redirectAttributes.addFlashAttribute("year",note.getDateTime().getYear());
         return "redirect:/calendar/id/"+note.getCalendarId()+"/day/"+note.getDay()+"/tasks";
     }
 
