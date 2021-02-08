@@ -78,7 +78,7 @@
                     <label for="time" th:text="#{lang.timeValue}"></label>
                     <input id="time" type="time" th:field="*{time}">
                 </div>
-                <div id="userIdInputs" class="formInputs" th:if="${role.equals('OWNER')}">
+                <div id="userIdInputs" class="formInputs" th:if="${calendarRole.equals('OWNER')}">
                     <label for="id" th:text="#{lang.user}"></label>
                     <select id="id" name="id" th:field="*{userId}">
                         <option th:each="user : ${calendarUsers}" th:text="${user.username}" th:value="${user.id}"></option>
@@ -92,7 +92,7 @@
                     </select>
                 </div>
                 <div style="clear: both"></div>
-                <input th:if="${!role.equals('OWNER')}" id="userId" type="hidden" th:field="*{userId}">
+                <input th:if="${!calendarRole.equals('OWNER')}" id="userId" type="hidden" th:field="*{userId}">
                 <input id="date" type="hidden" th:field="*{date}">
                 <input id="calendarId" type="hidden" th:field="*{calendarId}">
                 <input class="greenInputButton" type="submit" th:value="#{lang.add}">

@@ -14,22 +14,22 @@ public class InvitationService {
     private InvitationRepository invitationRepository;
     private UserRepository userRepository;
     private CalendarRepository calendarRepository;
-    private CalendarUserRepository calendarUserRepository;
     private ReminderRepository reminderRepository;
     private EmailService emailService;
+    private CalendarRoleService calendarRoleService;
 
     public InvitationService(InvitationRepository invitationRepository,
                              UserRepository userRepository,
                              CalendarRepository calendarRepository,
-                             CalendarUserRepository calendarUserRepository,
                              ReminderRepository reminderRepository,
-                             EmailService emailService){
+                             EmailService emailService,
+                             CalendarRoleService calendarRoleService){
         this.invitationRepository = invitationRepository;
         this.userRepository = userRepository;
         this.calendarRepository = calendarRepository;
-        this.calendarUserRepository = calendarUserRepository;
         this.reminderRepository = reminderRepository;
         this.emailService = emailService;
+        this.calendarRoleService = calendarRoleService;
     }
 
     //Dodaj zaproszenie
@@ -85,10 +85,11 @@ public class InvitationService {
     //Akceptuj zaproszenie
     public void acceptInvitation(Long id){
         Invitation invitation = invitationRepository.findById(id).get();
-        CalendarUser calendarUser = new CalendarUser();
-        calendarUser.setUserId(invitation.getReceiverId());
-        calendarUser.setCalendarId(invitation.getCalendarId());
-        calendarUserRepository.save(calendarUser);
+        CalendarRole calendarRole = new CalendarRole();
+        calendarRole.setUserId((long)invitation.getReceiverId());
+        calendarRole.setCalendarId((long)invitation.getCalendarId());
+        calendarRole.setName("NORMAL_MEMBER");
+        calendarRoleService.addRole(calendarRole);
         invitationRepository.deleteById(id);
     }
 

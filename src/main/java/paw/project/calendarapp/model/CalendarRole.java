@@ -6,14 +6,15 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name = "calendar_users")
-public class CalendarUser {
+@Table(name = "calendar_roles")
+public class CalendarRole {
 
     //Pola
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer calendarId;
-    private Integer userId;
+    private Long userId;
+    private Long calendarId;
+    private String name;
 
 }

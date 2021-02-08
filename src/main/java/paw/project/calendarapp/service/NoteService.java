@@ -5,10 +5,7 @@ import org.springframework.stereotype.Service;
 import paw.project.calendarapp.TO.AddNote;
 import paw.project.calendarapp.TO.UpdateNote;
 import paw.project.calendarapp.model.*;
-import paw.project.calendarapp.repository.CalendarUserRepository;
-import paw.project.calendarapp.repository.NoteRepository;
-import paw.project.calendarapp.repository.ReminderRepository;
-import paw.project.calendarapp.repository.UserRepository;
+import paw.project.calendarapp.repository.*;
 
 import javax.mail.MessagingException;
 import java.time.LocalDateTime;
@@ -21,29 +18,29 @@ public class NoteService {
 
     private NoteRepository noteRepository;
     private UserRepository userRepository;
-    private CalendarUserRepository calendarUserRepository;
     private ReminderRepository reminderRepository;
     private EmailService emailService;
+    private CalendarRoleRepository calendarRoleRepository;
 
     @Autowired
     public NoteService(NoteRepository noteRepository,
                        UserRepository userRepository,
-                       CalendarUserRepository calendarUserRepository,
                        ReminderRepository reminderRepository,
-                       EmailService emailService){
+                       EmailService emailService,
+                       CalendarRoleRepository calendarRoleRepository){
         this.noteRepository = noteRepository;
         this.userRepository = userRepository;
-        this.calendarUserRepository = calendarUserRepository;
         this.reminderRepository = reminderRepository;
         this.emailService = emailService;
+        this.calendarRoleRepository = calendarRoleRepository;
     }
 
     //Zwróć notki po id użytkownika
     public List<Note> loadNotesByUserId(int id, String timezone){
-        List<CalendarUser> calendars = calendarUserRepository.findAllByUserId(id);
+        List<CalendarRole> calendarRoles = calendarRoleRepository.findAllByUserId((long)id);
         List<Note> allNotes = new ArrayList<>();
-        for(CalendarUser calendar : calendars){
-            List<Note> notes = loadNotesByCalendarId(calendar.getCalendarId(), timezone);
+        for(CalendarRole calendarRole : calendarRoles){
+            List<Note> notes = loadNotesByCalendarId(calendarRole.getCalendarId().intValue(), timezone);
             allNotes.addAll(notes);
         }
         return allNotes;
@@ -80,12 +77,12 @@ public class NoteService {
             note.setStatus("-");
         }
         noteRepository.save(note);
-        List<CalendarUser> calendarUsers = calendarUserRepository.findAllByCalendarId(note.getCalendarId());
-        for(CalendarUser calendarUser : calendarUsers){
-            User user = userRepository.findById((long) calendarUser.getUserId()).get();
+        List<CalendarRole> calendarRoles = calendarRoleRepository.findAllByCalendarId((long)note.getCalendarId());
+        for(CalendarRole calendarRole : calendarRoles){
+            User user = userRepository.findById(calendarRole.getUserId()).get();
             Reminder reminder = new Reminder();
             reminder.setObjectId(note.getId().intValue());
-            reminder.setUserId(calendarUser.getUserId());
+            reminder.setUserId(calendarRole.getUserId().intValue());
             reminder.setReminderTime(user.getReminderTime());
             reminder.setReminded(false);
             reminder.setType("note");
@@ -133,11 +130,11 @@ public class NoteService {
         }else if(status.equals("finished")){
             status = "Zakończone";
         }
-        List<CalendarUser> calendarUsers = calendarUserRepository.findAllByCalendarId(note.getCalendarId());
+        List<CalendarRole> calendarRoles = calendarRoleRepository.findAllByCalendarId((long)note.getCalendarId());
         List<Reminder> reminders = reminderRepository.findAllByObjectId(note.getId().intValue());
         reminders.removeIf(reminder -> !reminder.getType().equals("status-change"));
-        for(CalendarUser calendarUser : calendarUsers){
-            User user = userRepository.findById((long) calendarUser.getUserId()).get();
+        for(CalendarRole calendarRole : calendarRoles){
+            User user = userRepository.findById(calendarRole.getUserId()).get();
             Reminder reminder = new Reminder();
             reminder.setObjectId(note.getId().intValue());
             reminder.setUserId(user.getId().intValue());

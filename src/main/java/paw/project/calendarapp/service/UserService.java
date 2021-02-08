@@ -6,9 +6,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import paw.project.calendarapp.model.CalendarUser;
+import paw.project.calendarapp.model.CalendarRole;
 import paw.project.calendarapp.model.User;
-import paw.project.calendarapp.repository.CalendarUserRepository;
+import paw.project.calendarapp.repository.CalendarRoleRepository;
 import paw.project.calendarapp.repository.UserRepository;
 
 import java.util.ArrayList;
@@ -19,16 +19,16 @@ public class UserService implements UserDetailsService {
 
     //Pola
     private UserRepository userRepository;
-    private CalendarUserRepository calendarUserRepository;
+    private CalendarRoleRepository calendarRoleRepository;
     private PasswordEncoder passwordEncoder;
 
     //Wstrzykiwanie repozytorium użytkowników
     @Autowired
     public UserService(UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
-                       CalendarUserRepository calendarUserRepository){
+                       CalendarRoleRepository calendarRoleRepository){
         this.userRepository = userRepository;
-        this.calendarUserRepository = calendarUserRepository;
+        this.calendarRoleRepository = calendarRoleRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -49,10 +49,10 @@ public class UserService implements UserDetailsService {
 
     //Znajdź wszystkich użytkowników kalendarza
     public List<User> getAllUsersByCalendarId(int id){
-        List<CalendarUser> calendarUsers = calendarUserRepository.findAllByCalendarId(id);
+        List<CalendarRole> calendarRoles = calendarRoleRepository.findAllByCalendarId((long)id);
         List<User> users = new ArrayList<>();
-        for(CalendarUser calendarUser : calendarUsers){
-            User user = userRepository.findById(calendarUser.getUserId().longValue()).get();
+        for(CalendarRole calendarRole : calendarRoles){
+            User user = userRepository.findById(calendarRole.getUserId()).get();
             users.add(user);
         }
         return users;
