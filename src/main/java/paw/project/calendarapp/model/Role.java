@@ -6,8 +6,8 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name = "privileges")
-public class Privilege {
+@Table(name = "roles")
+public class Role {
 
     //Pola
     @Id

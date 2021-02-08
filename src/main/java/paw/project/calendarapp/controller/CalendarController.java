@@ -27,7 +27,7 @@ public class CalendarController {
     private CalendarService calendarService;
     private UserService userService;
     private InvitationService invitationService;
-    private PrivilegeService privilegeService;
+    private RoleService roleService;
 
     //Wstrzykiwanie zależności
     @Autowired
@@ -36,13 +36,13 @@ public class CalendarController {
                               CalendarService calendarService,
                               UserService userService,
                               InvitationService invitationService,
-                              PrivilegeService privilegeService){
+                              RoleService roleService){
         this.calendar = calendar;
         this.noteService = noteService;
         this.calendarService = calendarService;
         this.userService = userService;
         this.invitationService = invitationService;
-        this.privilegeService = privilegeService;
+        this.roleService = roleService;
     }
 
     //Ustaw atrybuty modelu
@@ -348,8 +348,8 @@ public class CalendarController {
 
     //Ustaw atrybuty isOwner oraz calendarUsers
     public void setUpPrivilege(Model model, User user, Long calendarId){
-        Privilege privilege = privilegeService.getUserCalendarPrivilege(user.getId(),calendarId);
-        model.addAttribute("privilege",privilege.getPrivilege());
+        Role role = roleService.getUserCalendarPrivilege(user.getId(),calendarId);
+        model.addAttribute("role", role.getPrivilege());
     }
 
     //Ustaw atrybuty modelu używane przez widok calendar-users
