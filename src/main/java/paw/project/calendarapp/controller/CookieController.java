@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class CookieController {
 
-    private RequestService requestService;
+    private final RequestService requestService;
 
     @Autowired
     public CookieController(RequestService requestService){

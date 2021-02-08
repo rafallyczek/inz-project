@@ -11,8 +11,8 @@ import java.util.List;
 @Service
 public class CalendarService {
 
-    private CalendarRepository calendarRepository;
-    private CalendarRoleService calendarRoleService;
+    private final CalendarRepository calendarRepository;
+    private final CalendarRoleService calendarRoleService;
 
     public CalendarService(CalendarRepository calendarRepository,
                            CalendarRoleService calendarRoleService){

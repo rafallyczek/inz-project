@@ -18,9 +18,9 @@ import java.util.List;
 public class UserService implements UserDetailsService {
 
     //Pola
-    private UserRepository userRepository;
-    private CalendarRoleRepository calendarRoleRepository;
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final CalendarRoleRepository calendarRoleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     //Wstrzykiwanie repozytorium użytkowników
     @Autowired

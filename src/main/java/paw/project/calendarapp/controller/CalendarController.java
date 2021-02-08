@@ -22,12 +22,12 @@ import java.util.List;
 @RequestMapping("/calendar")
 public class CalendarController {
 
-    private Calendar calendar;
-    private NoteService noteService;
-    private CalendarService calendarService;
-    private UserService userService;
-    private InvitationService invitationService;
-    private CalendarRoleService calendarRoleService;
+    private final Calendar calendar;
+    private final NoteService noteService;
+    private final CalendarService calendarService;
+    private final UserService userService;
+    private final InvitationService invitationService;
+    private final CalendarRoleService calendarRoleService;
 
     //Wstrzykiwanie zależności
     @Autowired

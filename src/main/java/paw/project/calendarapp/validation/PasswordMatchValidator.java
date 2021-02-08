@@ -27,7 +27,8 @@ public class PasswordMatchValidator implements ConstraintValidator<PasswordMatch
         //Ustawienie wartości atrybutu ścieżki dla ograniczenia
         if(!result){
             constraintValidatorContext.disableDefaultConstraintViolation();
-            constraintValidatorContext.buildConstraintViolationWithTemplate(constraintValidatorContext.getDefaultConstraintMessageTemplate()).addPropertyNode("matchPassword").addConstraintViolation();
+            constraintValidatorContext.buildConstraintViolationWithTemplate(constraintValidatorContext
+                    .getDefaultConstraintMessageTemplate()).addPropertyNode("matchPassword").addConstraintViolation();
         }
         return result;
     }

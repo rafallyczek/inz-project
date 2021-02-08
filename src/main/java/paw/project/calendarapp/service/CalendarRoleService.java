@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class CalendarRoleService {
 
-    private CalendarRoleRepository calendarRoleRepository;
+    private final CalendarRoleRepository calendarRoleRepository;
 
     @Autowired
     public CalendarRoleService(CalendarRoleRepository calendarRoleRepository){

@@ -32,9 +32,9 @@ import java.util.List;
 @RequestMapping("/notes")
 public class NoteController {
 
-    private NoteService noteService;
-    private CalendarService calendarService;
-    private RequestService requestService;
+    private final NoteService noteService;
+    private final CalendarService calendarService;
+    private final RequestService requestService;
     private List<Note> notes;
 
     //Wstrzykiwanie serwisu

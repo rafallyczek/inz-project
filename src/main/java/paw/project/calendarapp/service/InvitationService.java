@@ -11,12 +11,12 @@ import java.util.List;
 @Service
 public class InvitationService {
 
-    private InvitationRepository invitationRepository;
-    private UserRepository userRepository;
-    private CalendarRepository calendarRepository;
-    private ReminderRepository reminderRepository;
-    private EmailService emailService;
-    private CalendarRoleService calendarRoleService;
+    private final InvitationRepository invitationRepository;
+    private final UserRepository userRepository;
+    private final CalendarRepository calendarRepository;
+    private final ReminderRepository reminderRepository;
+    private final EmailService emailService;
+    private final CalendarRoleService calendarRoleService;
 
     public InvitationService(InvitationRepository invitationRepository,
                              UserRepository userRepository,

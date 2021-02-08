@@ -20,13 +20,13 @@ import java.util.List;
 @Service
 public class ReminderService {
 
-    private EmailService emailService;
-    private UserService userService;
-    private InvitationService invitationService;
-    private NoteRepository noteRepository;
-    private ReminderRepository reminderRepository;
-    private SimpMessagingTemplate template;
-    private CalendarRepository calendarRepository;
+    private final EmailService emailService;
+    private final UserService userService;
+    private final InvitationService invitationService;
+    private final NoteRepository noteRepository;
+    private final ReminderRepository reminderRepository;
+    private final CalendarRepository calendarRepository;
+    private final SimpMessagingTemplate template;
 
     @Autowired
     public ReminderService(EmailService emailService,
@@ -137,12 +137,16 @@ public class ReminderService {
         message.setTitle("Aktualizacja zadania");
         message.setContent("Zmieniono status zadania: <span id='wsMessageLinkText' onclick='goTo()'>"+note.getTitle()+"</span>");
         HashMap<String, String> data = new HashMap<>();
-        if(note.getStatus().equals("to-do")){
-            data.put("Na: ","Do zrobienia");
-        }else if(note.getStatus().equals("in-progress")){
-            data.put("Na: ","W trakcie");
-        }else if(note.getStatus().equals("finished")){
-            data.put("Na: ","Zakończone");
+        switch (note.getStatus()) {
+            case "to-do":
+                data.put("Nowy status: ", "Do zrobienia");
+                break;
+            case "in-progress":
+                data.put("Nowy status: ", "W trakcie");
+                break;
+            case "finished":
+                data.put("Nowy status: ", "Zakończone");
+                break;
         }
         data.put("type","status-change");
         data.put("id",reminder.getId().toString());

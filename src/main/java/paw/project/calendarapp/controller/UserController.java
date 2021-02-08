@@ -25,11 +25,11 @@ import java.util.Set;
 @RequestMapping("/user")
 public class UserController {
 
-    private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
-    private UserService userService;
-    private ReminderService reminderService;
-    private List<String> zones;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final UserService userService;
+    private final ReminderService reminderService;
+    private final List<String> zones;
 
     //Wstrzykiwanie repozytorium
     @Autowired

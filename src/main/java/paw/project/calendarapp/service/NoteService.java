@@ -16,11 +16,11 @@ import java.util.List;
 @Service
 public class NoteService {
 
-    private NoteRepository noteRepository;
-    private UserRepository userRepository;
-    private ReminderRepository reminderRepository;
-    private EmailService emailService;
-    private CalendarRoleRepository calendarRoleRepository;
+    private final NoteRepository noteRepository;
+    private final UserRepository userRepository;
+    private final ReminderRepository reminderRepository;
+    private final EmailService emailService;
+    private final CalendarRoleRepository calendarRoleRepository;
 
     @Autowired
     public NoteService(NoteRepository noteRepository,
@@ -123,12 +123,16 @@ public class NoteService {
     public Note changeStatus(Long id, String status) throws MessagingException {
         Note note = noteRepository.findById(id).get();
         note.setStatus(status);
-        if(status.equals("to-do")){
-            status = "Do zrobienia";
-        }else if(status.equals("in-progress")){
-            status = "W trakcie";
-        }else if(status.equals("finished")){
-            status = "Zakończone";
+        switch (status) {
+            case "to-do":
+                status = "Do zrobienia";
+                break;
+            case "in-progress":
+                status = "W trakcie";
+                break;
+            case "finished":
+                status = "Zakończone";
+                break;
         }
         List<CalendarRole> calendarRoles = calendarRoleRepository.findAllByCalendarId((long)note.getCalendarId());
         List<Reminder> reminders = reminderRepository.findAllByObjectId(note.getId().intValue());
@@ -146,7 +150,7 @@ public class NoteService {
             }
             emailService.sendEmail(user.getEmail(),"Aktualizacja zadania",
                     "<p>Zmieniono status zadania: <b>"+note.getTitle()+"</b></p>" +
-                            "<p>Na: <b>"+status+"</b></p>");
+                            "<p>Nowy status: <b>"+status+"</b></p>");
         }
         noteRepository.save(note);
         return note;

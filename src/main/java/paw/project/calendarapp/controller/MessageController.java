@@ -11,7 +11,6 @@ import paw.project.calendarapp.model.*;
 import paw.project.calendarapp.service.InvitationService;
 import paw.project.calendarapp.service.NoteService;
 import paw.project.calendarapp.service.ReminderService;
-import paw.project.calendarapp.service.UserService;
 
 import java.util.List;
 
@@ -19,21 +18,18 @@ import java.util.List;
 @RequestMapping("/messages")
 public class MessageController {
 
-    private InvitationService invitationService;
-    private ReminderService reminderService;
-    private NoteService noteService;
-    private UserService userService;
+    private final InvitationService invitationService;
+    private final ReminderService reminderService;
+    private final NoteService noteService;
 
     //Wstrzykiwanie zależności
     @Autowired
     public MessageController(InvitationService invitationService,
                              ReminderService reminderService,
-                             NoteService noteService,
-                             UserService userService){
+                             NoteService noteService){
         this.invitationService = invitationService;
         this.reminderService = reminderService;
         this.noteService = noteService;
-        this.userService = userService;
     }
 
     //Wyświetl wiadomości

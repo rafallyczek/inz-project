@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class ThemeController {
 
-    private RequestService requestService;
+    private final RequestService requestService;
 
     @Autowired
     public ThemeController(RequestService requestService){
