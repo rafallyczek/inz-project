@@ -78,16 +78,6 @@ public class Calendar {
         dayOfWeek = currentDate.getDayOfWeek().getValue();
     }
 
-    //Resetuj datę
-    public void resetDate(){
-        currentDate = LocalDate.now().withDayOfMonth(1);
-        daysInMonth = currentDate.lengthOfMonth();
-        year = currentDate.getYear();
-        month = currentDate.getMonthValue();
-        monthName = monthName(month);
-        dayOfWeek = currentDate.getDayOfWeek().getValue();
-    }
-
     //Ustal nazwę miesiąca
     public String monthName(int month){
         String monthName = null;
