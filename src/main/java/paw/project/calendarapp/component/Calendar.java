@@ -5,12 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.SessionScope;
 import paw.project.calendarapp.model.Note;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Component
+@SessionScope
 @Data
 public class Calendar {
 
