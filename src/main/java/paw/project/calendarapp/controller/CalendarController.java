@@ -11,10 +11,7 @@ import paw.project.calendarapp.TO.AddNote;
 import paw.project.calendarapp.TO.UpdateNote;
 import paw.project.calendarapp.component.Calendar;
 import paw.project.calendarapp.model.*;
-import paw.project.calendarapp.service.CalendarService;
-import paw.project.calendarapp.service.InvitationService;
-import paw.project.calendarapp.service.NoteService;
-import paw.project.calendarapp.service.UserService;
+import paw.project.calendarapp.service.*;
 
 import javax.mail.MessagingException;
 import javax.validation.Valid;
@@ -30,6 +27,7 @@ public class CalendarController {
     private CalendarService calendarService;
     private UserService userService;
     private InvitationService invitationService;
+    private PrivilegeService privilegeService;
 
     //Wstrzykiwanie zależności
     @Autowired
@@ -37,12 +35,14 @@ public class CalendarController {
                               NoteService noteService,
                               CalendarService calendarService,
                               UserService userService,
-                              InvitationService invitationService){
+                              InvitationService invitationService,
+                              PrivilegeService privilegeService){
         this.calendar = calendar;
         this.noteService = noteService;
         this.calendarService = calendarService;
         this.userService = userService;
         this.invitationService = invitationService;
+        this.privilegeService = privilegeService;
     }
 
     //Ustaw atrybuty modelu
@@ -133,7 +133,7 @@ public class CalendarController {
                                       @AuthenticationPrincipal User user,
                                       Model model){
         setUpAddNoteViewAttributes(model, user, (long) calendarId, day);
-        setUpIsOwner(model, user, (long) calendarId);
+        setUpPrivilege(model, user, (long) calendarId);
         List<User> calendarUsers = userService.getAllUsersByCalendarId(calendarId);
         model.addAttribute("calendarUsers",calendarUsers);
         model.addAttribute("calendarId",calendarId);
@@ -158,7 +158,7 @@ public class CalendarController {
             model.addAttribute("dayNumber",day);
             model.addAttribute("month",month);
             model.addAttribute("year",year);
-            setUpIsOwner(model, user, (long) calendarId);
+            setUpPrivilege(model, user, (long) calendarId);
             List<User> calendarUsers = userService.getAllUsersByCalendarId(calendarId);
             model.addAttribute("calendarUsers",calendarUsers);
             return "add-note";
@@ -177,7 +177,7 @@ public class CalendarController {
                                          @AuthenticationPrincipal User user,
                                          Model model){
         setUpUpdateNoteViewAttributes(model, user, (long) noteId);
-        setUpIsOwner(model, user, (long) calendarId);
+        setUpPrivilege(model, user, (long) calendarId);
         List<User> calendarUsers = userService.getAllUsersByCalendarId(calendarId);
         model.addAttribute("calendarUsers",calendarUsers);
         model.addAttribute("calendarId",calendarId);
@@ -202,7 +202,7 @@ public class CalendarController {
             model.addAttribute("dayNumber",day);
             model.addAttribute("month",month);
             model.addAttribute("year",year);
-            setUpIsOwner(model, user, (long) calendarId);
+            setUpPrivilege(model, user, (long) calendarId);
             List<User> calendarUsers = userService.getAllUsersByCalendarId(calendarId);
             model.addAttribute("calendarUsers",calendarUsers);
             return "update-note";
@@ -240,7 +240,7 @@ public class CalendarController {
         DbCalendar dbCalendar = calendarService.getCalendar((long) id);
         model.addAttribute("calendarId", id);
         model.addAttribute("updateCalendar", dbCalendar);
-        setUpIsOwner(model, user, (long) id);
+        setUpPrivilege(model, user, (long) id);
         return "update-calendar";
     }
 
@@ -253,7 +253,7 @@ public class CalendarController {
                                  Model model){
         if(errors.hasErrors()){
             model.addAttribute("calendarId", id);
-            setUpIsOwner(model, user, (long) id);
+            setUpPrivilege(model, user, (long) id);
             return "update-calendar";
         }
         calendarService.updateCalendar(dbCalendar);
@@ -271,7 +271,7 @@ public class CalendarController {
         }
         model.addAttribute("calendarId",id);
         setUpCalendarUsersViewAttributes(model, (long) id);
-        setUpIsOwner(model, user, (long) id);
+        setUpPrivilege(model, user, (long) id);
         return "calendar-users";
     }
 
@@ -347,13 +347,9 @@ public class CalendarController {
     }
 
     //Ustaw atrybuty isOwner oraz calendarUsers
-    public void setUpIsOwner(Model model, User user, Long calendarId){
-        DbCalendar dbCalendar = calendarService.getCalendar(calendarId);
-        if(dbCalendar.getOwnerId()==user.getId().intValue()){
-            model.addAttribute("isOwner",true);
-        }else{
-            model.addAttribute("isOwner",false);
-        }
+    public void setUpPrivilege(Model model, User user, Long calendarId){
+        Privilege privilege = privilegeService.getUserCalendarPrivilege(user.getId(),calendarId);
+        model.addAttribute("privilege",privilege.getPrivilege());
     }
 
     //Ustaw atrybuty modelu używane przez widok calendar-users

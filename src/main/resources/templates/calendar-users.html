@@ -72,7 +72,7 @@
                 </div>
 
             </div>
-            <div class="userGrid" th:if="${isOwner}">
+            <div class="userGrid" th:if="${privilege.equals('OWNER')}">
 
                 <!--Wyszukiwanie użytkowników-->
                 <p th:text="#{lang.findUsers}"></p>

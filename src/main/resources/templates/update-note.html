@@ -79,7 +79,8 @@
                     <label for="timeEdit" th:text="#{lang.timeValue}"></label>
                     <input id="timeEdit" type="time" th:field="*{time}">
                 </div>
-                <div id="userIdInputs" class="formInputs" th:if="${isOwner}">
+                <div id="userIdInputs" class="formInputs" th:if="${privilege.equals('OWNER')}"
+                     th:style="${updateNote.isTask ? 'display: block;' : 'display: none;'}">
                     <label for="id" th:text="#{lang.user}"></label>
                     <select id="id" name="id" th:field="*{userId}">
                         <option th:each="user : ${calendarUsers}" th:text="${user.username}" th:value="${user.id}"></option>
