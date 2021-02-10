@@ -8,11 +8,11 @@
         <version>2.2.6.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>paw.project</groupId>
-    <artifactId>calendarapp</artifactId>
+    <groupId>kanbancalendar.project</groupId>
+    <artifactId>kanbancalendar</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>calendarapp</name>
-    <description>Demo project for Spring Boot</description>
+    <name>kanbancalendar</name>
+    <description>Calendar application with use of Kanban management method.</description>
 
     <properties>
         <java.version>1.8</java.version>
