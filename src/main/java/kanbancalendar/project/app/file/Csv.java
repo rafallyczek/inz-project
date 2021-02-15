@@ -1,4 +1,4 @@
-package kanbancalendar.project.app.files;
+package kanbancalendar.project.app.file;
 
 import com.opencsv.CSVWriter;
 import kanbancalendar.project.app.model.Note;
