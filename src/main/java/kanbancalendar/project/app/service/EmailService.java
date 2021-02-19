@@ -22,7 +22,7 @@ public class EmailService{
     public void sendEmail(String to, String subject, String text) throws MessagingException {
         MimeMessage msg = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(msg,true);
-        helper.setFrom("noreply@calendarapp.com");
+        helper.setFrom("noreply@kanbancalendar.com");
         helper.setTo(to);
         helper.setSubject(subject);
         helper.setText(text,true);
