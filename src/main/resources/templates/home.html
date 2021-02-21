@@ -58,7 +58,27 @@
 
     <div class="container">
 
-        <p class="hello" th:text="#{lang.greeting}"></p>
+        <div class="centralContainer" style="width: 60%">
+            <p class="hello" th:text="#{lang.greeting}"></p>
+            <p th:text="#{lang.appInfo}"></p>
+        </div>
+
+        <div class="centralContainer">
+            <a th:href="@{/user/register}">
+                <div class="largeLinkBox">
+                    <p th:text="#{lang.register}" class="large"></p>
+                    <p th:text="#{lang.registerInfo}" class="normal"></p>
+                </div>
+            </a>
+
+            <a th:href="@{/login}">
+                <div class="largeLinkBox">
+                    <p th:text="#{lang.logging}" class="large"></p>
+                    <p th:text="#{lang.loggingInfo}" class="normal"></p>
+                </div>
+            </a>
+            <div style="clear: both;"></div>
+        </div>
 
     </div>
 
