@@ -6,6 +6,7 @@
     float: left;
     min-height: 100px;
     margin: 5px 0 5px 5px;
+    font-weight: bold;
 }
 #new .calendar{
     background-color: seagreen;
