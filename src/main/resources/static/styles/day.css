@@ -3,9 +3,6 @@
     width: 100%;
     min-height: 400px;
 }
-.container{
-    min-height: 500px;
-}
 .note{
     padding: 5px;
     background-color: lightblue;
