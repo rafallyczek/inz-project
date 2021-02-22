@@ -1,18 +1,39 @@
 .calendar{
-    width: 100px;
-    border-radius: 10px;
+    width: 200px;
+    border-radius: 10px 0 0 10px;
     border: 1px solid black;
     background-color: grey;
-    cursor: pointer;
     float: left;
     min-height: 100px;
-    margin: 5px;
+    margin: 5px 0 5px 5px;
+}
+#new .calendar{
+    background-color: seagreen;
+}
+#new:hover .calendar{
+    background-color: #39ac6b;
 }
 .calendar p{
     color: black;
     text-align: center;
     padding: 15px;
 }
-.calendar:hover{
+.container a:hover .calendar{
     background-color: #737373;
+}
+.container a:hover .calendarDescription{
+    background-color: #737373;
+    border: 1px solid #737373;
+}
+.calendarDescription{
+    background-color: grey;
+    min-height: 100px;
+    float: left;
+    margin: 5px 5px 5px 0;
+    border: 1px solid grey;
+    width: calc(100% - 214px);
+    color: black;
+}
+.calendarDescription p{
+    margin-left: 16px;
 }

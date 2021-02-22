@@ -16,6 +16,10 @@ public class DbCalendar {
     private Long id;
     @NotBlank(message = "Tytuł nie może być pusty.")
     private String title;
+    private String description;
     private Integer ownerId;
+
+    @Transient
+    private String ownerName;
 
 }

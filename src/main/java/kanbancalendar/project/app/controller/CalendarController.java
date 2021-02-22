@@ -314,6 +314,10 @@ public class CalendarController {
     //Ustaw atrybuty modelu używane przez widok calendar-list
     public void setUpCalendarListViewAttributes(Model model, User user){
         List<DbCalendar> dbCalendars = calendarService.getCalendarsByUserId(user.getId().intValue());
+        for(DbCalendar dbCalendar : dbCalendars){
+            User owner = userService.getUser((long) dbCalendar.getOwnerId());
+            dbCalendar.setOwnerName(owner.getUsername());
+        }
         model.addAttribute("calendars", dbCalendars);
     }
 

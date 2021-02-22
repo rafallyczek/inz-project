@@ -67,6 +67,10 @@
                         <span class="tooltip" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
                     </div>
                 </div>
+                <div class="formInputs">
+                    <label for="descriptionEdit" th:text="#{lang.titleDescription}"></label>
+                    <input id="descriptionEdit" type="text" th:field="*{description}">
+                </div>
                 <div style="clear: both"></div>
                 <input id="ownerId" type="hidden" th:field="*{ownerId}">
                 <input class="greenInputButton" type="submit" th:value="#{lang.add}">

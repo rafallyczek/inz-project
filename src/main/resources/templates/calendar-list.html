@@ -6,6 +6,7 @@
     <title>KanbanCalendar</title>
     <link rel="stylesheet" type="text/css" th:href="${#themes.code('styleSheet')}">
     <link rel="stylesheet" type="text/css" href="/styles/calendar-list.css">
+    <link rel="stylesheet" type="text/css" href="/fontello/css/fontello.css">
     <link rel="stylesheet" type="text/css" href="/styles/common.css">
     <script src="/webjars/sockjs-client/1.1.2/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/2.3.3-1/stomp.min.js"></script>
@@ -55,10 +56,14 @@
     <div class="container">
 
         <!--Dodaj nowy kalendarz-->
-        <a th:href="@{/calendar/addCalendar}">
+        <a th:href="@{/calendar/addCalendar}" id="new">
             <div class="calendar">
-                <p th:text="#{lang.newCalendar}"></p>
+                <p><i class="icon-plus"></i></p>
             </div>
+            <div class="calendarDescription">
+                <p th:text="#{lang.addNewCalendar}"></p>
+            </div>
+            <div style="clear: both;"></div>
         </a>
 
         <!--Wyświetl kalendarze użytkownika-->
@@ -66,8 +71,12 @@
             <div class="calendar">
                 <p th:text="${dbcalendar.title}"></p>
             </div>
+            <div class="calendarDescription">
+                <p th:inline="text">[[#{lang.owner}]]: <span style="font-weight: bold;">[[${dbcalendar.ownerName}]]</span></p>
+                <p th:text="${dbcalendar.description}"></p>
+            </div>
+            <div style="clear: both;"></div>
         </a>
-        <div style="clear: both;"></div>
 
     </div>
 

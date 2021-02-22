@@ -50,6 +50,7 @@ public class CalendarService {
     public void updateCalendar(DbCalendar dbCalendar){
         DbCalendar calendar = calendarRepository.findById(dbCalendar.getId()).get();
         calendar.setTitle(dbCalendar.getTitle());
+        calendar.setDescription(dbCalendar.getDescription());
         calendarRepository.save(calendar);
     }
 
