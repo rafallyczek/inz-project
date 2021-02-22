@@ -13,6 +13,9 @@
 .normal{
     text-align: center;
 }
+.container{
+    min-height: 500px;
+}
 .centralContainer{
     font-family: 'Lato', sans-serif;
     width: 70%;
