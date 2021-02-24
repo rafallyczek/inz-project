@@ -100,7 +100,7 @@ function submitCalendarForm() {
 //-----------------------------------------------------------------------------------------
 
 //Pokaż lub schowaj pole z userId
-function changeDisplay(){
+function changeUserIdDisplay(){
     var div = document.getElementById("userIdInputs");
     if(div!==null){
         var styles = window.getComputedStyle(div);
@@ -110,6 +110,27 @@ function changeDisplay(){
             div.style.display = "none";
         }
     }
+}
+
+//Edycja ról
+//-----------------------------------------------------------------------------------------
+
+//Pokaż lub schowaj formularz edycji roli
+function changeUserRoleDisplay(id){
+    var form = document.getElementById("role"+id);
+    if(form!==null){
+        var styles = window.getComputedStyle(form);
+        if(styles.getPropertyValue("display")==="none"){
+            form.style.display = "block";
+        }else{
+            form.style.display = "none";
+        }
+    }
+}
+
+//Zmień rolę
+function submitRoleForm(id) {
+    document.getElementById("roleForm"+id).submit();
 }
 
 //Drag and Drop

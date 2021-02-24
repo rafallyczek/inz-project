@@ -88,7 +88,7 @@
                 </div>
                 <div class="formInputs">
                     <label for="istask" th:text="#{lang.typeValue}"></label>
-                    <select id="istask" name="istask" th:field="*{isTask}" onchange="changeDisplay()">
+                    <select id="istask" name="istask" th:field="*{isTask}" onchange="changeUserIdDisplay()">
                         <option th:value="false" th:text="#{lang.normalNote}"></option>
                         <option th:value="true" th:text="#{lang.taskNote}"></option>
                     </select>

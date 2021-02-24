@@ -302,6 +302,17 @@ public class CalendarController {
         return "redirect:/calendar/id/"+id+"/calendarUsers";
     }
 
+    //Zaktualizuj rolę
+    @PostMapping("/id/{id}/calendarUsers/changeRole/{roleId}")
+    public String changeRole(@PathVariable int id,
+                             @PathVariable int roleId,
+                             @RequestParam String role){
+        CalendarRole calendarRole = calendarRoleService.getCalendarRole((long) roleId);
+        calendarRole.setName(role);
+        calendarRoleService.updateRole(calendarRole);
+        return "redirect:/calendar/id/"+id+"/calendarUsers";
+    }
+
     //------------------------------------------------------------------------------------
     //Metody ustawiające atrybuty modelu
 
@@ -359,8 +370,10 @@ public class CalendarController {
     //Ustaw atrybuty modelu używane przez widok calendar-users
     public void setUpCalendarUsersViewAttributes(Model model, Long calendarId){
         List<User> calendarUsers = userService.getAllUsersByCalendarId(calendarId.intValue());
+        List<CalendarRole> userRoles = calendarRoleService.getAllRolesByCalendarId(calendarId);
         List<User> invitedUsers = invitationService.getInvitedUsers(calendarId.intValue());
         model.addAttribute("calendarUsers", calendarUsers);
+        model.addAttribute("userRoles", userRoles);
         model.addAttribute("invitedUsers", invitedUsers);
     }
 

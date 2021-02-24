@@ -22,9 +22,19 @@ public class CalendarRoleService {
         return calendarRoleRepository.findByUserIdAndCalendarId(userId, calendarId);
     }
 
+    //Zwróć rolę po id
+    public CalendarRole getCalendarRole(Long id){
+        return calendarRoleRepository.findById(id).get();
+    }
+
     //Zwróć uprawnienia użytkownika
     public List<CalendarRole> getAllRolesByUserId(Long id){
         return calendarRoleRepository.findAllByUserId(id);
+    }
+
+    //Zwróć uprawnienia dla danego kalendarza
+    public List<CalendarRole> getAllRolesByCalendarId(Long id){
+        return calendarRoleRepository.findAllByCalendarId(id);
     }
 
     //Dodaj uprawnienie
@@ -32,9 +42,9 @@ public class CalendarRoleService {
         calendarRoleRepository.save(calendarRole);
     }
 
-    //Usuń uprawnienie
-    public void deleteRole(Long id){
-        calendarRoleRepository.deleteById(id);
+    //Aktualizuj rolę
+    public void updateRole(CalendarRole calendarRole){
+        calendarRoleRepository.save(calendarRole);
     }
 
 }

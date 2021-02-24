@@ -65,7 +65,29 @@
                 <p th:text="#{lang.calendarUsers}"></p>
                 <hr>
                 <div class="user" th:each="calendarUser : ${calendarUsers}" style="float: none;">
-                    <p th:text="${calendarUser.username}"></p>
+                    <div th:onclick="'changeUserRoleDisplay('+${calendarUser.id}+');'">
+                        <p th:text="${calendarUser.username}"></p>
+                    </div>
+                    <div class="roleForm" th:id="'role'+${calendarUser.id}" style="display: none;">
+                        <form method="POST" th:action="@{/calendar/id/{id}/calendarUsers/changeRole/{roleId}(id=${calendarId}, roleId=${role.id})}"
+                              th:each="role : ${userRoles}" th:if="${calendarUser.id==role.userId}" th:id="'roleForm'+${calendarUser.id}">
+                            <div class="formInputs">
+                                <label for="role" th:inline="text">
+                                    [[#{lang.role}]]:
+                                    <th:block th:if="${role.name=='OWNER'}">[[#{lang.owner}]]</th:block>
+                                    <th:block th:if="${role.name=='NORMAL_MEMBER'}">[[#{lang.normalMember}]]</th:block>
+                                    <th:block th:if="${role.name=='ADMIN'}">[[#{lang.admin}]]</th:block>
+                                </label>
+                                <select id="role" name="role" th:onchange="'submitRoleForm('+${calendarUser.id}+');'">
+                                    <option value="" th:text="#{lang.chooseRole}" disabled selected></option>
+                                    <option th:value="OWNER" th:text="#{lang.owner}"></option>
+                                    <option th:value="ADMIN" th:text="#{lang.admin}"></option>
+                                    <option th:value="NORMAL_MEMBER" th:text="#{lang.normalMember}"></option>
+                                </select>
+                            </div>
+                            <div style="clear: both"></div>
+                        </form>
+                    </div>
                 </div>
                 <div class="user" th:each="invitedUser : ${invitedUsers}" style="float: none;">
                     <p th:inline="text">[[${invitedUser.username}]]<span class="invitation"> ([[#{lang.invitationSent}]])</span></p>
