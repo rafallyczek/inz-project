@@ -64,11 +64,11 @@
 
                 <p th:text="#{lang.calendarUsers}"></p>
                 <hr>
-                <div class="user" th:each="calendarUser : ${calendarUsers}" style="float: none;">
+                <div class="user" th:each="calendarUser : ${calendarUsers}" th:style="${calendarRole.equals('NORMAL_MEMBER')?'cursor: auto;':'cursor:pointer;'}">
                     <div th:onclick="'changeUserRoleDisplay('+${calendarUser.id}+');'">
                         <p th:text="${calendarUser.username}"></p>
                     </div>
-                    <div class="roleForm" th:id="'role'+${calendarUser.id}" style="display: none;">
+                    <div class="roleForm" th:id="'role'+${calendarUser.id}" style="display: none;" th:if="${calendarRole.equals('OWNER') || calendarRole.equals('ADMIN')}">
                         <form method="POST" th:action="@{/calendar/id/{id}/calendarUsers/changeRole/{roleId}(id=${calendarId}, roleId=${role.id})}"
                               th:each="role : ${userRoles}" th:if="${calendarUser.id==role.userId}" th:id="'roleForm'+${calendarUser.id}">
                             <div class="formInputs">
@@ -89,7 +89,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="user" th:each="invitedUser : ${invitedUsers}" style="float: none;">
+                <div class="user" th:each="invitedUser : ${invitedUsers}">
                     <p th:inline="text">[[${invitedUser.username}]]<span class="invitation"> ([[#{lang.invitationSent}]])</span></p>
                 </div>
 
@@ -114,7 +114,7 @@
                 <hr th:if="${!#lists.isEmpty(searchedUsers)}">
                 <form method="POST" th:each="searchedUser : ${searchedUsers}" th:action="@{/calendar/id/{id}/calendarUsers/inviteUser(id=${calendarId})}">
                     <input type="hidden" name="userId" th:value="${searchedUser.id}">
-                    <div class="user">
+                    <div class="user" style="float: left;">
                         <p th:text="${searchedUser.username}"></p>
                         <div class="userAdd">
                             <input type="submit" class="greenInputButton" th:value="#{lang.add}">
