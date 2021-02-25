@@ -60,7 +60,7 @@
         <div class="addUserForm">
 
             <!--Lista użytkowników kalendarza-->
-            <div class="userGrid" th:style="${!calendarRole.equals('OWNER') ? 'margin-right: auto; margin-left: auto; float: none;' : 'float: left;'}">
+            <div class="userGrid" th:style="${calendarRole.equals('NORMAL_MEMBER') ? 'margin-right: auto; margin-left: auto; float: none;' : 'float: left;'}">
 
                 <p th:text="#{lang.calendarUsers}"></p>
                 <hr>
@@ -80,9 +80,9 @@
                                 </label>
                                 <select id="role" name="role" th:onchange="'submitRoleForm('+${calendarUser.id}+');'">
                                     <option value="" th:text="#{lang.chooseRole}" disabled selected></option>
-                                    <option th:value="OWNER" th:text="#{lang.owner}"></option>
-                                    <option th:value="ADMIN" th:text="#{lang.admin}"></option>
-                                    <option th:value="NORMAL_MEMBER" th:text="#{lang.normalMember}"></option>
+                                    <option th:value="OWNER" th:text="#{lang.owner}" th:if="${calendarRole.equals('OWNER')}"></option>
+                                    <option th:value="ADMIN" th:text="#{lang.admin}" th:if="${calendarRole.equals('OWNER') || (calendarRole.equals('ADMIN')&&!role.name.equals('OWNER'))}"></option>
+                                    <option th:value="NORMAL_MEMBER" th:text="#{lang.normalMember}" th:if="${calendarRole.equals('OWNER') || (calendarRole.equals('ADMIN')&&!role.name.equals('OWNER'))}"></option>
                                 </select>
                             </div>
                             <div style="clear: both"></div>
@@ -94,7 +94,7 @@
                 </div>
 
             </div>
-            <div class="userGrid" th:if="${calendarRole.equals('OWNER')}">
+            <div class="userGrid" th:if="${calendarRole.equals('OWNER') || calendarRole.equals('ADMIN')}">
 
                 <!--Wyszukiwanie użytkowników-->
                 <p th:text="#{lang.findUsers}"></p>

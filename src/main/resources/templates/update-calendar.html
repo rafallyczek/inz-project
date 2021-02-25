@@ -60,27 +60,28 @@
         <div class="editCalendarForm">
 
             <!--Formularz edytujący kalendarz-->
-            <p th:if="${!calendarRole.equals('OWNER')}" class="noPrivileges" th:text="#{lang.noCalendarPrivileges}"></p>
-            <p th:if="${calendarRole.equals('OWNER')}" th:text="#{lang.editCalendar}"></p>
-            <hr th:if="${calendarRole.equals('OWNER')}">
-            <form method="POST" th:action="@{/calendar/id/{id}/update(id=${calendarId})}" th:object="${updateCalendar}" th:if="${calendarRole.equals('OWNER')}">
-                <input id="idEdit" type="hidden" th:field="*{id}">
-                <div class="formInputs">
-                    <label for="titleEdit" th:text="#{lang.titleDescription}"></label>
-                    <input id="titleEdit" type="text" th:field="*{title}">
-                    <div class="error">
-                        <span class="tooltip" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+            <p th:if="${calendarRole.equals('NORMAL_MEMBER')}" class="noPrivileges" th:text="#{lang.noCalendarPrivileges}"></p>
+            <th:block th:if="${calendarRole.equals('OWNER') || calendarRole.equals('ADMIN')}">
+                <p th:text="#{lang.editCalendar}"></p>
+                <hr>
+                <form method="POST" th:action="@{/calendar/id/{id}/update(id=${calendarId})}" th:object="${updateCalendar}">
+                    <input id="idEdit" type="hidden" th:field="*{id}">
+                    <div class="formInputs">
+                        <label for="titleEdit" th:text="#{lang.titleDescription}"></label>
+                        <input id="titleEdit" type="text" th:field="*{title}">
+                        <div class="error">
+                            <span class="tooltip" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+                        </div>
                     </div>
-                </div>
-                <div class="formInputs">
-                    <label for="descriptionEdit" th:text="#{lang.titleText}"></label>
-                    <input id="descriptionEdit" type="text" th:field="*{description}">
-                </div>
-                <input class="greenInputButton" type="submit" th:value="#{lang.save}">
-                <input class="redInputButton" type="reset" th:value="#{lang.reset}">
-                <div style="clear: both"></div>
-            </form>
-
+                    <div class="formInputs">
+                        <label for="descriptionEdit" th:text="#{lang.titleText}"></label>
+                        <input id="descriptionEdit" type="text" th:field="*{description}">
+                    </div>
+                    <input class="greenInputButton" type="submit" th:value="#{lang.save}">
+                    <input class="redInputButton" type="reset" th:value="#{lang.reset}">
+                    <div style="clear: both"></div>
+                </form>
+            </th:block>
         </div>
         <!--Powrót do listy kalendarzy-->
         <a th:href="@{/calendar/list}" th:text="#{lang.calendarsReturn}"></a>

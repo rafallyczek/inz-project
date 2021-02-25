@@ -306,8 +306,20 @@ public class CalendarController {
     @PostMapping("/id/{id}/calendarUsers/changeRole/{roleId}")
     public String changeRole(@PathVariable int id,
                              @PathVariable int roleId,
-                             @RequestParam String role){
+                             @RequestParam String role,
+                             @AuthenticationPrincipal User user){
+        CalendarRole currentUserRole = calendarRoleService.getUserCalendarRole(user.getId(),(long) id);
         CalendarRole calendarRole = calendarRoleService.getCalendarRole((long) roleId);
+        //Jeśli ADMIN chce zmienić rolę OWNERa nie zezwól
+        if(currentUserRole.getName().equals("ADMIN")&&calendarRole.getName().equals("OWNER")){
+            return "redirect:/calendar/id/"+id+"/calendarUsers";
+        //Jeśli ktoś chce sam sobie przyznać rolę OWNER nie zezwól
+        }else if(currentUserRole.getId().equals(calendarRole.getId())&&role.equals("OWNER")){
+            return "redirect:/calendar/id/"+id+"/calendarUsers";
+        //Jeśli jedyny właściciel chce zmienić swoją rolę nie zezwól
+        }else if(currentUserRole.getName().equals("OWNER")&&calendarRole.getName().equals("OWNER")&&!multipleOwners((long) id)){
+            return "redirect:/calendar/id/"+id+"/calendarUsers";
+        }
         calendarRole.setName(role);
         calendarRoleService.updateRole(calendarRole);
         return "redirect:/calendar/id/"+id+"/calendarUsers";
@@ -375,6 +387,24 @@ public class CalendarController {
         model.addAttribute("calendarUsers", calendarUsers);
         model.addAttribute("userRoles", userRoles);
         model.addAttribute("invitedUsers", invitedUsers);
+    }
+
+    //------------------------------------------------------------------------------------
+    //Inne metody
+
+    //Sprawdź czy kalendarz ma więcej niż jednego właściciela
+    public boolean multipleOwners(Long calendarId){
+        List<CalendarRole> calendarRoles = calendarRoleService.getAllRolesByCalendarId(calendarId);
+        int count = 0;
+        for(CalendarRole calendarRole : calendarRoles){
+            if(calendarRole.getName().equals("OWNER")){
+                count++;
+            }
+            if(count>1){
+                return true;
+            }
+        }
+        return false;
     }
 
 }
