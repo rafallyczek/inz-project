@@ -54,4 +54,9 @@ public class CalendarService {
         calendarRepository.save(calendar);
     }
 
+    //Usuń kalendarz
+    public void deleteCalendar(Long id){
+        calendarRepository.deleteById(id);
+    }
+
 }

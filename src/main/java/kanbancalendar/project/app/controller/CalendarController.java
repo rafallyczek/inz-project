@@ -260,6 +260,13 @@ public class CalendarController {
         return "redirect:/calendar/id/"+id;
     }
 
+    //Usuń kalendarz
+    @RequestMapping("/id/{id}/delete")
+    public String deleteCalendar(@PathVariable Long id){
+        calendarService.deleteCalendar(id);
+        return "redirect:/calendar/list";
+    }
+
     //Wyświetl widok użytkowników kalendarza
     @GetMapping("/id/{id}/calendarUsers")
     public String showCalendarUsersForm(@PathVariable int id,

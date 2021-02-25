@@ -28,9 +28,12 @@
 .greenHyperlinkButton{
     width: 74px;
     margin-bottom: 5px;
-    position: absolute;
-    top: 10px;
-    left: 10px;
+    float: left;
+}
+.redHyperlinkButton{
+    margin-bottom: 5px;
+    margin-left: 5px;
+    float: left;
 }
 .error{
     position: relative;
