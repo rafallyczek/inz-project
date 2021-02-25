@@ -45,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception{
         http.authorizeRequests()
                 .antMatchers("/user/register","/user/add").permitAll()
+                .antMatchers("/calendar/id/{id}/delete").access("@webSecurity.isOwner(authentication,#id)")
                 .antMatchers("/calendar/id/{id}/calendarUsers/changeRole/**").access("@webSecurity.checkCalendarRole(authentication,#id)")
                 .antMatchers("/calendar/id/{id}/**").access("@webSecurity.checkCalendarId(authentication,#id)")
                 .antMatchers("/calendar","/notes","/user","/calendar/**","/notes/**","/user/**","/messages","/messages/**")

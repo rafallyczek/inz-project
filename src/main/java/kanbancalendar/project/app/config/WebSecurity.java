@@ -25,13 +25,25 @@ public class WebSecurity {
         return false;
     }
 
-    //Sprawdź czy użytkownik ma prawa edycji w kalendarzu
+    //Sprawdź czy użytkownik ma prawa edycji w kalendarzu (OWNER lub ADMIN)
     public boolean checkCalendarRole(Authentication authentication, int id){
         User user = userRepository.findByUsername(authentication.getName());
         if(user!=null){
             CalendarRole calendarRole = calendarRoleRepository.findByUserIdAndCalendarId(user.getId(),(long) id);
             if(calendarRole!=null){
                 return calendarRole.getName().equals("OWNER") || calendarRole.getName().equals("ADMIN");
+            }
+        }
+        return false;
+    }
+
+    //Sprawdź czy użytkownik jest właścicielem
+    public boolean isOwner(Authentication authentication, int id){
+        User user = userRepository.findByUsername(authentication.getName());
+        if(user!=null){
+            CalendarRole calendarRole = calendarRoleRepository.findByUserIdAndCalendarId(user.getId(),(long) id);
+            if(calendarRole!=null){
+                return calendarRole.getName().equals("OWNER");
             }
         }
         return false;
