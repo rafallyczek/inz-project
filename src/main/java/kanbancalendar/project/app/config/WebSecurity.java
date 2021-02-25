@@ -21,12 +21,8 @@ public class WebSecurity {
     public boolean checkCalendarId(Authentication authentication, int id){
         User user = userRepository.findByUsername(authentication.getName());
         if(user!=null){
-            List<CalendarRole> calendarRoles = calendarRoleRepository.findAllByCalendarId((long)id);
-            for(CalendarRole calendarRole : calendarRoles){
-                if(user.getId().equals(calendarRole.getUserId())){
-                    return true;
-                }
-            }
+            CalendarRole calendarRole = calendarRoleRepository.findByUserIdAndCalendarId(user.getId(),(long) id);
+            return calendarRole != null;
         }
         return false;
     }
