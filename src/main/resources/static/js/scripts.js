@@ -135,6 +135,7 @@ function submitRoleForm(id) {
 
 //Drag and Drop
 //-----------------------------------------------------------------------------------------
+
 var dragGridId = "";
 //Zezwól na upuszczenie
 function allow(event) {
@@ -205,8 +206,20 @@ function statusFinished(noteId){
         }
     });
 }
+
+//Kalendarz
+//-----------------------------------------------------------------------------------------
+
+//Potwierdzenie usunięcia kalendarza
+function confirmDelete(){
+    if(confirm("Czy na pewno chcesz usunąć kalendarz?")){
+        document.getElementById("deleteForm").submit();
+    }
+}
+
 //AJAX - ogólne
 //-----------------------------------------------------------------------------------------
+
 function setUpAJAX(){
     var token = $("meta[name='_csrf']").attr("content");
     $.ajaxPrefilter(function (options, originalOptions, jqXHR) {

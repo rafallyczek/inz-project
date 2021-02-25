@@ -57,7 +57,8 @@
         <!-- Przejście do dodawania użytkowników do kalendarza -->
         <a class="greenHyperlinkButton" th:href="@{/calendar/id/{id}/calendarUsers(id=${calendarId})}" th:text="#{lang.users}"></a>
         <!-- Usuń kalendarz -->
-        <a class="redHyperlinkButton" th:href="@{/calendar/id/{id}/delete(id=${calendarId})}" th:text="#{lang.deleteCalendar}" th:if="${calendarRole.equals('OWNER')}"></a>
+        <button class="redInputButton" th:text="#{lang.deleteCalendar}" th:if="${calendarRole.equals('OWNER')}" onclick="confirmDelete()"></button>
+        <form method="POST" th:action="@{/calendar/id/{id}/delete(id=${calendarId})}" id="deleteForm"></form>
         <div style="clear: both"></div>
 
         <div class="editCalendarForm">
