@@ -7,8 +7,6 @@ import kanbancalendar.project.app.model.User;
 import kanbancalendar.project.app.repository.CalendarRoleRepository;
 import kanbancalendar.project.app.repository.UserRepository;
 
-import java.util.List;
-
 public class WebSecurity {
 
     @Autowired
