@@ -63,6 +63,9 @@
                 <div class="formInputs">
                     <label for="username" th:text="#{lang.username}"></label>
                     <input id="username" name="username" type="text">
+                    <div class="error">
+                        <span class="tooltip" th:if="${#request.getParameter('error') == 'true'}">Nieprawidłowy login lub hasło.</span>
+                    </div>
                 </div>
                 <div class="formInputs">
                     <label for="password" th:text="#{lang.password}"></label>
