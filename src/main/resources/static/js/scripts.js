@@ -207,16 +207,6 @@ function statusFinished(noteId){
     });
 }
 
-//Kalendarz
-//-----------------------------------------------------------------------------------------
-
-//Potwierdzenie usunięcia kalendarza
-function confirmDelete(){
-    if(confirm("Czy na pewno chcesz usunąć kalendarz?")){
-        document.getElementById("deleteForm").submit();
-    }
-}
-
 //AJAX - ogólne
 //-----------------------------------------------------------------------------------------
 
@@ -225,4 +215,14 @@ function setUpAJAX(){
     $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
         jqXHR.setRequestHeader('X-CSRF-Token', token);
     });
+}
+
+//Inne
+//-----------------------------------------------------------------------------------------
+
+//Potwierdzenie usunięcia
+function confirmDelete(){
+    if(confirm("Zmiany są nieodwracalne. Czy na pewno chcesz kontynuować?")){
+        document.getElementById("deleteForm").submit();
+    }
 }

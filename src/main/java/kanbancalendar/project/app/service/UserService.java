@@ -58,14 +58,19 @@ public class UserService implements UserDetailsService {
         return users;
     }
 
+    //Usuń użytkownika
+    public void deleteUser(Long id){
+        userRepository.deleteById(id);
+    }
+
     //Znajdź użytkowników, których nazwa użytkownika zawiera podaną frazę
     public List<User> getAllUsersContainingUsername(String username){
         return userRepository.findByUsernameContaining(username);
     }
 
-    //Sprawdzanie czy stare hasło się zgadza
-    public boolean checkOldPassword(User user, String oldPassword){
-        return passwordEncoder.matches(oldPassword,user.getPassword());
+    //Sprawdzanie czy hasło się zgadza
+    public boolean checkPassword(User user, String password){
+        return passwordEncoder.matches(password,user.getPassword());
     }
 
 }

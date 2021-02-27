@@ -133,6 +133,15 @@
                 <div style="clear: both"></div>
             </form>
 
+            <p>Usuń konto</p>
+            <hr>
+            <form method="POST" th:action="@{/user/id/{id}/delete(id=${userId})}" id="deleteForm">
+                <div class="formInputs">
+                    <label for="confirmPassword" th:text="#{lang.password}"></label>
+                    <input id="confirmPassword" name="password" type="password">
+                </div>
+                <button type="button" class="redInputButton" th:text="#{lang.deleteAccount}" onclick="confirmDelete()"></button>
+            </form>
         </div>
 
     </div>

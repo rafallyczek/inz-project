@@ -14,6 +14,8 @@ import kanbancalendar.project.app.repository.UserRepository;
 import kanbancalendar.project.app.service.ReminderService;
 import kanbancalendar.project.app.service.UserService;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -51,6 +53,7 @@ public class UserController {
     public String showUser(Model model,
                        @AuthenticationPrincipal User user){
         model.addAttribute("zones", zones);
+        model.addAttribute("userId",user.getId());
         setUpUpdateEmail(model, user);
         setUpUpdatePassword(model, user);
         setUpUpdateTimezone(model, user);
@@ -88,6 +91,8 @@ public class UserController {
                               @AuthenticationPrincipal User user){
         if(errors.hasErrors()){
             model.addAttribute("zones", zones);
+            model.addAttribute("userId",user.getId());
+            setUpUpdateEmail(model, user);
             setUpUpdatePassword(model, user);
             setUpUpdateTimezone(model, user);
             setUpUpdateReminderTime(model, user);
@@ -107,14 +112,19 @@ public class UserController {
                                  @AuthenticationPrincipal User user){
         if(errors.hasErrors()){
             model.addAttribute("zones", zones);
+            model.addAttribute("userId",user.getId());
             setUpUpdateEmail(model, user);
+            setUpUpdatePassword(model, user);
             setUpUpdateTimezone(model, user);
             setUpUpdateReminderTime(model, user);
             return "user";
         }
         User updateUser = userRepository.findById(updatePassword.getUserId()).get();
-        if(!userService.checkOldPassword(updateUser, updatePassword.getOldPassword())){
+        if(!userService.checkPassword(updateUser, updatePassword.getOldPassword())){
+            model.addAttribute("zones", zones);
+            model.addAttribute("userId",user.getId());
             setUpUpdateEmail(model, user);
+            setUpUpdatePassword(model, user);
             setUpUpdateTimezone(model, user);
             setUpUpdateReminderTime(model, user);
             return "user";
@@ -145,6 +155,27 @@ public class UserController {
             reminderService.updateReminder(reminder);
         }
         return "redirect:/user";
+    }
+
+    //Usuń konto
+    @RequestMapping("/id/{id}/delete")
+    public String deleteUser(@PathVariable int id,
+                             @RequestParam String password,
+                             Model model,
+                             @AuthenticationPrincipal User user,
+                             HttpServletRequest request) throws ServletException {
+        if(!userService.checkPassword(user,password)){
+            model.addAttribute("zones", zones);
+            model.addAttribute("userId",user.getId());
+            setUpUpdateEmail(model, user);
+            setUpUpdatePassword(model, user);
+            setUpUpdateTimezone(model, user);
+            setUpUpdateReminderTime(model, user);
+            return "user";
+        }
+        userService.deleteUser((long) id);
+        request.logout();
+        return "redirect:/";
     }
 
     //------------------------------------------------------------------------------------
