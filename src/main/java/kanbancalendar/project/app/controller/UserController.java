@@ -121,6 +121,7 @@ public class UserController {
         }
         User updateUser = userRepository.findById(updatePassword.getUserId()).get();
         if(!userService.checkPassword(updateUser, updatePassword.getOldPassword())){
+            model.addAttribute("invalidOldPassword",true);
             model.addAttribute("zones", zones);
             model.addAttribute("userId",user.getId());
             setUpUpdateEmail(model, user);
@@ -165,6 +166,7 @@ public class UserController {
                              @AuthenticationPrincipal User user,
                              HttpServletRequest request) throws ServletException {
         if(!userService.checkPassword(user,password)){
+            model.addAttribute("invalidPassword",true);
             model.addAttribute("zones", zones);
             model.addAttribute("userId",user.getId());
             setUpUpdateEmail(model, user);

@@ -78,6 +78,9 @@
                 <div class="formInputs">
                     <label for="oldPassword" th:text="#{lang.oldPassword}"></label>
                     <input id="oldPassword" type="password" th:field="*{oldPassword}">
+                    <div class="error">
+                        <span class="tooltip" th:if="${invalidOldPassword==true}">Nieprawidłowe hasło.</span>
+                    </div>
                 </div>
                 <div class="formInputs">
                     <label for="password" th:text="#{lang.newPassword}"></label>
@@ -139,6 +142,9 @@
                 <div class="formInputs">
                     <label for="confirmPassword" th:text="#{lang.password}"></label>
                     <input id="confirmPassword" name="password" type="password">
+                    <div class="error">
+                        <span class="tooltip" th:if="${invalidPassword==true}">Nieprawidłowe hasło.</span>
+                    </div>
                 </div>
                 <button type="button" class="redInputButton" th:text="#{lang.deleteAccount}" onclick="confirmDelete()"></button>
             </form>
