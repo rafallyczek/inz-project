@@ -91,7 +91,6 @@
 
     <div th:if="${#request.getAttribute('noCookieConsent')}" class="cookieConsent">
         <p th:text="#{lang.cookies}"></p>
-        <p th:text="${#request.getAttribute('noCookieConsent')}"></p>
         <a th:href="@{/setCookie}" class="greenHyperlinkButton">OK</a>
         <div style="clear: both;"></div>
     </div>
