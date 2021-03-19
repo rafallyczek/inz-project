@@ -47,6 +47,7 @@
     border-radius: 4px;
     max-width: 80px;
     max-height: 20px;
+    white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     break-inside: avoid;
