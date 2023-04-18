@@ -82,7 +82,11 @@ public class ReminderService {
 
     //Przypomnienie dotyczące notki
     public void noteReminder(Reminder reminder) throws MessagingException {
-        Note note = noteRepository.findById((long) reminder.getObjectId()).get();
+        Note note = noteRepository.findById((long) reminder.getObjectId()).orElse(null);
+        if(note == null){
+            reminderRepository.deleteById(reminder.getId());
+            return;
+        }
         User owner = userService.getUser((long) note.getUserId());
         User user = userService.getUser((long) reminder.getUserId());
         ZonedDateTime ownerDateTime = note.getDateTime().atZone(ZoneId.of(owner.getTimezone()));
